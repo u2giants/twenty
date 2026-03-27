@@ -43,7 +43,9 @@ jobs:
         run: yarn install --immutable
 
       - name: Build twenty-front
-        run: yarn workspace twenty-front build
+        run: npx nx build twenty-front
+        env:
+          NODE_OPTIONS: --max-old-space-size=8192
 
       - uses: docker/setup-buildx-action@v3
 
