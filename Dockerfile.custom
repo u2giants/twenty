@@ -1,0 +1,5 @@
+FROM twentycrm/twenty:latest
+
+# Replace the stock frontend with our custom build.
+# The build is produced by the CI job before this image is assembled.
+COPY packages/twenty-front/build /app/packages/twenty-server/dist/front
