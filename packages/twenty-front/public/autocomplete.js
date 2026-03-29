@@ -52,6 +52,7 @@
     '    edges {',
     '      node {',
     '        id',
+    '        userId',
     '        userEmail',
     '      }',
     '    }',
@@ -333,7 +334,7 @@
   }
 
   function fetchWorkspaceMembersFromApi() {
-    // Try the workspace members connection query first (returns id + userEmail)
+    // Try the workspace members connection query first (returns id, userId + userEmail)
     return gqlFetch(MEMBERS_WITH_IDS_QUERY)
       .then(function(json) {
         var edges = (((json || {}).data || {}).workspaceMembers || {}).edges || [];
@@ -556,7 +557,7 @@
       .then(function(members) {
         // Normalize to { email, id } shape
         var list = members.map(function(m) {
-          return { email: (m.userEmail || m.email || '').trim(), id: m.id || null };
+          return { email: (m.userEmail || m.email || '').trim(), id: m.id || null, userId: m.userId || null };
         }).filter(function(m) { return isEmail(m.email); });
 
         // Merge DOM emails
@@ -626,7 +627,7 @@
       // Look up by email in cache
       resolveId = fetchUserList().then(function(list) {
         var match = list.find(function(m) { return m.email.toLowerCase() === email.toLowerCase(); });
-        return match ? match.id : null;
+        return match ? (match.userId || match.id) : null;
       });
     }
 
@@ -721,7 +722,7 @@
     dd.innerHTML = '';
     items.forEach(function(item) {
       var email = item.email || item;
-      var memberId = item.id || null;
+      var memberId = item.userId || item.id || null;
 
       // ── Primary row: fills the input ──────────────────────────────────
       var emailRow = document.createElement('div');
