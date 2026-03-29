@@ -2,7 +2,6 @@ import { currentUserState } from '@/auth/states/currentUserState';
 import { canManageFeatureFlagsState } from '@/client-config/states/canManageFeatureFlagsState';
 import { SettingsAdminTableCard } from '@/settings/admin-panel/components/SettingsAdminTableCard';
 import { useFeatureFlagState } from '@/settings/admin-panel/hooks/useFeatureFlagState';
-import { useImpersonationRedirect } from '@/settings/admin-panel/hooks/useImpersonationRedirect';
 import { userLookupResultState } from '@/settings/admin-panel/states/userLookupResultState';
 import { type WorkspaceInfo } from '@/settings/admin-panel/types/WorkspaceInfo';
 import { getWorkspaceSchemaName } from '@/settings/admin-panel/utils/getWorkspaceSchemaName';
@@ -36,6 +35,7 @@ import { REACT_APP_SERVER_BASE_URL } from '~/config';
 import { useMutation } from '@apollo/client/react';
 import {
   type FeatureFlagKey,
+  GetAuthTokensFromLoginTokenDocument,
   ImpersonateDocument,
   UpdateWorkspaceFeatureFlagDocument,
 } from '~/generated-metadata/graphql';
@@ -64,8 +64,10 @@ export const SettingsAdminWorkspaceContent = ({
 
   const [updateFeatureFlag] = useMutation(UpdateWorkspaceFeatureFlagDocument);
   const [isImpersonateLoading, setIsImpersonationLoading] = useState(false);
-  const { executeImpersonationRedirect } = useImpersonationRedirect();
   const [impersonate] = useMutation(ImpersonateDocument);
+  const [getAuthTokens] = useMutation(
+    GetAuthTokensFromLoginTokenDocument,
+  );
 
   const { updateFeatureFlagState } = useFeatureFlagState();
   const userLookupResult = useAtomStateValue(userLookupResultState);
@@ -80,28 +82,53 @@ export const SettingsAdminWorkspaceContent = ({
 
     setIsImpersonationLoading(true);
 
-    await impersonate({
-      variables: { userId: userLookupResult.user.id, workspaceId },
-      onCompleted: async (data) => {
-        const { loginToken, workspace } = data.impersonate;
-        // Always open in a new tab. The in-session token swap breaks the
-        // SSE event stream connection, causing "An error occurred" on any
-        // view load immediately after impersonating.
-        return executeImpersonationRedirect(
-          workspace.workspaceUrls,
-          loginToken.token,
-          '_blank',
-        );
-      },
-      onError: (error) => {
-        const errorMessage = error.message;
-        enqueueErrorSnackBar({
-          message: t`Failed to impersonate user. ${errorMessage}`,
-        });
-      },
-    }).finally(() => {
+    try {
+      const impersonateResult = await impersonate({
+        variables: { userId: userLookupResult.user.id, workspaceId },
+      });
+
+      const loginToken =
+        impersonateResult.data?.impersonate?.loginToken?.token;
+
+      if (!loginToken) {
+        throw new Error('No login token returned');
+      }
+
+      // Exchange the loginToken for a full tokenPair
+      const tokenResult = await getAuthTokens({
+        variables: { loginToken, origin: window.location.origin },
+      });
+
+      const tokenPair =
+        tokenResult.data?.getAuthTokensFromLoginToken?.tokens;
+
+      if (!tokenPair?.accessOrWorkspaceAgnosticToken) {
+        throw new Error('Token exchange failed');
+      }
+
+      // Encode the tokenPair and open a new tab using the hash-based
+      // bootstrap in autocomplete.js.  This keeps the admin session in the
+      // current tab intact — the new tab writes its own tokenPair cookie
+      // on load and reloads independently.
+      const encoded = btoa(JSON.stringify(tokenPair))
+        .replace(/\+/g, '-')
+        .replace(/\//g, '_')
+        .replace(/=+$/, '');
+
+      window.open(
+        `${window.location.origin}/#__poc_su=${encoded}`,
+        '_blank',
+        'noopener',
+      );
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : String(error);
+      enqueueErrorSnackBar({
+        message: t`Failed to impersonate user. ${errorMessage}`,
+      });
+    } finally {
       setIsImpersonationLoading(false);
-    });
+    }
   };
 
   const handleFeatureFlagUpdate = async (
