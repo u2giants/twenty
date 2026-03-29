@@ -1,5 +1,23 @@
 name: Publish Custom Image
 
+# Builds the Twenty frontend, packages it into a Docker image on top of the
+# official twentycrm/twenty base, and publishes it to GHCR.
+# After the image is published, Coolify is asked to redeploy the server and
+# worker apps so the new image goes live and a deployment record appears in
+# Coolify's deployment history.
+#
+# Image naming
+# ------------
+# Immutable: ghcr.io/u2giants/twenty/twenty-custom:sha-<commit>
+# Moving:    ghcr.io/u2giants/twenty/twenty-custom:main   (always = latest main)
+#
+# Coolify apps driven by this workflow
+# -------------------------------------
+# twenty-server  uuid: rd261bt0wy7ifjrkoe1tkl92
+# twenty-worker  uuid: pkhhmt4r7n0xt25jmmlkkfi8
+# Both are configured in Coolify as dockerimage build-pack pointing at
+# ghcr.io/u2giants/twenty/twenty-custom:main
+
 on:
   push:
     branches: [main]
@@ -11,6 +29,8 @@ permissions:
 
 env:
   IMAGE_NAME: ghcr.io/u2giants/twenty/twenty-custom
+  SERVER_UUID: rd261bt0wy7ifjrkoe1tkl92
+  WORKER_UUID: pkhhmt4r7n0xt25jmmlkkfi8
 
 jobs:
   build-and-publish:
@@ -69,3 +89,17 @@ jobs:
           tags: |
             ${{ steps.meta.outputs.image }}:main
             ${{ steps.meta.outputs.image }}:${{ steps.meta.outputs.sha_tag }}
+
+      - name: Trigger Coolify deploy – server
+        run: |
+          curl -fsSL -X GET \
+            "${{ secrets.COOLIFY_BASE_URL }}/api/v1/applications/${SERVER_UUID}/start" \
+            -H "Authorization: Bearer ${{ secrets.COOLIFY_API_TOKEN }}" \
+            -H "Accept: application/json"
+
+      - name: Trigger Coolify deploy – worker
+        run: |
+          curl -fsSL -X GET \
+            "${{ secrets.COOLIFY_BASE_URL }}/api/v1/applications/${WORKER_UUID}/start" \
+            -H "Authorization: Bearer ${{ secrets.COOLIFY_API_TOKEN }}" \
+            -H "Accept: application/json"
