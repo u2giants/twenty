@@ -656,7 +656,7 @@
           return gqlFetch(GET_TOKENS_MUTATION, {
             loginToken: loginTokenStr,
             origin: window.location.origin
-          }).then(function(json) {
+          }, METADATA_URL).then(function(json) {
             var tokens = ((((json || {}).data || {}).getAuthTokensFromLoginToken || {}).tokens);
             if (!tokens || !tokens.accessOrWorkspaceAgnosticToken) {
               var err = ((json || {}).errors || []).map(function(e) { return e.message; }).join('; ');
