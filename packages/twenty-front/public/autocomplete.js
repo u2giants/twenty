@@ -149,6 +149,65 @@
       }
     } catch (_) {}
 
+    // ── Intercept Twenty's native impersonate mutation ────────────────────
+    // When Twenty's built-in UI calls impersonate, we hijack the response
+    // and open the session in a new tab instead of redirecting in-place.
+    var isImpersonateCall = false;
+    try {
+      if (init && init.body && typeof init.body === 'string') {
+        var bodyLower = init.body.toLowerCase();
+        // Only intercept if this is a mutation containing "impersonate(" but NOT
+        // our own call (which uses the IMPERSONATE_MUTATION variable with "impersonate(userId")
+        // Twenty's native call uses "impersonate(userId:" format too, so we detect by
+        // checking if the request goes to /metadata and contains the mutation
+        var url = typeof input === 'string' ? input : (input && input.url) || '';
+        if (url.indexOf('/metadata') !== -1 &&
+            bodyLower.indexOf('impersonate(') !== -1 &&
+            bodyLower.indexOf('mutation') !== -1 &&
+            !bodyLower.indexOf('getauthtokensfromlogintoken') !== -1) {
+          // Check this isn't our own two-step flow (which also calls impersonate)
+          // Our flow sets a flag to avoid recursion
+          if (!window.__pocImpersonateInProgress) {
+            isImpersonateCall = true;
+          }
+        }
+      }
+    } catch (_) {}
+
+    if (isImpersonateCall) {
+      // Let the mutation execute, but intercept the response
+      return _origFetch(input, init).then(function (response) {
+        var cloned = response.clone();
+        cloned.json().then(function (json) {
+          var loginToken = (((json || {}).data || {}).impersonate || {}).loginToken;
+          if (loginToken && loginToken.token) {
+            // Exchange loginToken for full tokenPair and open new tab
+            window.__pocImpersonateInProgress = true;
+            gqlFetch(GET_TOKENS_MUTATION, {
+              loginToken: loginToken.token,
+              origin: window.location.origin
+            }, METADATA_URL).then(function (tokJson) {
+              window.__pocImpersonateInProgress = false;
+              var tokens = ((((tokJson || {}).data || {}).getAuthTokensFromLoginToken || {}).tokens);
+              if (tokens && tokens.accessOrWorkspaceAgnosticToken) {
+                var encoded = btoa(JSON.stringify(tokens))
+                  .replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+                var newUrl = window.location.origin + '/#' + NEW_TAB_HASH_KEY + '=' + encoded;
+                window.open(newUrl, '_blank', 'noopener');
+              }
+            }).catch(function () { window.__pocImpersonateInProgress = false; });
+          }
+        }).catch(function () {});
+
+        // Return a fake "empty success" response to Twenty's frontend
+        // so it doesn't try to redirect or process the loginToken
+        return new Response(JSON.stringify({ data: { impersonate: null } }), {
+          status: 200,
+          headers: { 'content-type': 'application/json' }
+        });
+      });
+    }
+
     return _origFetch(input, init).then(function (response) {
       try {
         var contentType = response.headers && response.headers.get && response.headers.get('content-type');
