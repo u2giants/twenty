@@ -1,0 +1,2476 @@
+{
+    "data": {
+        "objects": {
+            "edges": [
+                {
+                    "node": {
+                        "id": "f4507080-123e-457b-9c77-5fe8afc15aad",
+                        "universalIdentifier": "20202020-6736-4337-b5c4-8b39fae325a5",
+                        "nameSingular": "timelineActivity",
+                        "namePlural": "timelineActivities",
+                        "isCustom": false,
+                        "isActive": true,
+                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                        "labelSingular": "Timeline Activity",
+                        "labelPlural": "Timeline Activities",
+                        "fields": {
+                            "edges": [
+                                {
+                                    "node": {
+                                        "id": "0bd89c4a-d41b-44fe-a117-2340d31017aa",
+                                        "universalIdentifier": "09e64000-f765-5856-94cd-83b54a9ea794",
+                                        "name": "targetLicensorApprovalThread",
+                                        "label": "LicensorApprovalThread",
+                                        "type": "MORPH_RELATION",
+                                        "isCustom": true,
+                                        "isActive": true,
+                                        "applicationId": "b7ad46a7-1784-4fab-9f09-9eed6eedb0bf",
+                                        "options": null,
+                                        "settings": {
+                                            "onDelete": "SET_NULL",
+                                            "relationType": "MANY_TO_ONE",
+                                            "joinColumnName": "targetLicensorApprovalThreadId"
+                                        },
+                                        "defaultValue": null
+                                    }
+                                },
+                                {
+                                    "node": {
+                                        "id": "33071ce4-3b25-4602-8152-35c28b3d3a8d",
+                                        "universalIdentifier": "20202020-04ad-4221-a744-7a8278a5ce21",
+                                        "name": "targetCompany",
+                                        "label": "Target",
+                                        "type": "MORPH_RELATION",
+                                        "isCustom": false,
+                                        "isActive": true,
+                                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                                        "options": null,
+                                        "settings": {
+                                            "onDelete": "CASCADE",
+                                            "relationType": "MANY_TO_ONE",
+                                            "joinColumnName": "targetCompanyId"
+                                        },
+                                        "defaultValue": null
+                                    }
+                                },
+                                {
+                                    "node": {
+                                        "id": "f6953e53-7628-41bc-9e43-8e0d6b89b5fc",
+                                        "universalIdentifier": "20202020-2e0e-48c0-b445-ee6c1e61687d",
+                                        "name": "linkedRecordId",
+                                        "label": "Linked Record id",
+                                        "type": "UUID",
+                                        "isCustom": false,
+                                        "isActive": true,
+                                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                                        "options": null,
+                                        "settings": null,
+                                        "defaultValue": null
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "node": {
+                        "id": "f39c54cd-511d-41ab-81c6-fa5a90d8782b",
+                        "universalIdentifier": "20202020-491b-4aaa-9825-afd1bae6ae00",
+                        "nameSingular": "calendarChannelEventAssociation",
+                        "namePlural": "calendarChannelEventAssociations",
+                        "isCustom": false,
+                        "isActive": true,
+                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                        "labelSingular": "Calendar Channel Event Association",
+                        "labelPlural": "Calendar Channel Event Associations",
+                        "fields": {
+                            "edges": [
+                                {
+                                    "node": {
+                                        "id": "49879666-044b-46b8-b3c3-6d98cd9c081c",
+                                        "universalIdentifier": "1844a9cf-6d35-46d7-99ba-011626a6d71b",
+                                        "name": "searchVector",
+                                        "label": "Search vector",
+                                        "type": "TS_VECTOR",
+                                        "isCustom": false,
+                                        "isActive": true,
+                                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                                        "options": null,
+                                        "settings": {
+                                            "asExpression": "to_tsvector('simple', COALESCE(public.unaccent_immutable(\"eventExternalId\"), ''))",
+                                            "generatedType": "STORED"
+                                        },
+                                        "defaultValue": null
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "node": {
+                        "id": "efe9b7bb-cd1c-4506-839f-1404abd9bf96",
+                        "universalIdentifier": "20202020-ab56-4e05-92a3-e2414a499860",
+                        "nameSingular": "favorite",
+                        "namePlural": "favorites",
+                        "isCustom": false,
+                        "isActive": true,
+                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                        "labelSingular": "Favorite",
+                        "labelPlural": "Favorites",
+                        "fields": {
+                            "edges": [
+                                {
+                                    "node": {
+                                        "id": "5580c8e9-8797-4f98-8ad7-9ceef3cdf08d",
+                                        "universalIdentifier": "178245a2-b1cc-5368-b99c-22ace6922663",
+                                        "name": "targetLicensorApprovalThread",
+                                        "label": "LicensorApprovalThread",
+                                        "type": "RELATION",
+                                        "isCustom": true,
+                                        "isActive": true,
+                                        "applicationId": "b7ad46a7-1784-4fab-9f09-9eed6eedb0bf",
+                                        "options": null,
+                                        "settings": {
+                                            "onDelete": "SET_NULL",
+                                            "relationType": "MANY_TO_ONE",
+                                            "joinColumnName": "targetLicensorApprovalThreadId"
+                                        },
+                                        "defaultValue": null
+                                    }
+                                },
+                                {
+                                    "node": {
+                                        "id": "32859f94-f922-4416-9914-1331e64e8527",
+                                        "universalIdentifier": "1ec895e7-288b-5067-9be8-a8b8b63e4ace",
+                                        "name": "targetDepartment",
+                                        "label": "Department",
+                                        "type": "RELATION",
+                                        "isCustom": true,
+                                        "isActive": true,
+                                        "applicationId": "b7ad46a7-1784-4fab-9f09-9eed6eedb0bf",
+                                        "options": null,
+                                        "settings": {
+                                            "onDelete": "SET_NULL",
+                                            "relationType": "MANY_TO_ONE",
+                                            "joinColumnName": "targetDepartmentId"
+                                        },
+                                        "defaultValue": null
+                                    }
+                                },
+                                {
+                                    "node": {
+                                        "id": "d0fa84f0-8dd1-4214-ac2f-0346b589dea7",
+                                        "universalIdentifier": "20202020-1b1b-4b3b-8b1b-7f8d6a1d7d5c",
+                                        "name": "task",
+                                        "label": "Task",
+                                        "type": "RELATION",
+                                        "isCustom": false,
+                                        "isActive": true,
+                                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                                        "options": null,
+                                        "settings": {
+                                            "onDelete": "CASCADE",
+                                            "relationType": "MANY_TO_ONE",
+                                            "joinColumnName": "taskId"
+                                        },
+                                        "defaultValue": null
+                                    }
+                                },
+                                {
+                                    "node": {
+                                        "id": "e53d1f5c-0db7-4bcc-811a-eaee2f4258bc",
+                                        "universalIdentifier": "20202020-1f25-43fe-8b00-af212fdde824",
+                                        "name": "note",
+                                        "label": "Note",
+                                        "type": "RELATION",
+                                        "isCustom": false,
+                                        "isActive": true,
+                                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                                        "options": null,
+                                        "settings": {
+                                            "onDelete": "CASCADE",
+                                            "relationType": "MANY_TO_ONE",
+                                            "joinColumnName": "noteId"
+                                        },
+                                        "defaultValue": null
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "node": {
+                        "id": "dca7a9c2-3213-4a81-8096-55895fc9b41e",
+                        "universalIdentifier": "20202020-5a9a-44e8-95df-771cd06d0fb1",
+                        "nameSingular": "taskTarget",
+                        "namePlural": "taskTargets",
+                        "isCustom": false,
+                        "isActive": true,
+                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                        "labelSingular": "Task Target",
+                        "labelPlural": "Task Targets",
+                        "fields": {
+                            "edges": [
+                                {
+                                    "node": {
+                                        "id": "92b5e6da-14bd-4b63-9098-0ab59a94eeba",
+                                        "universalIdentifier": "01639dfa-7af0-5626-b6d6-fce0101ae6ab",
+                                        "name": "targetFactory",
+                                        "label": "Factory",
+                                        "type": "MORPH_RELATION",
+                                        "isCustom": true,
+                                        "isActive": true,
+                                        "applicationId": "b7ad46a7-1784-4fab-9f09-9eed6eedb0bf",
+                                        "options": null,
+                                        "settings": {
+                                            "onDelete": "SET_NULL",
+                                            "relationType": "MANY_TO_ONE",
+                                            "joinColumnName": "targetFactoryId"
+                                        },
+                                        "defaultValue": null
+                                    }
+                                },
+                                {
+                                    "node": {
+                                        "id": "79769e22-545c-4efe-9c45-3acdd22f91ca",
+                                        "universalIdentifier": "030d19aa-eebe-57fa-820b-8457fd99b864",
+                                        "name": "targetAiModelConfig",
+                                        "label": "AiModelConfig",
+                                        "type": "MORPH_RELATION",
+                                        "isCustom": true,
+                                        "isActive": true,
+                                        "applicationId": "b7ad46a7-1784-4fab-9f09-9eed6eedb0bf",
+                                        "options": null,
+                                        "settings": {
+                                            "onDelete": "SET_NULL",
+                                            "relationType": "MANY_TO_ONE",
+                                            "joinColumnName": "targetAiModelConfigId"
+                                        },
+                                        "defaultValue": null
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "node": {
+                        "id": "d05a1e4a-8d85-4271-809b-526ccf7fdf6e",
+                        "universalIdentifier": "20202020-d65d-4ab9-9344-d77bfb376a3d",
+                        "nameSingular": "workflowVersion",
+                        "namePlural": "workflowVersions",
+                        "isCustom": false,
+                        "isActive": true,
+                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                        "labelSingular": "Workflow Version",
+                        "labelPlural": "Workflow Versions",
+                        "fields": {
+                            "edges": [
+                                {
+                                    "node": {
+                                        "id": "a753a25e-eaf8-440d-8c0a-241d2d6cc4a7",
+                                        "universalIdentifier": "20202020-1d08-46df-901a-85045f18099a",
+                                        "name": "runs",
+                                        "label": "Runs",
+                                        "type": "RELATION",
+                                        "isCustom": false,
+                                        "isActive": true,
+                                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                                        "options": null,
+                                        "settings": {
+                                            "relationType": "ONE_TO_MANY"
+                                        },
+                                        "defaultValue": null
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "node": {
+                        "id": "c0c4f5dc-efa5-451f-ba94-974451bbf269",
+                        "universalIdentifier": "20202020-7cf8-401f-8211-a9587d27fd2d",
+                        "nameSingular": "favoriteFolder",
+                        "namePlural": "favoriteFolders",
+                        "isCustom": false,
+                        "isActive": true,
+                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                        "labelSingular": "Favorite Folder",
+                        "labelPlural": "Favorite Folders",
+                        "fields": {
+                            "edges": [
+                                {
+                                    "node": {
+                                        "id": "8ceba15f-a086-466b-8210-f286c2236710",
+                                        "universalIdentifier": "1ec58922-7789-4832-a583-ec97f766f433",
+                                        "name": "createdBy",
+                                        "label": "Created by",
+                                        "type": "ACTOR",
+                                        "isCustom": false,
+                                        "isActive": true,
+                                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                                        "options": null,
+                                        "settings": null,
+                                        "defaultValue": {
+                                            "name": "'System'",
+                                            "source": "'MANUAL'",
+                                            "workspaceMemberId": null
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "node": {
+                        "id": "bdc17096-d1db-447f-8641-cb23ec3e6cda",
+                        "universalIdentifier": "20202020-fff0-4b44-be82-bda313884400",
+                        "nameSingular": "noteTarget",
+                        "namePlural": "noteTargets",
+                        "isCustom": false,
+                        "isActive": true,
+                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                        "labelSingular": "Note Target",
+                        "labelPlural": "Note Targets",
+                        "fields": {
+                            "edges": [
+                                {
+                                    "node": {
+                                        "id": "c193998f-15c5-4f94-b203-2ce7d28d8449",
+                                        "universalIdentifier": "082f7c9e-5ccd-4056-8748-a428f65fa6f6",
+                                        "name": "position",
+                                        "label": "Position",
+                                        "type": "POSITION",
+                                        "isCustom": false,
+                                        "isActive": true,
+                                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                                        "options": null,
+                                        "settings": null,
+                                        "defaultValue": 0
+                                    }
+                                },
+                                {
+                                    "node": {
+                                        "id": "09f91c69-2fc4-474a-b1ce-3181bf53827d",
+                                        "universalIdentifier": "0cc32d0f-99ab-4fee-bf66-9e84bc8bce00",
+                                        "name": "searchVector",
+                                        "label": "Search vector",
+                                        "type": "TS_VECTOR",
+                                        "isCustom": false,
+                                        "isActive": true,
+                                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                                        "options": null,
+                                        "settings": null,
+                                        "defaultValue": null
+                                    }
+                                },
+                                {
+                                    "node": {
+                                        "id": "44135961-2552-4a66-bba1-80f21b6d9b12",
+                                        "universalIdentifier": "1f6f5e22-8a4a-56ff-814e-fc98ae7a15ad",
+                                        "name": "targetEmailMessage",
+                                        "label": "EmailMessage",
+                                        "type": "MORPH_RELATION",
+                                        "isCustom": true,
+                                        "isActive": true,
+                                        "applicationId": "b7ad46a7-1784-4fab-9f09-9eed6eedb0bf",
+                                        "options": null,
+                                        "settings": {
+                                            "onDelete": "SET_NULL",
+                                            "relationType": "MANY_TO_ONE",
+                                            "joinColumnName": "targetEmailMessageId"
+                                        },
+                                        "defaultValue": null
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "node": {
+                        "id": "b66686c4-e9e0-4df3-8665-9bf2f63bb8d3",
+                        "universalIdentifier": "20202020-b374-4779-a561-80086cb2e17f",
+                        "nameSingular": "company",
+                        "namePlural": "companies",
+                        "isCustom": false,
+                        "isActive": true,
+                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                        "labelSingular": "Company",
+                        "labelPlural": "Companies",
+                        "fields": {
+                            "edges": [
+                                {
+                                    "node": {
+                                        "id": "57b5fb40-3647-4568-9f49-d387263d680b",
+                                        "universalIdentifier": "17ae291c-604a-424b-9faf-adc7c7e77df1",
+                                        "name": "creditStatus",
+                                        "label": "Credit Status",
+                                        "type": "SELECT",
+                                        "isCustom": true,
+                                        "isActive": false,
+                                        "applicationId": "b7ad46a7-1784-4fab-9f09-9eed6eedb0bf",
+                                        "options": [
+                                            {
+                                                "id": "0a20ac9c-30c1-4009-9194-259cd3bb9489",
+                                                "color": "green",
+                                                "label": "Good",
+                                                "value": "GOOD",
+                                                "position": 0
+                                            },
+                                            {
+                                                "id": "8526e190-f468-4852-9fa3-a63f467162a2",
+                                                "color": "yellow",
+                                                "label": "Watch",
+                                                "value": "WATCH",
+                                                "position": 1
+                                            },
+                                            {
+                                                "id": "99cfe30a-5932-4498-a45c-c797b4b28875",
+                                                "color": "red",
+                                                "label": "Hold",
+                                                "value": "HOLD",
+                                                "position": 2
+                                            }
+                                        ],
+                                        "settings": null,
+                                        "defaultValue": null
+                                    }
+                                },
+                                {
+                                    "node": {
+                                        "id": "ec522135-170d-46a9-a65e-441256baec75",
+                                        "universalIdentifier": "20202020-0414-4daf-9c0d-64fe7b27f89f",
+                                        "name": "timelineActivities",
+                                        "label": "Timeline Activities",
+                                        "type": "RELATION",
+                                        "isCustom": false,
+                                        "isActive": true,
+                                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                                        "options": null,
+                                        "settings": {
+                                            "relationType": "ONE_TO_MANY"
+                                        },
+                                        "defaultValue": null
+                                    }
+                                },
+                                {
+                                    "node": {
+                                        "id": "4c8f9b30-5a1c-4db8-89bc-13df5720b561",
+                                        "universalIdentifier": "20202020-0c28-43d8-8ba5-3659924d3489",
+                                        "name": "domainName",
+                                        "label": "Domain Name",
+                                        "type": "LINKS",
+                                        "isCustom": false,
+                                        "isActive": true,
+                                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                                        "options": null,
+                                        "settings": {
+                                            "maxNumberOfValues": 1
+                                        },
+                                        "defaultValue": null
+                                    }
+                                },
+                                {
+                                    "node": {
+                                        "id": "37e07c01-5eb9-4e5e-8007-9b5713896876",
+                                        "universalIdentifier": "20202020-3213-4ddf-9494-6422bcff8d7c",
+                                        "name": "people",
+                                        "label": "People",
+                                        "type": "RELATION",
+                                        "isCustom": false,
+                                        "isActive": true,
+                                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                                        "options": null,
+                                        "settings": {
+                                            "relationType": "ONE_TO_MANY"
+                                        },
+                                        "defaultValue": null
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "node": {
+                        "id": "aa69a65c-4bcd-4672-9dde-134d35328154",
+                        "universalIdentifier": "20202020-a1b0-40b0-8ab0-5b6c7d8e9f0a",
+                        "nameSingular": "messageChannelMessageAssociationMessageFolder",
+                        "namePlural": "messageChannelMessageAssociationMessageFolders",
+                        "isCustom": false,
+                        "isActive": true,
+                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                        "labelSingular": "Message Channel Message Association Message Folder",
+                        "labelPlural": "Message Channel Message Association Message Folders",
+                        "fields": {
+                            "edges": [
+                                {
+                                    "node": {
+                                        "id": "30b143dc-fc75-4de5-8711-96a166685405",
+                                        "universalIdentifier": "107d13dc-a8ff-493c-8d04-72688c68f8c1",
+                                        "name": "updatedBy",
+                                        "label": "Updated by",
+                                        "type": "ACTOR",
+                                        "isCustom": false,
+                                        "isActive": true,
+                                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                                        "options": null,
+                                        "settings": null,
+                                        "defaultValue": {
+                                            "name": "'System'",
+                                            "source": "'MANUAL'",
+                                            "workspaceMemberId": null
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "node": {
+                        "id": "a5f9d91e-c0eb-4c17-8c7a-f2703290fdce",
+                        "universalIdentifier": "20202020-3319-4234-a34c-7f3b9d2e4d1f",
+                        "nameSingular": "workflowAutomatedTrigger",
+                        "namePlural": "workflowAutomatedTriggers",
+                        "isCustom": false,
+                        "isActive": true,
+                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                        "labelSingular": "Workflow Automated Trigger",
+                        "labelPlural": "Workflow Automated Triggers",
+                        "fields": {
+                            "edges": [
+                                {
+                                    "node": {
+                                        "id": "fd4a8bed-80f7-4545-aeb3-3ae07f35eb42",
+                                        "universalIdentifier": "017d3587-98bd-43ad-b5a6-cb8125105641",
+                                        "name": "updatedBy",
+                                        "label": "Updated by",
+                                        "type": "ACTOR",
+                                        "isCustom": false,
+                                        "isActive": true,
+                                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                                        "options": null,
+                                        "settings": null,
+                                        "defaultValue": {
+                                            "name": "'System'",
+                                            "source": "'MANUAL'",
+                                            "workspaceMemberId": null
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "node": {
+                        "id": "a22dfca0-dafa-47e1-b549-979d1046792b",
+                        "universalIdentifier": "20202020-e8f2-40e1-a39c-c0e0039c5034",
+                        "nameSingular": "calendarChannel",
+                        "namePlural": "calendarChannels",
+                        "isCustom": false,
+                        "isActive": true,
+                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                        "labelSingular": "Calendar Channel",
+                        "labelPlural": "Calendar Channels",
+                        "fields": {
+                            "edges": [
+                                {
+                                    "node": {
+                                        "id": "ad64bd19-e0a4-4bb3-b7e6-591b363b5cdc",
+                                        "universalIdentifier": "20202020-1b07-4796-9f01-d626bab7ca4d",
+                                        "name": "visibility",
+                                        "label": "Visibility",
+                                        "type": "SELECT",
+                                        "isCustom": false,
+                                        "isActive": true,
+                                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                                        "options": [
+                                            {
+                                                "id": "20202020-82a0-4859-b356-f5a1d6e3e53d",
+                                                "color": "green",
+                                                "label": "Metadata",
+                                                "value": "METADATA",
+                                                "position": 0
+                                            },
+                                            {
+                                                "id": "20202020-e5ec-4df5-ba3f-66ca2a79c283",
+                                                "color": "orange",
+                                                "label": "Share Everything",
+                                                "value": "SHARE_EVERYTHING",
+                                                "position": 1
+                                            }
+                                        ],
+                                        "settings": null,
+                                        "defaultValue": "'SHARE_EVERYTHING'"
+                                    }
+                                },
+                                {
+                                    "node": {
+                                        "id": "afaeee98-274d-4c04-a843-6fc5f1d710dd",
+                                        "universalIdentifier": "20202020-1d08-420a-9aa7-22e0f298232d",
+                                        "name": "handle",
+                                        "label": "Handle",
+                                        "type": "TEXT",
+                                        "isCustom": false,
+                                        "isActive": true,
+                                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                                        "options": null,
+                                        "settings": null,
+                                        "defaultValue": null
+                                    }
+                                },
+                                {
+                                    "node": {
+                                        "id": "10bbcb20-6027-4ac8-a25e-225cafb762a5",
+                                        "universalIdentifier": "20202020-2ff5-4f70-953a-3d0d36357576",
+                                        "name": "syncedAt",
+                                        "label": "Last sync date",
+                                        "type": "DATE_TIME",
+                                        "isCustom": false,
+                                        "isActive": true,
+                                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                                        "options": null,
+                                        "settings": null,
+                                        "defaultValue": null
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "node": {
+                        "id": "a221ba07-844e-43ed-9966-18139659e6e6",
+                        "universalIdentifier": "20202020-3319-4234-a34c-82d5c0e881a6",
+                        "nameSingular": "workspaceMember",
+                        "namePlural": "workspaceMembers",
+                        "isCustom": false,
+                        "isActive": true,
+                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                        "labelSingular": "Workspace Member",
+                        "labelPlural": "Workspace Members",
+                        "fields": {
+                            "edges": [
+                                {
+                                    "node": {
+                                        "id": "6957444b-4d52-4908-b013-aad87ab0afed",
+                                        "universalIdentifier": "20202020-0ced-4c4f-a376-c98a966af3f6",
+                                        "name": "avatarUrl",
+                                        "label": "Avatar Url",
+                                        "type": "TEXT",
+                                        "isCustom": false,
+                                        "isActive": true,
+                                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                                        "options": null,
+                                        "settings": null,
+                                        "defaultValue": null
+                                    }
+                                },
+                                {
+                                    "node": {
+                                        "id": "d197e2fe-f187-4285-8ab1-67fe30a3b233",
+                                        "universalIdentifier": "20202020-0dbc-4841-9ce1-3e793b5b3512",
+                                        "name": "calendarEventParticipants",
+                                        "label": "Calendar Event Participants",
+                                        "type": "RELATION",
+                                        "isCustom": false,
+                                        "isActive": true,
+                                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                                        "options": null,
+                                        "settings": {
+                                            "relationType": "ONE_TO_MANY"
+                                        },
+                                        "defaultValue": null
+                                    }
+                                },
+                                {
+                                    "node": {
+                                        "id": "87cd3b73-5aae-428e-8059-87d2ee43a236",
+                                        "universalIdentifier": "20202020-1810-4591-a93c-d0df97dca843",
+                                        "name": "position",
+                                        "label": "Position",
+                                        "type": "POSITION",
+                                        "isCustom": false,
+                                        "isActive": true,
+                                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                                        "options": null,
+                                        "settings": null,
+                                        "defaultValue": 0
+                                    }
+                                },
+                                {
+                                    "node": {
+                                        "id": "dc820f52-d5f8-465f-a2c7-fde578cdbf5e",
+                                        "universalIdentifier": "20202020-1ecc-4562-84c9-ff3a2f6cce85",
+                                        "name": "calendarStartDay",
+                                        "label": "Start of the week",
+                                        "type": "NUMBER",
+                                        "isCustom": false,
+                                        "isActive": true,
+                                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                                        "options": null,
+                                        "settings": {
+                                            "dataType": "int"
+                                        },
+                                        "defaultValue": 7
+                                    }
+                                },
+                                {
+                                    "node": {
+                                        "id": "860dae96-029f-41fd-8117-fd497e675cf2",
+                                        "universalIdentifier": "20202020-2d33-4c21-a86e-5943b050dd54",
+                                        "name": "timeZone",
+                                        "label": "Time zone",
+                                        "type": "TEXT",
+                                        "isCustom": false,
+                                        "isActive": true,
+                                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                                        "options": null,
+                                        "settings": null,
+                                        "defaultValue": "'system'"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "node": {
+                        "id": "98370c7f-f4aa-4a48-b4a4-7fc5a0a113b4",
+                        "universalIdentifier": "20202020-a1c3-47a6-9732-27e5b1e8436d",
+                        "nameSingular": "calendarEventParticipant",
+                        "namePlural": "calendarEventParticipants",
+                        "isCustom": false,
+                        "isActive": true,
+                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                        "labelSingular": "Calendar event participant",
+                        "labelPlural": "Calendar event participants",
+                        "fields": {
+                            "edges": [
+                                {
+                                    "node": {
+                                        "id": "a740c288-ca48-4f09-a468-158d65a45e6f",
+                                        "universalIdentifier": "20202020-20e4-4591-93ed-aeb17a4dcbd2",
+                                        "name": "workspaceMember",
+                                        "label": "Workspace Member",
+                                        "type": "RELATION",
+                                        "isCustom": false,
+                                        "isActive": true,
+                                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                                        "options": null,
+                                        "settings": {
+                                            "onDelete": "SET_NULL",
+                                            "relationType": "MANY_TO_ONE",
+                                            "joinColumnName": "workspaceMemberId"
+                                        },
+                                        "defaultValue": null
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "node": {
+                        "id": "8f05aacc-53d0-4696-9502-f0e9574bab0d",
+                        "universalIdentifier": "20202020-bd3d-4c60-8dca-571c71d4447a",
+                        "nameSingular": "attachment",
+                        "namePlural": "attachments",
+                        "isCustom": false,
+                        "isActive": true,
+                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                        "labelSingular": "Attachment",
+                        "labelPlural": "Attachments",
+                        "fields": {
+                            "edges": [
+                                {
+                                    "node": {
+                                        "id": "c2dc7915-9763-44f1-a9d6-3d0bb82c9f90",
+                                        "universalIdentifier": "00511308-1baf-5425-ae2f-3a1b74485c73",
+                                        "name": "targetLicensorApprovalThread",
+                                        "label": "LicensorApprovalThread",
+                                        "type": "MORPH_RELATION",
+                                        "isCustom": true,
+                                        "isActive": true,
+                                        "applicationId": "b7ad46a7-1784-4fab-9f09-9eed6eedb0bf",
+                                        "options": null,
+                                        "settings": {
+                                            "onDelete": "SET_NULL",
+                                            "relationType": "MANY_TO_ONE",
+                                            "joinColumnName": "targetLicensorApprovalThreadId"
+                                        },
+                                        "defaultValue": null
+                                    }
+                                },
+                                {
+                                    "node": {
+                                        "id": "803e21d5-d8a6-48ae-ac63-d869dd461d3c",
+                                        "universalIdentifier": "0a732954-089f-54ab-9cee-15ebda168d5d",
+                                        "name": "targetDepartment",
+                                        "label": "Department",
+                                        "type": "MORPH_RELATION",
+                                        "isCustom": true,
+                                        "isActive": true,
+                                        "applicationId": "b7ad46a7-1784-4fab-9f09-9eed6eedb0bf",
+                                        "options": null,
+                                        "settings": {
+                                            "onDelete": "SET_NULL",
+                                            "relationType": "MANY_TO_ONE",
+                                            "joinColumnName": "targetDepartmentId"
+                                        },
+                                        "defaultValue": null
+                                    }
+                                },
+                                {
+                                    "node": {
+                                        "id": "edd3e360-e663-4647-b66a-b1fc1834dcab",
+                                        "universalIdentifier": "1577aadb-6e48-4163-896b-6e660813a62e",
+                                        "name": "targetIgnoreRule",
+                                        "label": "IgnoreRule",
+                                        "type": "MORPH_RELATION",
+                                        "isCustom": true,
+                                        "isActive": true,
+                                        "applicationId": "f99617d1-aa3d-4009-8211-53a7b747f5f2",
+                                        "options": null,
+                                        "settings": {
+                                            "onDelete": "SET_NULL",
+                                            "relationType": "MANY_TO_ONE",
+                                            "joinColumnName": "targetIgnoreRuleId"
+                                        },
+                                        "defaultValue": null
+                                    }
+                                },
+                                {
+                                    "node": {
+                                        "id": "2d43b7eb-ceee-41ee-93d6-dea5c30a905a",
+                                        "universalIdentifier": "20202020-0158-4aa2-965c-5cdafe21ffa2",
+                                        "name": "targetPerson",
+                                        "label": "Target",
+                                        "type": "MORPH_RELATION",
+                                        "isCustom": false,
+                                        "isActive": true,
+                                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                                        "options": null,
+                                        "settings": {
+                                            "onDelete": "CASCADE",
+                                            "relationType": "MANY_TO_ONE",
+                                            "joinColumnName": "targetPersonId"
+                                        },
+                                        "defaultValue": null
+                                    }
+                                },
+                                {
+                                    "node": {
+                                        "id": "beca4063-9e09-451b-a815-4dfc88cbbdfa",
+                                        "universalIdentifier": "20202020-0d19-453d-8e8d-fbcda8ca3747",
+                                        "name": "fullPath",
+                                        "label": "Full path",
+                                        "type": "TEXT",
+                                        "isCustom": false,
+                                        "isActive": true,
+                                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                                        "options": null,
+                                        "settings": null,
+                                        "defaultValue": null
+                                    }
+                                },
+                                {
+                                    "node": {
+                                        "id": "a33cce56-342a-4cf1-8ac9-5090f6592411",
+                                        "universalIdentifier": "20202020-15db-460e-8166-c7b5d87ad4be",
+                                        "name": "file",
+                                        "label": "File",
+                                        "type": "FILES",
+                                        "isCustom": false,
+                                        "isActive": true,
+                                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                                        "options": null,
+                                        "settings": {
+                                            "maxNumberOfValues": 1
+                                        },
+                                        "defaultValue": null
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "node": {
+                        "id": "809a9fbd-43b6-4a74-98ed-7de63edd84ea",
+                        "universalIdentifier": "20202020-ad1e-4127-bccb-d83ae04d2ccb",
+                        "nameSingular": "messageChannelMessageAssociation",
+                        "namePlural": "messageChannelMessageAssociations",
+                        "isCustom": false,
+                        "isActive": true,
+                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                        "labelSingular": "Message Channel Message Association",
+                        "labelPlural": "Message Channel Message Associations",
+                        "fields": {
+                            "edges": []
+                        }
+                    }
+                },
+                {
+                    "node": {
+                        "id": "7df39021-e21d-4f80-9349-a046bc771b28",
+                        "universalIdentifier": "20202020-0408-4f38-b8a8-4d5e3e26e24d",
+                        "nameSingular": "blocklist",
+                        "namePlural": "blocklists",
+                        "isCustom": false,
+                        "isActive": true,
+                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                        "labelSingular": "Blocklist",
+                        "labelPlural": "Blocklists",
+                        "fields": {
+                            "edges": [
+                                {
+                                    "node": {
+                                        "id": "7a0b9449-3675-4afc-8115-f5a5e2a99a25",
+                                        "universalIdentifier": "11aaa404-f04b-421d-a451-c453bf77cc78",
+                                        "name": "updatedBy",
+                                        "label": "Updated by",
+                                        "type": "ACTOR",
+                                        "isCustom": false,
+                                        "isActive": true,
+                                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                                        "options": null,
+                                        "settings": null,
+                                        "defaultValue": {
+                                            "name": "'System'",
+                                            "source": "'MANUAL'",
+                                            "workspaceMemberId": null
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "node": {
+                        "id": "7c16ce3f-8c36-4c81-b4a7-50b067a63aff",
+                        "universalIdentifier": "c0baf376-8e17-4d5b-b31a-39122aae9db5",
+                        "nameSingular": "ignoreRule",
+                        "namePlural": "ignoreRules",
+                        "isCustom": true,
+                        "isActive": true,
+                        "applicationId": "f99617d1-aa3d-4009-8211-53a7b747f5f2",
+                        "labelSingular": "Ignore Rule",
+                        "labelPlural": "Ignore Rules",
+                        "fields": {
+                            "edges": [
+                                {
+                                    "node": {
+                                        "id": "08649a35-c213-4c52-8248-f97f1af4abd7",
+                                        "universalIdentifier": "0a4bd5e0-d572-4eb7-9d5e-c3fb2ec13d04",
+                                        "name": "updatedBy",
+                                        "label": "Updated by",
+                                        "type": "ACTOR",
+                                        "isCustom": false,
+                                        "isActive": true,
+                                        "applicationId": "f99617d1-aa3d-4009-8211-53a7b747f5f2",
+                                        "options": null,
+                                        "settings": null,
+                                        "defaultValue": {
+                                            "name": "''",
+                                            "source": "'MANUAL'"
+                                        }
+                                    }
+                                },
+                                {
+                                    "node": {
+                                        "id": "c186336b-fb12-4693-b68c-156fe92c72a1",
+                                        "universalIdentifier": "0b503a9b-5a08-4d3c-8b93-f37108dd5734",
+                                        "name": "createdBy",
+                                        "label": "Created by",
+                                        "type": "ACTOR",
+                                        "isCustom": false,
+                                        "isActive": true,
+                                        "applicationId": "f99617d1-aa3d-4009-8211-53a7b747f5f2",
+                                        "options": null,
+                                        "settings": null,
+                                        "defaultValue": {
+                                            "name": "''",
+                                            "source": "'MANUAL'"
+                                        }
+                                    }
+                                },
+                                {
+                                    "node": {
+                                        "id": "3f357636-af83-4ac9-8d40-4476eada00c6",
+                                        "universalIdentifier": "0b6a0cbd-e640-45dc-a018-ee18fdbb6ca4",
+                                        "name": "matchType",
+                                        "label": "Match Type",
+                                        "type": "SELECT",
+                                        "isCustom": true,
+                                        "isActive": true,
+                                        "applicationId": "f99617d1-aa3d-4009-8211-53a7b747f5f2",
+                                        "options": [
+                                            {
+                                                "id": "2e501d39-c9aa-4469-9c01-53268838b556",
+                                                "color": "blue",
+                                                "label": "Contains",
+                                                "value": "CONTAINS",
+                                                "position": 0
+                                            },
+                                            {
+                                                "id": "13ddfa50-72da-46c4-b4ff-eb25e0ae4211",
+                                                "color": "green",
+                                                "label": "Exact Match",
+                                                "value": "EXACT",
+                                                "position": 1
+                                            },
+                                            {
+                                                "id": "eae4afef-5800-45e8-8ccf-1fe70fcc0cb9",
+                                                "color": "purple",
+                                                "label": "Starts With",
+                                                "value": "STARTS_WITH",
+                                                "position": 2
+                                            }
+                                        ],
+                                        "settings": null,
+                                        "defaultValue": "'CONTAINS'"
+                                    }
+                                },
+                                {
+                                    "node": {
+                                        "id": "50a0abed-3a35-4785-83f2-22f59e7c6f0f",
+                                        "universalIdentifier": "1eba8567-baef-4d14-8521-6934bba4d7e3",
+                                        "name": "position",
+                                        "label": "Position",
+                                        "type": "POSITION",
+                                        "isCustom": false,
+                                        "isActive": true,
+                                        "applicationId": "f99617d1-aa3d-4009-8211-53a7b747f5f2",
+                                        "options": null,
+                                        "settings": null,
+                                        "defaultValue": 0
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "node": {
+                        "id": "79d7c675-855c-45fa-b3fc-35a72f6c2b53",
+                        "universalIdentifier": "20202020-fe8c-40bc-a681-b80b771449b7",
+                        "nameSingular": "messageChannel",
+                        "namePlural": "messageChannels",
+                        "isCustom": false,
+                        "isActive": true,
+                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                        "labelSingular": "Message Channel",
+                        "labelPlural": "Message Channels",
+                        "fields": {
+                            "edges": [
+                                {
+                                    "node": {
+                                        "id": "3f063852-8927-49c6-a018-255f57a74ff3",
+                                        "universalIdentifier": "20202020-0291-42be-9ad0-d578a51684ab",
+                                        "name": "throttleFailureCount",
+                                        "label": "Throttle Failure Count",
+                                        "type": "NUMBER",
+                                        "isCustom": false,
+                                        "isActive": true,
+                                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                                        "options": null,
+                                        "settings": null,
+                                        "defaultValue": 0
+                                    }
+                                },
+                                {
+                                    "node": {
+                                        "id": "893397ed-060f-4620-ba68-d0d798898dbe",
+                                        "universalIdentifier": "20202020-17c5-4e9f-bc50-af46a89fdd42",
+                                        "name": "pendingGroupEmailsAction",
+                                        "label": "Pending group emails action",
+                                        "type": "SELECT",
+                                        "isCustom": false,
+                                        "isActive": true,
+                                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                                        "options": [
+                                            {
+                                                "id": "20202020-2ead-4bd1-aa5d-5005c7a956b4",
+                                                "color": "red",
+                                                "label": "Group emails deletion",
+                                                "value": "GROUP_EMAILS_DELETION",
+                                                "position": 0
+                                            },
+                                            {
+                                                "id": "20202020-155d-447d-a36e-6ecbb30fc37c",
+                                                "color": "green",
+                                                "label": "Group emails import",
+                                                "value": "GROUP_EMAILS_IMPORT",
+                                                "position": 1
+                                            },
+                                            {
+                                                "id": "20202020-fe98-4018-9f94-f878c22b8ece",
+                                                "color": "blue",
+                                                "label": "None",
+                                                "value": "NONE",
+                                                "position": 2
+                                            }
+                                        ],
+                                        "settings": null,
+                                        "defaultValue": "'NONE'"
+                                    }
+                                },
+                                {
+                                    "node": {
+                                        "id": "98052200-1462-46a9-bcf3-b3a97e1c94b4",
+                                        "universalIdentifier": "20202020-1df5-445d-b4f3-2413ad178431",
+                                        "name": "excludeNonProfessionalEmails",
+                                        "label": "Exclude non professional emails",
+                                        "type": "BOOLEAN",
+                                        "isCustom": false,
+                                        "isActive": true,
+                                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                                        "options": null,
+                                        "settings": null,
+                                        "defaultValue": true
+                                    }
+                                },
+                                {
+                                    "node": {
+                                        "id": "e20dfe92-fd6b-47f5-8032-e7aae2ce089b",
+                                        "universalIdentifier": "20202020-263d-4c6b-ad51-137ada56f7d4",
+                                        "name": "syncedAt",
+                                        "label": "Last sync date",
+                                        "type": "DATE_TIME",
+                                        "isCustom": false,
+                                        "isActive": true,
+                                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                                        "options": null,
+                                        "settings": null,
+                                        "defaultValue": null
+                                    }
+                                },
+                                {
+                                    "node": {
+                                        "id": "6f847e58-2df8-4af3-8065-df35d7431a22",
+                                        "universalIdentifier": "20202020-2c96-43c3-93e3-ed6b1acb69bc",
+                                        "name": "handle",
+                                        "label": "Handle",
+                                        "type": "TEXT",
+                                        "isCustom": false,
+                                        "isActive": true,
+                                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                                        "options": null,
+                                        "settings": null,
+                                        "defaultValue": null
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "node": {
+                        "id": "76e2c6fd-aa39-418a-a5d7-6114c694128f",
+                        "universalIdentifier": "20202020-4e28-4e95-a9d7-6c00874f843c",
+                        "nameSingular": "workflowRun",
+                        "namePlural": "workflowRuns",
+                        "isCustom": false,
+                        "isActive": true,
+                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                        "labelSingular": "Workflow Run",
+                        "labelPlural": "Workflow Runs",
+                        "fields": {
+                            "edges": [
+                                {
+                                    "node": {
+                                        "id": "83ea9835-917f-423d-ab57-033c58b1852f",
+                                        "universalIdentifier": "20202020-0b91-4ded-b1ac-cbd5efa58cb9",
+                                        "name": "searchVector",
+                                        "label": "Search vector",
+                                        "type": "TS_VECTOR",
+                                        "isCustom": false,
+                                        "isActive": true,
+                                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                                        "options": null,
+                                        "settings": {
+                                            "asExpression": "to_tsvector('simple', COALESCE(public.unaccent_immutable(\"name\"), ''))",
+                                            "generatedType": "STORED"
+                                        },
+                                        "defaultValue": null
+                                    }
+                                },
+                                {
+                                    "node": {
+                                        "id": "c7f9910f-1ea4-49d8-b878-df0f4e19878a",
+                                        "universalIdentifier": "20202020-189c-478a-b867-d72feaf5926a",
+                                        "name": "context",
+                                        "label": "Context",
+                                        "type": "RAW_JSON",
+                                        "isCustom": false,
+                                        "isActive": true,
+                                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                                        "options": null,
+                                        "settings": null,
+                                        "defaultValue": null
+                                    }
+                                },
+                                {
+                                    "node": {
+                                        "id": "3fd429e4-b019-4783-9733-5ca91727e106",
+                                        "universalIdentifier": "20202020-2f52-4ba8-8dc4-d0d6adb9578d",
+                                        "name": "workflowVersion",
+                                        "label": "Workflow version",
+                                        "type": "RELATION",
+                                        "isCustom": false,
+                                        "isActive": true,
+                                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                                        "options": null,
+                                        "settings": {
+                                            "onDelete": "SET_NULL",
+                                            "relationType": "MANY_TO_ONE",
+                                            "joinColumnName": "workflowVersionId"
+                                        },
+                                        "defaultValue": null
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "node": {
+                        "id": "7605dc65-86ea-41f3-8c75-109bc4793012",
+                        "universalIdentifier": "20202020-8f1d-4eef-9f85-0d1965e27221",
+                        "nameSingular": "calendarEvent",
+                        "namePlural": "calendarEvents",
+                        "isCustom": false,
+                        "isActive": true,
+                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                        "labelSingular": "Calendar event",
+                        "labelPlural": "Calendar events",
+                        "fields": {
+                            "edges": [
+                                {
+                                    "node": {
+                                        "id": "c5e86c40-5665-457b-b277-57ca68f94498",
+                                        "universalIdentifier": "1081c196-d675-4801-b9e1-7d8637b48eab",
+                                        "name": "updatedBy",
+                                        "label": "Updated by",
+                                        "type": "ACTOR",
+                                        "isCustom": false,
+                                        "isActive": true,
+                                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                                        "options": null,
+                                        "settings": null,
+                                        "defaultValue": {
+                                            "name": "'System'",
+                                            "source": "'MANUAL'",
+                                            "workspaceMemberId": null
+                                        }
+                                    }
+                                },
+                                {
+                                    "node": {
+                                        "id": "b0e0be04-6d90-44ac-91f5-68267294b605",
+                                        "universalIdentifier": "20202020-080e-49d1-b21d-9702a7e2525c",
+                                        "name": "title",
+                                        "label": "Title",
+                                        "type": "TEXT",
+                                        "isCustom": false,
+                                        "isActive": true,
+                                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                                        "options": null,
+                                        "settings": null,
+                                        "defaultValue": null
+                                    }
+                                },
+                                {
+                                    "node": {
+                                        "id": "0e17ed97-cb5c-4ac9-b94d-f713a03058e2",
+                                        "universalIdentifier": "20202020-1c3f-4b5a-b526-5411a82179eb",
+                                        "name": "conferenceSolution",
+                                        "label": "Conference Solution",
+                                        "type": "TEXT",
+                                        "isCustom": false,
+                                        "isActive": true,
+                                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                                        "options": null,
+                                        "settings": null,
+                                        "defaultValue": null
+                                    }
+                                },
+                                {
+                                    "node": {
+                                        "id": "170a8f71-0865-4d12-aa3f-71c6c3a95e57",
+                                        "universalIdentifier": "20202020-2554-4ee1-a617-17907f6bab21",
+                                        "name": "endsAt",
+                                        "label": "End Date",
+                                        "type": "DATE_TIME",
+                                        "isCustom": false,
+                                        "isActive": true,
+                                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                                        "options": null,
+                                        "settings": null,
+                                        "defaultValue": null
+                                    }
+                                },
+                                {
+                                    "node": {
+                                        "id": "358783fe-2440-48c5-86e1-f3b89ded3929",
+                                        "universalIdentifier": "20202020-2c57-4c75-93c5-2ac950a6ed67",
+                                        "name": "startsAt",
+                                        "label": "Start Date",
+                                        "type": "DATE_TIME",
+                                        "isCustom": false,
+                                        "isActive": true,
+                                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                                        "options": null,
+                                        "settings": null,
+                                        "defaultValue": null
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "node": {
+                        "id": "73407588-ac2c-48c1-9438-13804732f3f4",
+                        "universalIdentifier": "3b6c3623-dce6-4ae4-91a4-c212e5e9efe2",
+                        "nameSingular": "aiModelConfig",
+                        "namePlural": "aiModelConfigs",
+                        "isCustom": true,
+                        "isActive": true,
+                        "applicationId": "b7ad46a7-1784-4fab-9f09-9eed6eedb0bf",
+                        "labelSingular": "AI Model Config",
+                        "labelPlural": "AI Model Configs",
+                        "fields": {
+                            "edges": [
+                                {
+                                    "node": {
+                                        "id": "0655274a-e891-449c-85ed-4247ff2be677",
+                                        "universalIdentifier": "13078569-cd5a-5cff-9de5-0efc5e4d074d",
+                                        "name": "noteTargets",
+                                        "label": "Note Targets",
+                                        "type": "RELATION",
+                                        "isCustom": true,
+                                        "isActive": true,
+                                        "applicationId": "b7ad46a7-1784-4fab-9f09-9eed6eedb0bf",
+                                        "options": null,
+                                        "settings": {
+                                            "relationType": "ONE_TO_MANY"
+                                        },
+                                        "defaultValue": null
+                                    }
+                                },
+                                {
+                                    "node": {
+                                        "id": "8cf61d86-4f4b-42d2-a44a-11baf95a60c3",
+                                        "universalIdentifier": "14bdde9a-3fe9-5a9c-9653-b783787e6d21",
+                                        "name": "timelineActivities",
+                                        "label": "Timeline Activities",
+                                        "type": "RELATION",
+                                        "isCustom": true,
+                                        "isActive": true,
+                                        "applicationId": "b7ad46a7-1784-4fab-9f09-9eed6eedb0bf",
+                                        "options": null,
+                                        "settings": {
+                                            "relationType": "ONE_TO_MANY"
+                                        },
+                                        "defaultValue": null
+                                    }
+                                },
+                                {
+                                    "node": {
+                                        "id": "ba36f66c-955e-4caf-a377-239a8bb3653e",
+                                        "universalIdentifier": "1bf2ce6e-34b0-5b73-8406-e50f43d4fcd2",
+                                        "name": "attachments",
+                                        "label": "Attachments",
+                                        "type": "RELATION",
+                                        "isCustom": true,
+                                        "isActive": true,
+                                        "applicationId": "b7ad46a7-1784-4fab-9f09-9eed6eedb0bf",
+                                        "options": null,
+                                        "settings": {
+                                            "relationType": "ONE_TO_MANY"
+                                        },
+                                        "defaultValue": null
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "node": {
+                        "id": "59cfafd8-befe-42f3-8bf9-2c450c12d369",
+                        "universalIdentifier": "20202020-e674-48e5-a542-72570eee7213",
+                        "nameSingular": "person",
+                        "namePlural": "people",
+                        "isCustom": false,
+                        "isActive": true,
+                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                        "labelSingular": "Person",
+                        "labelPlural": "People",
+                        "fields": {
+                            "edges": [
+                                {
+                                    "node": {
+                                        "id": "2c7b1194-bed1-4099-99fc-2ec91409f1e1",
+                                        "universalIdentifier": "19301d41-9b9d-42d3-ab7c-026569b39f1e",
+                                        "name": "meetingNotes",
+                                        "label": "Meeting Notes",
+                                        "type": "RELATION",
+                                        "isCustom": true,
+                                        "isActive": true,
+                                        "applicationId": "b7ad46a7-1784-4fab-9f09-9eed6eedb0bf",
+                                        "options": null,
+                                        "settings": {
+                                            "relationType": "ONE_TO_MANY"
+                                        },
+                                        "defaultValue": null
+                                    }
+                                },
+                                {
+                                    "node": {
+                                        "id": "7cb621e6-2660-4e48-bc62-8742e30fc222",
+                                        "universalIdentifier": "20202020-0638-448e-8825-439134618022",
+                                        "name": "phones",
+                                        "label": "Phones",
+                                        "type": "PHONES",
+                                        "isCustom": false,
+                                        "isActive": true,
+                                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                                        "options": null,
+                                        "settings": {
+                                            "maxNumberOfValues": 1
+                                        },
+                                        "defaultValue": null
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "node": {
+                        "id": "483c7abb-fc9b-4adb-b185-c6b90e2c2a30",
+                        "universalIdentifier": "20202020-1ba1-48ba-bc83-ef7e5990ed10",
+                        "nameSingular": "task",
+                        "namePlural": "tasks",
+                        "isCustom": false,
+                        "isActive": true,
+                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                        "labelSingular": "Task",
+                        "labelPlural": "Tasks",
+                        "fields": {
+                            "edges": [
+                                {
+                                    "node": {
+                                        "id": "faea65d2-f638-4c48-bd0a-f9a3300d855b",
+                                        "universalIdentifier": "20202020-065a-4f42-a906-e20422c1753f",
+                                        "name": "assignee",
+                                        "label": "Assignee",
+                                        "type": "RELATION",
+                                        "isCustom": false,
+                                        "isActive": true,
+                                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                                        "options": null,
+                                        "settings": {
+                                            "onDelete": "SET_NULL",
+                                            "relationType": "MANY_TO_ONE",
+                                            "joinColumnName": "assigneeId"
+                                        },
+                                        "defaultValue": null
+                                    }
+                                },
+                                {
+                                    "node": {
+                                        "id": "ea0a21e5-d607-4ef5-9939-2fc2531bf7b1",
+                                        "universalIdentifier": "20202020-1a04-48ab-a567-576965ae5387",
+                                        "name": "createdBy",
+                                        "label": "Created by",
+                                        "type": "ACTOR",
+                                        "isCustom": false,
+                                        "isActive": true,
+                                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                                        "options": null,
+                                        "settings": null,
+                                        "defaultValue": {
+                                            "name": "'System'",
+                                            "source": "'MANUAL'",
+                                            "workspaceMemberId": null
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "node": {
+                        "id": "3fa8b72b-996d-4f40-a8c9-7b601bfbbc51",
+                        "universalIdentifier": "c0233f86-fdb6-4a32-9693-6c6fb1d5e740",
+                        "nameSingular": "emailMessage",
+                        "namePlural": "emailMessages",
+                        "isCustom": true,
+                        "isActive": true,
+                        "applicationId": "b7ad46a7-1784-4fab-9f09-9eed6eedb0bf",
+                        "labelSingular": "Email Message",
+                        "labelPlural": "Email Messages",
+                        "fields": {
+                            "edges": [
+                                {
+                                    "node": {
+                                        "id": "b72f410f-dedd-4a5e-adab-ebbbf47f2368",
+                                        "universalIdentifier": "00860179-974b-4edc-a48d-22cb832af5ce",
+                                        "name": "receivedAt",
+                                        "label": "Received",
+                                        "type": "DATE",
+                                        "isCustom": true,
+                                        "isActive": true,
+                                        "applicationId": "b7ad46a7-1784-4fab-9f09-9eed6eedb0bf",
+                                        "options": null,
+                                        "settings": null,
+                                        "defaultValue": null
+                                    }
+                                },
+                                {
+                                    "node": {
+                                        "id": "222ac5fe-c852-498a-9e5a-591c2b4f0d33",
+                                        "universalIdentifier": "0c5b20cb-36e2-4b46-bcd5-c45401c4cb63",
+                                        "name": "subject",
+                                        "label": "Subject",
+                                        "type": "TEXT",
+                                        "isCustom": true,
+                                        "isActive": true,
+                                        "applicationId": "b7ad46a7-1784-4fab-9f09-9eed6eedb0bf",
+                                        "options": null,
+                                        "settings": null,
+                                        "defaultValue": null
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "node": {
+                        "id": "3f47e8c7-f7d6-4d41-b5d0-c5999feebcbc",
+                        "universalIdentifier": "20202020-4955-4fd9-8e59-2dbd373f2a46",
+                        "nameSingular": "messageFolder",
+                        "namePlural": "messageFolders",
+                        "isCustom": false,
+                        "isActive": true,
+                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                        "labelSingular": "Message Folder",
+                        "labelPlural": "Message Folders",
+                        "fields": {
+                            "edges": [
+                                {
+                                    "node": {
+                                        "id": "5d058272-7632-4d63-b896-4b4676c09371",
+                                        "universalIdentifier": "20202020-2af5-4a25-b2de-3c9386da941b",
+                                        "name": "isSentFolder",
+                                        "label": "Is Sent Folder",
+                                        "type": "BOOLEAN",
+                                        "isCustom": false,
+                                        "isActive": true,
+                                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                                        "options": null,
+                                        "settings": null,
+                                        "defaultValue": false
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "node": {
+                        "id": "39411826-fa43-4b73-a89c-631e418e91f8",
+                        "universalIdentifier": "20202020-849a-4c3e-84f5-a25a7d802271",
+                        "nameSingular": "messageThread",
+                        "namePlural": "messageThreads",
+                        "isCustom": false,
+                        "isActive": true,
+                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                        "labelSingular": "Message Thread",
+                        "labelPlural": "Message Threads",
+                        "fields": {
+                            "edges": [
+                                {
+                                    "node": {
+                                        "id": "132405ce-1a8a-4448-bc38-3572b63c8d5b",
+                                        "universalIdentifier": "20202020-3115-404f-aade-e1154b28e35a",
+                                        "name": "messages",
+                                        "label": "Messages",
+                                        "type": "RELATION",
+                                        "isCustom": false,
+                                        "isActive": true,
+                                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                                        "options": null,
+                                        "settings": {
+                                            "relationType": "ONE_TO_MANY"
+                                        },
+                                        "defaultValue": null
+                                    }
+                                },
+                                {
+                                    "node": {
+                                        "id": "1d665a64-8fb9-4fea-9491-70f372607df5",
+                                        "universalIdentifier": "20202020-314e-40a4-906d-a5d5d6c285f6",
+                                        "name": "messageChannelMessageAssociations",
+                                        "label": "Message Channel Association",
+                                        "type": "RELATION",
+                                        "isCustom": false,
+                                        "isActive": true,
+                                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                                        "options": null,
+                                        "settings": {
+                                            "relationType": "ONE_TO_MANY"
+                                        },
+                                        "defaultValue": null
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "node": {
+                        "id": "30e0fbc3-ee73-4a2b-a303-05f12f6b6ab7",
+                        "universalIdentifier": "78e3ad65-5495-461b-842e-672f1e10d78d",
+                        "nameSingular": "meetingNoteAttendee",
+                        "namePlural": "meetingNoteAttendees",
+                        "isCustom": true,
+                        "isActive": true,
+                        "applicationId": "f99617d1-aa3d-4009-8211-53a7b747f5f2",
+                        "labelSingular": "Meeting Attendee",
+                        "labelPlural": "Meeting Attendees",
+                        "fields": {
+                            "edges": [
+                                {
+                                    "node": {
+                                        "id": "d5073db3-506e-4e1c-afb1-e7aa084a6a45",
+                                        "universalIdentifier": "19b945c4-41a7-4803-a46c-02baceb6a50a",
+                                        "name": "updatedAt",
+                                        "label": "Last update",
+                                        "type": "DATE_TIME",
+                                        "isCustom": false,
+                                        "isActive": true,
+                                        "applicationId": "f99617d1-aa3d-4009-8211-53a7b747f5f2",
+                                        "options": null,
+                                        "settings": null,
+                                        "defaultValue": "now"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "node": {
+                        "id": "30792b38-3752-42ee-a485-dad05ef0ffb9",
+                        "universalIdentifier": "20202020-a433-4456-aa2d-fd9cb26b774a",
+                        "nameSingular": "messageParticipant",
+                        "namePlural": "messageParticipants",
+                        "isCustom": false,
+                        "isActive": true,
+                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                        "labelSingular": "Message Participant",
+                        "labelPlural": "Message Participants",
+                        "fields": {
+                            "edges": [
+                                {
+                                    "node": {
+                                        "id": "412531b7-f66f-458c-a7e8-efd74516ce5c",
+                                        "universalIdentifier": "20202020-2456-464e-b422-b965a4db4a0b",
+                                        "name": "handle",
+                                        "label": "Handle",
+                                        "type": "TEXT",
+                                        "isCustom": false,
+                                        "isActive": true,
+                                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                                        "options": null,
+                                        "settings": null,
+                                        "defaultValue": null
+                                    }
+                                },
+                                {
+                                    "node": {
+                                        "id": "f8a2ef3b-1101-45bb-995e-f341844bc243",
+                                        "universalIdentifier": "20202020-249d-4e0f-82cd-1b9df5cd3da2",
+                                        "name": "person",
+                                        "label": "Person",
+                                        "type": "RELATION",
+                                        "isCustom": false,
+                                        "isActive": true,
+                                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                                        "options": null,
+                                        "settings": {
+                                            "onDelete": "SET_NULL",
+                                            "relationType": "MANY_TO_ONE",
+                                            "joinColumnName": "personId"
+                                        },
+                                        "defaultValue": null
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "node": {
+                        "id": "2e688912-bf88-4456-882d-2e68a7b5a162",
+                        "universalIdentifier": "b654e699-2912-433f-93dd-c97d9a5bb7e1",
+                        "nameSingular": "licensorApprovalThread",
+                        "namePlural": "licensorApprovalThreads",
+                        "isCustom": true,
+                        "isActive": true,
+                        "applicationId": "b7ad46a7-1784-4fab-9f09-9eed6eedb0bf",
+                        "labelSingular": "Licensor Approval Thread",
+                        "labelPlural": "Licensor Approval Threads",
+                        "fields": {
+                            "edges": [
+                                {
+                                    "node": {
+                                        "id": "3f069e13-c7f5-4cc4-9ce7-7137073d7155",
+                                        "universalIdentifier": "19dacb5f-de6a-523f-a9a0-d1e60bdcdc37",
+                                        "name": "name",
+                                        "label": "Name",
+                                        "type": "TEXT",
+                                        "isCustom": true,
+                                        "isActive": true,
+                                        "applicationId": "b7ad46a7-1784-4fab-9f09-9eed6eedb0bf",
+                                        "options": null,
+                                        "settings": null,
+                                        "defaultValue": null
+                                    }
+                                },
+                                {
+                                    "node": {
+                                        "id": "2c80c376-5678-4fd3-a12a-46db26a9a740",
+                                        "universalIdentifier": "1d78e531-c814-44df-8dcf-9ec5ccedc5ce",
+                                        "name": "licensorComments",
+                                        "label": "Licensor Comments",
+                                        "type": "TEXT",
+                                        "isCustom": true,
+                                        "isActive": true,
+                                        "applicationId": "b7ad46a7-1784-4fab-9f09-9eed6eedb0bf",
+                                        "options": null,
+                                        "settings": null,
+                                        "defaultValue": null
+                                    }
+                                },
+                                {
+                                    "node": {
+                                        "id": "0876517b-a95e-430c-a6b6-c73cb97d3c9c",
+                                        "universalIdentifier": "1e8b7ef6-e128-5e8c-8cde-083fd8f17d54",
+                                        "name": "updatedBy",
+                                        "label": "Updated by",
+                                        "type": "ACTOR",
+                                        "isCustom": true,
+                                        "isActive": true,
+                                        "applicationId": "f99617d1-aa3d-4009-8211-53a7b747f5f2",
+                                        "options": null,
+                                        "settings": null,
+                                        "defaultValue": {
+                                            "name": "''",
+                                            "source": "'MANUAL'"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "node": {
+                        "id": "2a6b5846-c8f3-472f-89f6-a256338663af",
+                        "universalIdentifier": "20202020-977e-46b2-890b-c3002ddfd5c5",
+                        "nameSingular": "connectedAccount",
+                        "namePlural": "connectedAccounts",
+                        "isCustom": false,
+                        "isActive": true,
+                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                        "labelSingular": "Connected Account",
+                        "labelPlural": "Connected Accounts",
+                        "fields": {
+                            "edges": [
+                                {
+                                    "node": {
+                                        "id": "e4a3f735-84a0-40cf-90ce-3a2e3287a465",
+                                        "universalIdentifier": "0a84c0e1-f9fc-47d5-8ac9-58538e50a9f9",
+                                        "name": "updatedBy",
+                                        "label": "Updated by",
+                                        "type": "ACTOR",
+                                        "isCustom": false,
+                                        "isActive": true,
+                                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                                        "options": null,
+                                        "settings": null,
+                                        "defaultValue": {
+                                            "name": "'System'",
+                                            "source": "'MANUAL'",
+                                            "workspaceMemberId": null
+                                        }
+                                    }
+                                },
+                                {
+                                    "node": {
+                                        "id": "fb8efc7c-d64e-4d90-a3b6-b59c5e69b461",
+                                        "universalIdentifier": "140767fe-0aa4-4573-a0bd-67cb657c9452",
+                                        "name": "searchVector",
+                                        "label": "Search vector",
+                                        "type": "TS_VECTOR",
+                                        "isCustom": false,
+                                        "isActive": true,
+                                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                                        "options": null,
+                                        "settings": {
+                                            "asExpression": "to_tsvector('simple', COALESCE(public.unaccent_immutable(\"handle\"), ''))",
+                                            "generatedType": "STORED"
+                                        },
+                                        "defaultValue": null
+                                    }
+                                },
+                                {
+                                    "node": {
+                                        "id": "e4b5a9b4-179b-4bcf-a3a6-dd01d12d9ffe",
+                                        "universalIdentifier": "20202020-115c-4a87-b50f-ac4367a971b9",
+                                        "name": "lastSyncHistoryId",
+                                        "label": "Last sync history ID",
+                                        "type": "TEXT",
+                                        "isCustom": false,
+                                        "isActive": true,
+                                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                                        "options": null,
+                                        "settings": null,
+                                        "defaultValue": null
+                                    }
+                                },
+                                {
+                                    "node": {
+                                        "id": "056ee959-c195-43e8-83f8-c50e1bb830af",
+                                        "universalIdentifier": "20202020-24f7-4362-8468-042204d1e445",
+                                        "name": "messageChannels",
+                                        "label": "Message Channels",
+                                        "type": "RELATION",
+                                        "isCustom": false,
+                                        "isActive": true,
+                                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                                        "options": null,
+                                        "settings": {
+                                            "relationType": "ONE_TO_MANY"
+                                        },
+                                        "defaultValue": null
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "node": {
+                        "id": "242488e5-89c7-4f0d-866f-92be6ea16a28",
+                        "universalIdentifier": "20202020-3f6b-4425-80ab-e468899ab4b2",
+                        "nameSingular": "message",
+                        "namePlural": "messages",
+                        "isCustom": false,
+                        "isActive": true,
+                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                        "labelSingular": "Message",
+                        "labelPlural": "Messages",
+                        "fields": {
+                            "edges": [
+                                {
+                                    "node": {
+                                        "id": "3ac98dde-5063-4af0-adf3-c7b5014e8911",
+                                        "universalIdentifier": "06c5052d-3369-4d6d-8eaa-f9780eddb1fd",
+                                        "name": "position",
+                                        "label": "Position",
+                                        "type": "POSITION",
+                                        "isCustom": false,
+                                        "isActive": true,
+                                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                                        "options": null,
+                                        "settings": null,
+                                        "defaultValue": 0
+                                    }
+                                },
+                                {
+                                    "node": {
+                                        "id": "335d7674-96e8-4439-b9f1-ab2bbe581e05",
+                                        "universalIdentifier": "20202020-0203-4118-8e2a-05b9bdae6dab",
+                                        "name": "direction",
+                                        "label": "Direction",
+                                        "type": "SELECT",
+                                        "isCustom": false,
+                                        "isActive": true,
+                                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                                        "options": [
+                                            {
+                                                "id": "20202020-7b52-47d2-abd8-e96a4295f9a6",
+                                                "color": "green",
+                                                "label": "Incoming",
+                                                "value": "INCOMING",
+                                                "position": 0
+                                            },
+                                            {
+                                                "id": "20202020-11cb-42be-8df7-709ad53f90f9",
+                                                "color": "blue",
+                                                "label": "Outgoing",
+                                                "value": "OUTGOING",
+                                                "position": 1
+                                            }
+                                        ],
+                                        "settings": null,
+                                        "defaultValue": "'INCOMING'"
+                                    }
+                                },
+                                {
+                                    "node": {
+                                        "id": "c1f5c480-8b1d-4bd7-9e4a-fb606a73fb9c",
+                                        "universalIdentifier": "20202020-140a-4a2a-9f86-f13b6a979afc",
+                                        "name": "receivedAt",
+                                        "label": "Received At",
+                                        "type": "DATE_TIME",
+                                        "isCustom": false,
+                                        "isActive": true,
+                                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                                        "options": null,
+                                        "settings": null,
+                                        "defaultValue": null
+                                    }
+                                },
+                                {
+                                    "node": {
+                                        "id": "9fbd406d-2dc5-49f7-8238-0ee55ec90b0f",
+                                        "universalIdentifier": "20202020-30f2-4ccd-9f5c-e41bb9d26214",
+                                        "name": "messageThread",
+                                        "label": "Message Thread Id",
+                                        "type": "RELATION",
+                                        "isCustom": false,
+                                        "isActive": true,
+                                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                                        "options": null,
+                                        "settings": {
+                                            "onDelete": "CASCADE",
+                                            "relationType": "MANY_TO_ONE",
+                                            "joinColumnName": "messageThreadId"
+                                        },
+                                        "defaultValue": null
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "node": {
+                        "id": "1df80fa9-1f2e-4ba7-af02-bb5d0bc39785",
+                        "universalIdentifier": "20202020-0b00-45cd-b6f6-6cd806fc6804",
+                        "nameSingular": "note",
+                        "namePlural": "notes",
+                        "isCustom": false,
+                        "isActive": true,
+                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                        "labelSingular": "Note",
+                        "labelPlural": "Notes",
+                        "fields": {
+                            "edges": [
+                                {
+                                    "node": {
+                                        "id": "0ee491bd-8177-42c7-bdde-9f70bf8187ae",
+                                        "universalIdentifier": "20202020-0d79-4e21-ab77-5a394eff97be",
+                                        "name": "createdBy",
+                                        "label": "Created by",
+                                        "type": "ACTOR",
+                                        "isCustom": false,
+                                        "isActive": true,
+                                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                                        "options": null,
+                                        "settings": null,
+                                        "defaultValue": {
+                                            "name": "'System'",
+                                            "source": "'MANUAL'",
+                                            "workspaceMemberId": null
+                                        }
+                                    }
+                                },
+                                {
+                                    "node": {
+                                        "id": "0ad98f45-c04b-4ba2-ae7b-6732320dad2d",
+                                        "universalIdentifier": "20202020-1f25-43fe-8b00-af212fdde823",
+                                        "name": "noteTargets",
+                                        "label": "Relations",
+                                        "type": "RELATION",
+                                        "isCustom": false,
+                                        "isActive": true,
+                                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                                        "options": null,
+                                        "settings": {
+                                            "relationType": "ONE_TO_MANY"
+                                        },
+                                        "defaultValue": null
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "node": {
+                        "id": "1c666129-4bb6-4268-8ffc-b1cc3641b2b5",
+                        "universalIdentifier": "20202020-9549-49dd-b2b2-883999db8938",
+                        "nameSingular": "opportunity",
+                        "namePlural": "opportunities",
+                        "isCustom": false,
+                        "isActive": true,
+                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                        "labelSingular": "Program",
+                        "labelPlural": "Programs",
+                        "fields": {
+                            "edges": [
+                                {
+                                    "node": {
+                                        "id": "525089a5-fdf7-4848-997a-e9fd11948975",
+                                        "universalIdentifier": "01d23cb3-41c4-466f-9938-4ff13a1405ef",
+                                        "name": "division",
+                                        "label": "Division",
+                                        "type": "SELECT",
+                                        "isCustom": true,
+                                        "isActive": true,
+                                        "applicationId": "b7ad46a7-1784-4fab-9f09-9eed6eedb0bf",
+                                        "options": [
+                                            {
+                                                "id": "d1",
+                                                "color": "blue",
+                                                "label": "POP",
+                                                "value": "POP",
+                                                "position": 0
+                                            },
+                                            {
+                                                "id": "d2",
+                                                "color": "green",
+                                                "label": "Spruce",
+                                                "value": "SPRUCE",
+                                                "position": 1
+                                            }
+                                        ],
+                                        "settings": null,
+                                        "defaultValue": null
+                                    }
+                                },
+                                {
+                                    "node": {
+                                        "id": "d4fe81e9-1d49-4d21-9a53-eb9e796101c8",
+                                        "universalIdentifier": "0938ff91-ae1c-4d1a-be95-16e1db12f99b",
+                                        "name": "factory",
+                                        "label": "Factory",
+                                        "type": "RELATION",
+                                        "isCustom": true,
+                                        "isActive": true,
+                                        "applicationId": "b7ad46a7-1784-4fab-9f09-9eed6eedb0bf",
+                                        "options": null,
+                                        "settings": {
+                                            "onDelete": "SET_NULL",
+                                            "relationType": "MANY_TO_ONE",
+                                            "joinColumnName": "factoryId"
+                                        },
+                                        "defaultValue": null
+                                    }
+                                },
+                                {
+                                    "node": {
+                                        "id": "2ee9e069-07a2-43c2-b698-678b2d0d3d42",
+                                        "universalIdentifier": "0a674bc2-18b1-40d5-86af-1cbf4d8e214a",
+                                        "name": "productionPoNumber",
+                                        "label": "Production PO#",
+                                        "type": "TEXT",
+                                        "isCustom": true,
+                                        "isActive": true,
+                                        "applicationId": "b7ad46a7-1784-4fab-9f09-9eed6eedb0bf",
+                                        "options": null,
+                                        "settings": null,
+                                        "defaultValue": null
+                                    }
+                                },
+                                {
+                                    "node": {
+                                        "id": "4635bdc5-01e1-47ac-8460-842249048322",
+                                        "universalIdentifier": "0f8bb3d0-5ebd-4883-b9d6-783284732f3c",
+                                        "name": "sampleApprovalMethod",
+                                        "label": "Sample Approval Method",
+                                        "type": "SELECT",
+                                        "isCustom": true,
+                                        "isActive": true,
+                                        "applicationId": "b7ad46a7-1784-4fab-9f09-9eed6eedb0bf",
+                                        "options": [
+                                            {
+                                                "id": "72aca642-ca89-42d4-b5c5-282ff5bc056b",
+                                                "color": "blue",
+                                                "label": "In-Person",
+                                                "value": "IN_PERSON",
+                                                "position": 0
+                                            },
+                                            {
+                                                "id": "2203541f-294b-483a-bdea-2a375a468fb6",
+                                                "color": "green",
+                                                "label": "Photo",
+                                                "value": "PHOTO",
+                                                "position": 1
+                                            },
+                                            {
+                                                "id": "c13caa19-ef5f-414c-b0a9-811d3fcf6452",
+                                                "color": "gray",
+                                                "label": "N/A",
+                                                "value": "NA",
+                                                "position": 2
+                                            }
+                                        ],
+                                        "settings": null,
+                                        "defaultValue": null
+                                    }
+                                },
+                                {
+                                    "node": {
+                                        "id": "cf2cdb1c-861d-40fc-80e4-70cc93e2cd7e",
+                                        "universalIdentifier": "119c94b6-1588-43f9-b3cc-8f66eb606fbe",
+                                        "name": "requiresNewPricing",
+                                        "label": "Requires New Pricing",
+                                        "type": "BOOLEAN",
+                                        "isCustom": true,
+                                        "isActive": true,
+                                        "applicationId": "b7ad46a7-1784-4fab-9f09-9eed6eedb0bf",
+                                        "options": null,
+                                        "settings": null,
+                                        "defaultValue": false
+                                    }
+                                },
+                                {
+                                    "node": {
+                                        "id": "047e2619-8c0f-4aaf-8204-5cf0cbc74192",
+                                        "universalIdentifier": "194b0d6e-f67d-4a4a-99d5-c0766a112655",
+                                        "name": "emailMessages",
+                                        "label": "Emails",
+                                        "type": "RELATION",
+                                        "isCustom": true,
+                                        "isActive": true,
+                                        "applicationId": "b7ad46a7-1784-4fab-9f09-9eed6eedb0bf",
+                                        "options": null,
+                                        "settings": {
+                                            "relationType": "ONE_TO_MANY"
+                                        },
+                                        "defaultValue": null
+                                    }
+                                },
+                                {
+                                    "node": {
+                                        "id": "884f1a50-0ef9-45a6-9249-8bf5fb076091",
+                                        "universalIdentifier": "20202020-30e2-421f-96c7-19c69d1cf631",
+                                        "name": "timelineActivities",
+                                        "label": "Timeline Activities",
+                                        "type": "RELATION",
+                                        "isCustom": false,
+                                        "isActive": true,
+                                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                                        "options": null,
+                                        "settings": {
+                                            "relationType": "ONE_TO_MANY"
+                                        },
+                                        "defaultValue": null
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "node": {
+                        "id": "123cc87a-0235-45ff-a9a4-9ac8f9ec7360",
+                        "universalIdentifier": "20202020-3840-4b6d-9425-0c5188b05ca8",
+                        "nameSingular": "dashboard",
+                        "namePlural": "dashboards",
+                        "isCustom": false,
+                        "isActive": true,
+                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                        "labelSingular": "Dashboard",
+                        "labelPlural": "Dashboards",
+                        "fields": {
+                            "edges": [
+                                {
+                                    "node": {
+                                        "id": "3996c97c-198e-4985-94cb-ebb49e516bc5",
+                                        "universalIdentifier": "20202020-0bcc-47a4-8360-2e35a7133f7a",
+                                        "name": "searchVector",
+                                        "label": "Search vector",
+                                        "type": "TS_VECTOR",
+                                        "isCustom": false,
+                                        "isActive": true,
+                                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                                        "options": null,
+                                        "settings": {
+                                            "asExpression": "to_tsvector('simple', COALESCE(public.unaccent_immutable(\"title\"), ''))",
+                                            "generatedType": "STORED"
+                                        },
+                                        "defaultValue": null
+                                    }
+                                },
+                                {
+                                    "node": {
+                                        "id": "43f36a8d-5469-4492-85d8-9d8c1d2ff5c3",
+                                        "universalIdentifier": "20202020-20ee-4091-95dc-44b57eda3a89",
+                                        "name": "title",
+                                        "label": "Title",
+                                        "type": "TEXT",
+                                        "isCustom": false,
+                                        "isActive": true,
+                                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                                        "options": null,
+                                        "settings": null,
+                                        "defaultValue": null
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "node": {
+                        "id": "1235ad8b-2435-41a1-9ea4-2586cfd24f37",
+                        "universalIdentifier": "1e10f8ed-8571-48b8-8571-32e53b44d63e",
+                        "nameSingular": "factory",
+                        "namePlural": "factories",
+                        "isCustom": true,
+                        "isActive": true,
+                        "applicationId": "b7ad46a7-1784-4fab-9f09-9eed6eedb0bf",
+                        "labelSingular": "Factory",
+                        "labelPlural": "Factories",
+                        "fields": {
+                            "edges": [
+                                {
+                                    "node": {
+                                        "id": "189dba9c-7333-4b3e-b3d1-58d8514b0f78",
+                                        "universalIdentifier": "0c762be0-dc28-50b0-bda6-95f0526defcc",
+                                        "name": "id",
+                                        "label": "Id",
+                                        "type": "UUID",
+                                        "isCustom": true,
+                                        "isActive": true,
+                                        "applicationId": "f99617d1-aa3d-4009-8211-53a7b747f5f2",
+                                        "options": null,
+                                        "settings": null,
+                                        "defaultValue": "uuid"
+                                    }
+                                },
+                                {
+                                    "node": {
+                                        "id": "f4327794-dfee-406f-b630-656df2fe4475",
+                                        "universalIdentifier": "0dfa3a62-6a45-5dc9-bf29-8db12476e77b",
+                                        "name": "searchVector",
+                                        "label": "Search vector",
+                                        "type": "TS_VECTOR",
+                                        "isCustom": true,
+                                        "isActive": true,
+                                        "applicationId": "f99617d1-aa3d-4009-8211-53a7b747f5f2",
+                                        "options": null,
+                                        "settings": null,
+                                        "defaultValue": null
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "node": {
+                        "id": "0fb541ef-9d3e-49a3-9f2e-db2f9730f1c0",
+                        "universalIdentifier": "1b9e366d-b0a1-40e6-b253-115079fed63d",
+                        "nameSingular": "department",
+                        "namePlural": "departments",
+                        "isCustom": true,
+                        "isActive": true,
+                        "applicationId": "b7ad46a7-1784-4fab-9f09-9eed6eedb0bf",
+                        "labelSingular": "Department",
+                        "labelPlural": "Departments",
+                        "fields": {
+                            "edges": [
+                                {
+                                    "node": {
+                                        "id": "0b6dae35-fb5d-4cea-ac60-c76f59c4788c",
+                                        "universalIdentifier": "0eaa59b7-c15a-4a6a-b207-23b67b086865",
+                                        "name": "meetingNotes",
+                                        "label": "Meeting Notes",
+                                        "type": "RELATION",
+                                        "isCustom": true,
+                                        "isActive": true,
+                                        "applicationId": "b7ad46a7-1784-4fab-9f09-9eed6eedb0bf",
+                                        "options": null,
+                                        "settings": {
+                                            "relationType": "ONE_TO_MANY"
+                                        },
+                                        "defaultValue": null
+                                    }
+                                },
+                                {
+                                    "node": {
+                                        "id": "214a3c2c-60f5-4e8f-89ef-5373c32ddcac",
+                                        "universalIdentifier": "134d1e57-0050-5f9b-9aaf-e1d44060f5fc",
+                                        "name": "searchVector",
+                                        "label": "Search vector",
+                                        "type": "TS_VECTOR",
+                                        "isCustom": true,
+                                        "isActive": true,
+                                        "applicationId": "f99617d1-aa3d-4009-8211-53a7b747f5f2",
+                                        "options": null,
+                                        "settings": null,
+                                        "defaultValue": null
+                                    }
+                                },
+                                {
+                                    "node": {
+                                        "id": "05a182e8-fda7-457c-bbdd-f15dbbe9b4ba",
+                                        "universalIdentifier": "1d644242-de69-5943-9d33-1f9251754a06",
+                                        "name": "favorites",
+                                        "label": "Favorites",
+                                        "type": "RELATION",
+                                        "isCustom": true,
+                                        "isActive": true,
+                                        "applicationId": "b7ad46a7-1784-4fab-9f09-9eed6eedb0bf",
+                                        "options": null,
+                                        "settings": {
+                                            "relationType": "ONE_TO_MANY"
+                                        },
+                                        "defaultValue": null
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "node": {
+                        "id": "04d6d662-db7d-462a-8504-8fdab5094e21",
+                        "universalIdentifier": "20202020-62be-406c-b9ca-8caa50d51392",
+                        "nameSingular": "workflow",
+                        "namePlural": "workflows",
+                        "isCustom": false,
+                        "isActive": true,
+                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                        "labelSingular": "Workflow",
+                        "labelPlural": "Workflows",
+                        "fields": {
+                            "edges": [
+                                {
+                                    "node": {
+                                        "id": "60f04782-1c7a-4264-ae3e-d3aa82d4acb3",
+                                        "universalIdentifier": "20202020-326a-4fba-8639-3456c0a169e8",
+                                        "name": "lastPublishedVersionId",
+                                        "label": "Last published Version Id",
+                                        "type": "TEXT",
+                                        "isCustom": false,
+                                        "isActive": true,
+                                        "applicationId": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                                        "options": null,
+                                        "settings": null,
+                                        "defaultValue": null
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "node": {
+                        "id": "044e142f-181a-4aa7-acfe-8c9c48288d5b",
+                        "universalIdentifier": "79e9be9f-d969-40f7-988d-efc83a8e7049",
+                        "nameSingular": "meetingNote",
+                        "namePlural": "meetingNotes",
+                        "isCustom": true,
+                        "isActive": true,
+                        "applicationId": "b7ad46a7-1784-4fab-9f09-9eed6eedb0bf",
+                        "labelSingular": "Meeting Note",
+                        "labelPlural": "Meeting Notes",
+                        "fields": {
+                            "edges": [
+                                {
+                                    "node": {
+                                        "id": "36c27639-0d55-4270-98e0-208905c4cb82",
+                                        "universalIdentifier": "0944d2a9-a87b-56d3-94d4-4468b6a552d6",
+                                        "name": "taskTargets",
+                                        "label": "Task Targets",
+                                        "type": "RELATION",
+                                        "isCustom": true,
+                                        "isActive": true,
+                                        "applicationId": "b7ad46a7-1784-4fab-9f09-9eed6eedb0bf",
+                                        "options": null,
+                                        "settings": {
+                                            "relationType": "ONE_TO_MANY"
+                                        },
+                                        "defaultValue": null
+                                    }
+                                },
+                                {
+                                    "node": {
+                                        "id": "ae20bc76-0021-4e39-be4e-607e8b7326f3",
+                                        "universalIdentifier": "12c1a8b5-5507-5622-9617-fd053ae936f6",
+                                        "name": "updatedAt",
+                                        "label": "Last update",
+                                        "type": "DATE_TIME",
+                                        "isCustom": true,
+                                        "isActive": true,
+                                        "applicationId": "f99617d1-aa3d-4009-8211-53a7b747f5f2",
+                                        "options": null,
+                                        "settings": null,
+                                        "defaultValue": "now"
+                                    }
+                                },
+                                {
+                                    "node": {
+                                        "id": "9dcbff64-aa86-48c9-9803-7e04b5244765",
+                                        "universalIdentifier": "1525d1cf-ec54-4687-855e-2491e1e2bccc",
+                                        "name": "company",
+                                        "label": "Company",
+                                        "type": "RELATION",
+                                        "isCustom": true,
+                                        "isActive": true,
+                                        "applicationId": "b7ad46a7-1784-4fab-9f09-9eed6eedb0bf",
+                                        "options": null,
+                                        "settings": {
+                                            "onDelete": "SET_NULL",
+                                            "relationType": "MANY_TO_ONE",
+                                            "joinColumnName": "companyId"
+                                        },
+                                        "defaultValue": null
+                                    }
+                                },
+                                {
+                                    "node": {
+                                        "id": "344460e1-8eed-4fe2-acf2-f2cd95cf365f",
+                                        "universalIdentifier": "173395b1-abd5-44d0-83d4-45730435162e",
+                                        "name": "firefliesTranscriptId",
+                                        "label": "Fireflies Transcript ID",
+                                        "type": "TEXT",
+                                        "isCustom": true,
+                                        "isActive": true,
+                                        "applicationId": "b7ad46a7-1784-4fab-9f09-9eed6eedb0bf",
+                                        "options": null,
+                                        "settings": null,
+                                        "defaultValue": null
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}

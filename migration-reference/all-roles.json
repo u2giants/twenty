@@ -1,0 +1,36 @@
+{
+    "data": {
+        "getRoles": [
+            {
+                "id": "7ade96e0-509c-42b5-907f-a26f64270d42",
+                "universalIdentifier": "20202020-02c2-43f2-b94d-cab1f2b532eb",
+                "label": "Admin",
+                "description": "Admin role",
+                "canReadAllObjectRecords": true,
+                "canUpdateAllObjectRecords": true,
+                "canSoftDeleteAllObjectRecords": true,
+                "canDestroyAllObjectRecords": true
+            },
+            {
+                "id": "22df02bf-947a-4ea3-91e9-2e2536894787",
+                "universalIdentifier": "a0d8c728-29d9-454d-beb0-f7a90a4ef290",
+                "label": "Member",
+                "description": "Member role",
+                "canReadAllObjectRecords": true,
+                "canUpdateAllObjectRecords": true,
+                "canSoftDeleteAllObjectRecords": true,
+                "canDestroyAllObjectRecords": true
+            },
+            {
+                "id": "3e20f5b8-6bec-433b-8189-a486d8f9b951",
+                "universalIdentifier": "da44e0ec-2694-41e4-8d52-dd29b750df36",
+                "label": "POP Creations CRM default function role",
+                "description": "POP Creations CRM default function role",
+                "canReadAllObjectRecords": true,
+                "canUpdateAllObjectRecords": true,
+                "canSoftDeleteAllObjectRecords": true,
+                "canDestroyAllObjectRecords": false
+            }
+        ]
+    }
+}

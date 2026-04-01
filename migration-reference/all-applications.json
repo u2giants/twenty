@@ -1,0 +1,21 @@
+{
+    "data": {
+        "findManyApplications": [
+            {
+                "id": "f99617d1-aa3d-4009-8211-53a7b747f5f2",
+                "name": "Workspace's custom application",
+                "universalIdentifier": "f99617d1-aa3d-4009-8211-53a7b747f5f2"
+            },
+            {
+                "id": "58dd163b-b4d9-4b30-aca8-23b41518741d",
+                "name": "Twenty Standard",
+                "universalIdentifier": "20202020-64aa-4b6f-b003-9c74b97cee20"
+            },
+            {
+                "id": "b7ad46a7-1784-4fab-9f09-9eed6eedb0bf",
+                "name": "POP Creations CRM",
+                "universalIdentifier": "8f8664b5-d25d-4e82-a979-bb61728c0706"
+            }
+        ]
+    }
+}

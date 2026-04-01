@@ -1,0 +1,158 @@
+{
+    "data": {
+        "findManyLogicFunctions": [
+            {
+                "id": "b7fa4ac3-4dca-4f62-8f89-45654312b166",
+                "universalIdentifier": "f2fb663a-31b5-44d0-98cd-069697d70c27",
+                "name": "contact-auto-scope",
+                "description": "Auto-sets Person scope (DEPARTMENT/COMPANY_WIDE/IGNORED) based on contactType when a contact is created",
+                "sourceHandlerPath": "src/logic-functions/contact-auto-scope.ts",
+                "handlerName": "default.config.handler",
+                "cronTriggerSettings": null,
+                "databaseEventTriggerSettings": {
+                    "eventName": "person.created"
+                },
+                "httpRouteTriggerSettings": null,
+                "applicationId": "b7ad46a7-1784-4fab-9f09-9eed6eedb0bf"
+            },
+            {
+                "id": "214fdc84-82f6-43ae-9a1e-8d02dffdc04c",
+                "universalIdentifier": "709b33c0-df47-4d82-b579-589ea2d9d06a",
+                "name": "lat-stage-follow-up",
+                "description": "Creates a follow-up task when a Licensor Approval Thread stage changes",
+                "sourceHandlerPath": "src/logic-functions/lat-stage-follow-up.ts",
+                "handlerName": "default.config.handler",
+                "cronTriggerSettings": null,
+                "databaseEventTriggerSettings": {
+                    "eventName": "licensorApprovalThread.updated"
+                },
+                "httpRouteTriggerSettings": null,
+                "applicationId": "b7ad46a7-1784-4fab-9f09-9eed6eedb0bf"
+            },
+            {
+                "id": "f950188c-5ed7-4609-9f36-f7283e8103da",
+                "universalIdentifier": "1ec5d27a-0491-493b-bfe0-197338d6ce4d",
+                "name": "new-program-tasks",
+                "description": "Auto-creates a standard task checklist when a new Program (opportunity) is created",
+                "sourceHandlerPath": "src/logic-functions/new-program-tasks.ts",
+                "handlerName": "default.config.handler",
+                "cronTriggerSettings": null,
+                "databaseEventTriggerSettings": {
+                    "eventName": "opportunity.created"
+                },
+                "httpRouteTriggerSettings": null,
+                "applicationId": "b7ad46a7-1784-4fab-9f09-9eed6eedb0bf"
+            },
+            {
+                "id": "8c687cf3-46b4-47c7-afd4-c24cf3a31e24",
+                "universalIdentifier": "fda29017-6f27-4655-9ae9-e37c9db28546",
+                "name": "post-install",
+                "description": "Runs after installation to set up the application.",
+                "sourceHandlerPath": "src/logic-functions/post-install.ts",
+                "handlerName": "default.config.handler",
+                "cronTriggerSettings": null,
+                "databaseEventTriggerSettings": null,
+                "httpRouteTriggerSettings": null,
+                "applicationId": "b7ad46a7-1784-4fab-9f09-9eed6eedb0bf"
+            },
+            {
+                "id": "d60d9196-922a-4850-b3d7-ac1a67c6fd5f",
+                "universalIdentifier": "668325c7-8e91-4c70-aa90-7e6ab9b1b156",
+                "name": "pre-install",
+                "description": "Runs before installation to prepare the application.",
+                "sourceHandlerPath": "src/logic-functions/pre-install.ts",
+                "handlerName": "default.config.handler",
+                "cronTriggerSettings": null,
+                "databaseEventTriggerSettings": null,
+                "httpRouteTriggerSettings": null,
+                "applicationId": "b7ad46a7-1784-4fab-9f09-9eed6eedb0bf"
+            },
+            {
+                "id": "f1c5f972-60a8-4134-a126-e23d0ac38ed0",
+                "universalIdentifier": "beb0af2a-0349-48f5-8d4a-b7161a001ae0",
+                "name": "clickup-sync",
+                "description": "Daily sync of ClickUp task statuses to Programs, and auto-links programs via SAS-PO field",
+                "sourceHandlerPath": "src/logic-functions/clickup-sync.ts",
+                "handlerName": "default.config.handler",
+                "cronTriggerSettings": {
+                    "pattern": "0 7 * * *"
+                },
+                "databaseEventTriggerSettings": null,
+                "httpRouteTriggerSettings": null,
+                "applicationId": "b7ad46a7-1784-4fab-9f09-9eed6eedb0bf"
+            },
+            {
+                "id": "9d3da9fc-9c5d-4617-840d-4c988a045db9",
+                "universalIdentifier": "869df70f-a448-4c03-896c-1fda47470dff",
+                "name": "program-stage-change",
+                "description": "Triggers task creation and LAT auto-creation when a Program stage changes",
+                "sourceHandlerPath": "src/logic-functions/program-stage-change.ts",
+                "handlerName": "default.config.handler",
+                "cronTriggerSettings": null,
+                "databaseEventTriggerSettings": {
+                    "eventName": "opportunity.updated"
+                },
+                "httpRouteTriggerSettings": null,
+                "applicationId": "b7ad46a7-1784-4fab-9f09-9eed6eedb0bf"
+            },
+            {
+                "id": "4fa3aee3-268a-4c5b-91d0-cb1751cbabcd",
+                "universalIdentifier": "82a08d2e-19f6-40dd-8fee-460cccc84f3c",
+                "name": "fireflies-ingest",
+                "description": "Receives Fireflies webhooks, creates MeetingNote records with routing and participant linking",
+                "sourceHandlerPath": "src/logic-functions/fireflies-ingest.ts",
+                "handlerName": "default.config.handler",
+                "cronTriggerSettings": null,
+                "databaseEventTriggerSettings": null,
+                "httpRouteTriggerSettings": {
+                    "path": "/fireflies-webhook",
+                    "httpMethod": "POST",
+                    "isAuthRequired": false
+                },
+                "applicationId": "b7ad46a7-1784-4fab-9f09-9eed6eedb0bf"
+            },
+            {
+                "id": "d986c7f2-1716-4654-af63-c10f67eedd88",
+                "universalIdentifier": "7b2e4a91-3c8f-4d1e-a5b2-9f8c7d6e5a4b",
+                "name": "email-contact-sync",
+                "description": "Scans ingested emails for external addresses, creates Companies from domains and People from email addresses",
+                "sourceHandlerPath": "src/logic-functions/email-contact-sync.ts",
+                "handlerName": "default",
+                "cronTriggerSettings": {
+                    "pattern": "0 2 * * *"
+                },
+                "databaseEventTriggerSettings": null,
+                "httpRouteTriggerSettings": null,
+                "applicationId": "f99617d1-aa3d-4009-8211-53a7b747f5f2"
+            },
+            {
+                "id": "2b9d65bd-0165-4231-9545-b643b242c865",
+                "universalIdentifier": "6fec3269-187e-4056-a35b-81333bc86ba6",
+                "name": "outlook-ingest",
+                "description": "Polls Outlook/Microsoft Graph every 15 min, ingests emails from adweck@popcre.com and routes them to programs",
+                "sourceHandlerPath": "src/logic-functions/outlook-ingest.ts",
+                "handlerName": "default.config.handler",
+                "cronTriggerSettings": {
+                    "pattern": "*/15 * * * *"
+                },
+                "databaseEventTriggerSettings": null,
+                "httpRouteTriggerSettings": null,
+                "applicationId": "b7ad46a7-1784-4fab-9f09-9eed6eedb0bf"
+            },
+            {
+                "id": "2735545d-c3bc-43ff-9d43-acab04f3f77c",
+                "universalIdentifier": "8c3d4e5f-6a7b-4c8d-9e0f-1a2b3c4d5e6f",
+                "name": "email-rerouter",
+                "description": "Re-processes unrouted emails every 6 hours",
+                "sourceHandlerPath": "src/logic-functions/email-rerouter.ts",
+                "handlerName": "default",
+                "cronTriggerSettings": {
+                    "pattern": "0 */6 * * *"
+                },
+                "databaseEventTriggerSettings": null,
+                "httpRouteTriggerSettings": null,
+                "applicationId": "b7ad46a7-1784-4fab-9f09-9eed6eedb0bf"
+            }
+        ]
+    }
+}

@@ -1,0 +1,2258 @@
+{
+    "data": {
+        "getCoreViews": [
+            {
+                "id": "99c8d7e6-efea-459e-911e-228c92585580",
+                "type": "TABLE",
+                "objectMetadataId": "8f05aacc-53d0-4696-9502-f0e9574bab0d",
+                "key": "INDEX",
+                "isCustom": false,
+                "visibility": "WORKSPACE",
+                "name": "All Attachments",
+                "viewFields": [
+                    {
+                        "id": "54a80c02-6989-45e7-8311-eab0f969ea3f",
+                        "fieldMetadataId": "34fd2c00-c09f-4877-ac44-1e610512c4fe",
+                        "isVisible": true,
+                        "position": 0,
+                        "size": 210
+                    },
+                    {
+                        "id": "058ca6bc-12d4-47cb-ac50-4488ec02ac08",
+                        "fieldMetadataId": "a33cce56-342a-4cf1-8ac9-5090f6592411",
+                        "isVisible": true,
+                        "position": 1,
+                        "size": 150
+                    },
+                    {
+                        "id": "88b52130-189d-4647-a7a1-dcffb29905ff",
+                        "fieldMetadataId": "2d43b7eb-ceee-41ee-93d6-dea5c30a905a",
+                        "isVisible": true,
+                        "position": 2,
+                        "size": 150
+                    },
+                    {
+                        "id": "94a48d99-f5a9-4350-96d4-bc803f55921f",
+                        "fieldMetadataId": "95fa6613-7280-43c6-8e33-74bc5f218939",
+                        "isVisible": true,
+                        "position": 3,
+                        "size": 150
+                    },
+                    {
+                        "id": "36d24696-37c2-432c-a5a9-db26403dab5a",
+                        "fieldMetadataId": "55c09d61-c718-4aca-8a64-c81a29c85a38",
+                        "isVisible": true,
+                        "position": 4,
+                        "size": 150
+                    },
+                    {
+                        "id": "eb075ae7-2084-453c-9e8c-587f30334967",
+                        "fieldMetadataId": "f5d7b729-caf1-4704-b92c-a1612c7f57eb",
+                        "isVisible": true,
+                        "position": 5,
+                        "size": 150
+                    },
+                    {
+                        "id": "8c782209-e072-46d9-aec5-c0d13f400196",
+                        "fieldMetadataId": "8e4955fa-f902-41c0-807c-f1a2275f2f97",
+                        "isVisible": true,
+                        "position": 6,
+                        "size": 150
+                    },
+                    {
+                        "id": "806e952d-5704-4151-ba0d-c4566925ae48",
+                        "fieldMetadataId": "22f4a118-bbd7-40cc-90c4-481645a8c530",
+                        "isVisible": true,
+                        "position": 7,
+                        "size": 150
+                    },
+                    {
+                        "id": "2783c188-039f-44dd-b674-50fdcdd420a6",
+                        "fieldMetadataId": "210961d3-5ab1-4228-831a-2f8eaa89b6af",
+                        "isVisible": true,
+                        "position": 8,
+                        "size": 150
+                    },
+                    {
+                        "id": "c1ef0347-c1a8-4b04-8677-6b3f73ae5af7",
+                        "fieldMetadataId": "83d34046-6772-4450-b467-a72331760a3c",
+                        "isVisible": true,
+                        "position": 9,
+                        "size": 150
+                    },
+                    {
+                        "id": "1cedbfbb-10ed-4f1e-b10e-d6b58b9b39fc",
+                        "fieldMetadataId": "d3983aec-b015-4649-be3f-7d0ca0d96ed1",
+                        "isVisible": true,
+                        "position": 10,
+                        "size": 150
+                    }
+                ],
+                "viewFilters": [],
+                "viewSorts": []
+            },
+            {
+                "id": "98160c50-e464-402d-a5b2-ab865c278afa",
+                "type": "TABLE",
+                "objectMetadataId": "7df39021-e21d-4f80-9349-a046bc771b28",
+                "key": "INDEX",
+                "isCustom": false,
+                "visibility": "WORKSPACE",
+                "name": "All Blocklists",
+                "viewFields": [
+                    {
+                        "id": "462edae6-50f5-431b-9f23-176a0e50180c",
+                        "fieldMetadataId": "28065b0f-401f-4fae-aa0e-dedfd05a971a",
+                        "isVisible": true,
+                        "position": 0,
+                        "size": 150
+                    },
+                    {
+                        "id": "4492640a-7562-4968-ab47-866c0f613ebe",
+                        "fieldMetadataId": "ee77e2a6-1e21-4ee2-a0d4-04bac231c7f7",
+                        "isVisible": true,
+                        "position": 1,
+                        "size": 150
+                    },
+                    {
+                        "id": "32e2cb20-e5bb-41af-b1bd-db486dafe4f8",
+                        "fieldMetadataId": "94386aa1-b3a8-4d71-b1ac-5d836a636c92",
+                        "isVisible": true,
+                        "position": 2,
+                        "size": 150
+                    }
+                ],
+                "viewFilters": [],
+                "viewSorts": []
+            },
+            {
+                "id": "3ed09dd5-08bc-4730-b9ad-18d22b35fdc3",
+                "type": "TABLE",
+                "objectMetadataId": "a22dfca0-dafa-47e1-b549-979d1046792b",
+                "key": "INDEX",
+                "isCustom": false,
+                "visibility": "WORKSPACE",
+                "name": "All Calendar Channels",
+                "viewFields": [
+                    {
+                        "id": "a1d06049-5f15-454e-aa91-59bff94405cb",
+                        "fieldMetadataId": "afaeee98-274d-4c04-a843-6fc5f1d710dd",
+                        "isVisible": true,
+                        "position": 0,
+                        "size": 150
+                    },
+                    {
+                        "id": "9106bf7a-3911-4c2c-a2ac-67d5aeac2d4c",
+                        "fieldMetadataId": "0ab1298f-2751-4096-928f-a043eb3f83c9",
+                        "isVisible": true,
+                        "position": 1,
+                        "size": 150
+                    },
+                    {
+                        "id": "03bf2cb4-8a8e-409b-9ff9-43ed7b04ce79",
+                        "fieldMetadataId": "ad64bd19-e0a4-4bb3-b7e6-591b363b5cdc",
+                        "isVisible": true,
+                        "position": 2,
+                        "size": 150
+                    },
+                    {
+                        "id": "23702b14-8133-40be-b0c7-d0a06c059e7d",
+                        "fieldMetadataId": "c874be6a-27c5-4a57-89f3-00783ba8179a",
+                        "isVisible": true,
+                        "position": 3,
+                        "size": 150
+                    },
+                    {
+                        "id": "2035ad04-8457-4ca3-96fe-85b72cac908b",
+                        "fieldMetadataId": "c792506c-2a8f-4032-b1d4-ad6f3346550e",
+                        "isVisible": true,
+                        "position": 4,
+                        "size": 150
+                    },
+                    {
+                        "id": "4a36a902-5d0a-4117-b259-345ea0b2c6ed",
+                        "fieldMetadataId": "132338a8-7f29-4abb-b5d6-df5b54fae4ad",
+                        "isVisible": true,
+                        "position": 5,
+                        "size": 150
+                    }
+                ],
+                "viewFilters": [],
+                "viewSorts": []
+            },
+            {
+                "id": "cfe75d8f-ccda-440a-a3a4-08f4d22f251a",
+                "type": "TABLE",
+                "objectMetadataId": "f39c54cd-511d-41ab-81c6-fa5a90d8782b",
+                "key": "INDEX",
+                "isCustom": false,
+                "visibility": "WORKSPACE",
+                "name": "All Calendar Channel Event Associations",
+                "viewFields": [
+                    {
+                        "id": "2faff54f-c013-4c7d-8d02-441b64423ee2",
+                        "fieldMetadataId": "c54d130c-1869-4219-8a13-65a2787bbe09",
+                        "isVisible": true,
+                        "position": 0,
+                        "size": 150
+                    },
+                    {
+                        "id": "af770e42-f9fc-4d2b-9d78-9433e6bc2959",
+                        "fieldMetadataId": "15e54759-6b2f-4ad7-93de-a24cf3676b49",
+                        "isVisible": true,
+                        "position": 1,
+                        "size": 150
+                    },
+                    {
+                        "id": "f45ac0e1-a920-4104-8327-79e4b0ba7582",
+                        "fieldMetadataId": "31ce8af2-c6c5-42c5-9a56-f6059acbf759",
+                        "isVisible": true,
+                        "position": 2,
+                        "size": 150
+                    },
+                    {
+                        "id": "eddd3472-c0df-4a94-a4ad-6259a3348207",
+                        "fieldMetadataId": "3995f989-0e32-4da6-85d6-537dfbe4ec25",
+                        "isVisible": true,
+                        "position": 3,
+                        "size": 150
+                    }
+                ],
+                "viewFilters": [],
+                "viewSorts": []
+            },
+            {
+                "id": "9a59f304-eaa0-421a-9c65-1515f9e32bbf",
+                "type": "TABLE",
+                "objectMetadataId": "7605dc65-86ea-41f3-8c75-109bc4793012",
+                "key": "INDEX",
+                "isCustom": false,
+                "visibility": "WORKSPACE",
+                "name": "All Calendar Events",
+                "viewFields": [
+                    {
+                        "id": "46ed42ec-532d-4e9b-9470-f86d3d99d608",
+                        "fieldMetadataId": "b0e0be04-6d90-44ac-91f5-68267294b605",
+                        "isVisible": true,
+                        "position": 0,
+                        "size": 180
+                    },
+                    {
+                        "id": "3be341e7-7299-43e9-bb51-6e0beee39e3e",
+                        "fieldMetadataId": "358783fe-2440-48c5-86e1-f3b89ded3929",
+                        "isVisible": true,
+                        "position": 1,
+                        "size": 150
+                    },
+                    {
+                        "id": "f4613c58-654f-4542-b710-80a8b4cc8ddc",
+                        "fieldMetadataId": "170a8f71-0865-4d12-aa3f-71c6c3a95e57",
+                        "isVisible": true,
+                        "position": 2,
+                        "size": 150
+                    },
+                    {
+                        "id": "d820f9a4-3f4a-44c1-96c1-697f3b9d160a",
+                        "fieldMetadataId": "609ebc6b-6f14-4680-85b1-52f88768e77f",
+                        "isVisible": true,
+                        "position": 3,
+                        "size": 100
+                    },
+                    {
+                        "id": "9d8ff9f8-9aae-4be1-a070-0b55003b9663",
+                        "fieldMetadataId": "e02b9811-dc14-49a6-88ec-4b013c8a54d8",
+                        "isVisible": true,
+                        "position": 4,
+                        "size": 150
+                    },
+                    {
+                        "id": "0f37b4d2-ba14-4f57-960a-3988e6424f15",
+                        "fieldMetadataId": "35e57ec6-90b3-4f00-b9a7-af6f369a3414",
+                        "isVisible": true,
+                        "position": 5,
+                        "size": 150
+                    },
+                    {
+                        "id": "7b560d75-8b3f-464c-9105-3d4c2d5e0920",
+                        "fieldMetadataId": "7da978e5-4537-422e-8e36-544ca7b35540",
+                        "isVisible": true,
+                        "position": 6,
+                        "size": 100
+                    },
+                    {
+                        "id": "4b0c9592-4778-499b-b48d-de5ee1d2eb23",
+                        "fieldMetadataId": "e6fccd9b-8866-4b05-8f1c-16491e12c461",
+                        "isVisible": true,
+                        "position": 7,
+                        "size": 150
+                    }
+                ],
+                "viewFilters": [],
+                "viewSorts": []
+            },
+            {
+                "id": "79056ed6-05ee-4a63-89b4-05c8e85d0267",
+                "type": "TABLE",
+                "objectMetadataId": "98370c7f-f4aa-4a48-b4a4-7fc5a0a113b4",
+                "key": "INDEX",
+                "isCustom": false,
+                "visibility": "WORKSPACE",
+                "name": "All Calendar Event Participants",
+                "viewFields": [
+                    {
+                        "id": "44033624-cf78-40c3-8621-c343780ae5f2",
+                        "fieldMetadataId": "1fc803d7-adae-4088-bc7e-ad057e6182c2",
+                        "isVisible": true,
+                        "position": 0,
+                        "size": 150
+                    },
+                    {
+                        "id": "26e2e5eb-72d1-4548-a3fa-51630ea910fc",
+                        "fieldMetadataId": "440044ea-004a-440f-87b7-d065777c06f1",
+                        "isVisible": true,
+                        "position": 1,
+                        "size": 150
+                    },
+                    {
+                        "id": "1da03125-c615-4e4a-ade2-c25f5be20bdf",
+                        "fieldMetadataId": "652108b0-7ce1-4650-b45a-8bb6bdcfe713",
+                        "isVisible": true,
+                        "position": 2,
+                        "size": 150
+                    },
+                    {
+                        "id": "a4e2925a-794f-47dd-8c3c-f318c0723b66",
+                        "fieldMetadataId": "f57ac4a0-ae4d-46fa-ab8f-a52e6dc162f3",
+                        "isVisible": true,
+                        "position": 3,
+                        "size": 150
+                    },
+                    {
+                        "id": "dd8a04d5-94dd-405b-ad9b-b3046fee294f",
+                        "fieldMetadataId": "27a2ed56-b955-4077-908f-7d11a4586ed0",
+                        "isVisible": true,
+                        "position": 4,
+                        "size": 150
+                    },
+                    {
+                        "id": "400531ad-c51e-4e35-8876-70fe820f5e7e",
+                        "fieldMetadataId": "8be75c7f-f265-4754-955b-f8e4845f6aef",
+                        "isVisible": true,
+                        "position": 5,
+                        "size": 150
+                    },
+                    {
+                        "id": "486b201e-bf81-4bdc-af80-53a42e4579df",
+                        "fieldMetadataId": "a740c288-ca48-4f09-a468-158d65a45e6f",
+                        "isVisible": true,
+                        "position": 6,
+                        "size": 150
+                    },
+                    {
+                        "id": "d00bc58c-983e-45ed-8ffd-1653bb18c86b",
+                        "fieldMetadataId": "df8e0999-80ed-4e39-9f0b-f02f66f15bc4",
+                        "isVisible": true,
+                        "position": 7,
+                        "size": 150
+                    }
+                ],
+                "viewFilters": [],
+                "viewSorts": []
+            },
+            {
+                "id": "9c90eb05-fbad-4637-a74f-120110ae36c3",
+                "type": "TABLE",
+                "objectMetadataId": "b66686c4-e9e0-4df3-8665-9bf2f63bb8d3",
+                "key": "INDEX",
+                "isCustom": false,
+                "visibility": "WORKSPACE",
+                "name": "All Companies",
+                "viewFields": [
+                    {
+                        "id": "75a41bfd-d4a2-44a6-832d-ba346427d8d7",
+                        "fieldMetadataId": "cea25fc8-e72f-4d68-8b77-7dad3a91d7a1",
+                        "isVisible": true,
+                        "position": 2,
+                        "size": 150
+                    },
+                    {
+                        "id": "68895ae7-8e0a-4c70-9515-0fe9fe5948a7",
+                        "fieldMetadataId": "2ded5130-01e6-490a-b2f1-f088df884a6b",
+                        "isVisible": true,
+                        "position": 4,
+                        "size": 150
+                    },
+                    {
+                        "id": "0a2935bc-1773-45ae-9e6c-ccf3bb315a03",
+                        "fieldMetadataId": "e7da8194-4c7e-4c49-9be2-267fa6c2b017",
+                        "isVisible": true,
+                        "position": 5,
+                        "size": 150
+                    },
+                    {
+                        "id": "cbcf574d-94ee-4dc6-8022-812de5f973ae",
+                        "fieldMetadataId": "28ff2f32-844f-4c0b-a2f2-f0bb046fae68",
+                        "isVisible": true,
+                        "position": 7,
+                        "size": 170
+                    },
+                    {
+                        "id": "aa0f5084-398f-43de-8154-6a6d9ed8d990",
+                        "fieldMetadataId": "8382f38d-3e36-436f-8e56-42235587292b",
+                        "isVisible": false,
+                        "position": 3,
+                        "size": 150
+                    },
+                    {
+                        "id": "e371a6fa-437c-4117-bedc-206b52e34554",
+                        "fieldMetadataId": "4f6765aa-b030-4edb-a6eb-548d9cafec5f",
+                        "isVisible": true,
+                        "position": 0,
+                        "size": 287
+                    },
+                    {
+                        "id": "89182d16-8307-41c6-83d8-982ae6cc72bd",
+                        "fieldMetadataId": "4c8f9b30-5a1c-4db8-89bc-13df5720b561",
+                        "isVisible": true,
+                        "position": 1,
+                        "size": 184
+                    },
+                    {
+                        "id": "a82085dc-dbb9-4d6c-8d00-0084f5381646",
+                        "fieldMetadataId": "b3fd5064-1190-4f6e-b2c6-302bccdc2ccd",
+                        "isVisible": true,
+                        "position": 3,
+                        "size": 150
+                    },
+                    {
+                        "id": "5e025a85-b906-4fb3-8f5b-08ce94f22c3d",
+                        "fieldMetadataId": "b3ac3635-4379-4075-a4c8-3641dea298ad",
+                        "isVisible": true,
+                        "position": 4,
+                        "size": 150
+                    }
+                ],
+                "viewFilters": [],
+                "viewSorts": []
+            },
+            {
+                "id": "d32f63f0-d588-450a-ab34-c24d8541fd36",
+                "type": "TABLE",
+                "objectMetadataId": "2a6b5846-c8f3-472f-89f6-a256338663af",
+                "key": "INDEX",
+                "isCustom": false,
+                "visibility": "WORKSPACE",
+                "name": "All Connected Accounts",
+                "viewFields": [
+                    {
+                        "id": "eb8b84ff-f50f-4a27-821b-b4dd718c17b2",
+                        "fieldMetadataId": "c9bb2882-17f8-4da7-a1d6-5fecc476b04c",
+                        "isVisible": true,
+                        "position": 0,
+                        "size": 150
+                    },
+                    {
+                        "id": "38f61264-e2f5-43d7-a563-0904919118af",
+                        "fieldMetadataId": "4a706961-40fb-406b-8578-8031871aa1cf",
+                        "isVisible": true,
+                        "position": 1,
+                        "size": 150
+                    },
+                    {
+                        "id": "66532c6e-d4dd-4e47-a8c2-2cc5cf39c66c",
+                        "fieldMetadataId": "25cc551c-2386-4c72-92f9-801dbee87460",
+                        "isVisible": true,
+                        "position": 2,
+                        "size": 150
+                    },
+                    {
+                        "id": "38e56cc8-9611-4036-8ade-b6e5e822de8e",
+                        "fieldMetadataId": "faa3ca2f-7425-41f9-99b5-2fc40da8a5b6",
+                        "isVisible": true,
+                        "position": 3,
+                        "size": 150
+                    },
+                    {
+                        "id": "5910af1f-00e1-43ac-8e33-ec7c55234c87",
+                        "fieldMetadataId": "aceb3e99-7231-47b7-9d51-2cb770ff8a41",
+                        "isVisible": true,
+                        "position": 4,
+                        "size": 150
+                    }
+                ],
+                "viewFilters": [],
+                "viewSorts": []
+            },
+            {
+                "id": "81adb8e9-3b15-471b-8b49-5244e4e658b7",
+                "type": "TABLE",
+                "objectMetadataId": "123cc87a-0235-45ff-a9a4-9ac8f9ec7360",
+                "key": "INDEX",
+                "isCustom": false,
+                "visibility": "WORKSPACE",
+                "name": "All Dashboards",
+                "viewFields": [
+                    {
+                        "id": "ee0acf25-ebfb-450f-b49e-3145e5a8e713",
+                        "fieldMetadataId": "43f36a8d-5469-4492-85d8-9d8c1d2ff5c3",
+                        "isVisible": true,
+                        "position": 0,
+                        "size": 200
+                    },
+                    {
+                        "id": "d8fff017-93e0-4466-b0dd-4938ac9de7e6",
+                        "fieldMetadataId": "a16417b1-1e3d-4a4c-abfe-556dab8ed8ee",
+                        "isVisible": true,
+                        "position": 1,
+                        "size": 150
+                    },
+                    {
+                        "id": "7f9cc516-f8fb-4d25-9979-abddee6e8bfb",
+                        "fieldMetadataId": "9b08d48f-cbd6-414c-ad6c-d26a89514c68",
+                        "isVisible": true,
+                        "position": 2,
+                        "size": 150
+                    },
+                    {
+                        "id": "0297d822-ec38-431f-954e-61cdc4195667",
+                        "fieldMetadataId": "1a90689b-12bc-4324-b3d2-025d7ec6c9f9",
+                        "isVisible": true,
+                        "position": 3,
+                        "size": 150
+                    }
+                ],
+                "viewFilters": [],
+                "viewSorts": []
+            },
+            {
+                "id": "fe45aca0-eeef-4fe6-b7f1-53d23f37bc49",
+                "type": "TABLE",
+                "objectMetadataId": "efe9b7bb-cd1c-4506-839f-1404abd9bf96",
+                "key": "INDEX",
+                "isCustom": false,
+                "visibility": "WORKSPACE",
+                "name": "All Favorites",
+                "viewFields": [
+                    {
+                        "id": "0cba7045-6078-401f-bdbf-a5b70cd7fcd9",
+                        "fieldMetadataId": "33dcb31c-6904-4614-a2ed-164de1546fc4",
+                        "isVisible": true,
+                        "position": 0,
+                        "size": 150
+                    },
+                    {
+                        "id": "4743a9c7-0c26-454e-9994-d84083208fda",
+                        "fieldMetadataId": "9f515158-78ed-47cb-a7ac-8abc763eb84d",
+                        "isVisible": true,
+                        "position": 1,
+                        "size": 150
+                    },
+                    {
+                        "id": "d47cc9e6-9d7f-49f9-8532-e8181ad1fe25",
+                        "fieldMetadataId": "8b3a3b77-1270-4766-a0eb-393111c7f578",
+                        "isVisible": true,
+                        "position": 2,
+                        "size": 150
+                    },
+                    {
+                        "id": "ce59d4cc-07ae-4a44-a78b-5006a9802f0a",
+                        "fieldMetadataId": "e3360134-4bef-4ba3-ae1d-42e593d49f73",
+                        "isVisible": true,
+                        "position": 3,
+                        "size": 150
+                    },
+                    {
+                        "id": "65791afb-1974-4376-9c45-123790afe985",
+                        "fieldMetadataId": "d0fa84f0-8dd1-4214-ac2f-0346b589dea7",
+                        "isVisible": true,
+                        "position": 4,
+                        "size": 150
+                    },
+                    {
+                        "id": "a9dae03d-08bc-4b06-a134-681f8d7fd502",
+                        "fieldMetadataId": "e53d1f5c-0db7-4bcc-811a-eaee2f4258bc",
+                        "isVisible": true,
+                        "position": 5,
+                        "size": 150
+                    },
+                    {
+                        "id": "d45db512-ee94-40bb-b2fa-dce9f0c9bed4",
+                        "fieldMetadataId": "ec142352-add2-4de3-a44b-0422f23543b6",
+                        "isVisible": true,
+                        "position": 6,
+                        "size": 150
+                    },
+                    {
+                        "id": "bd28a38f-8ef4-44b3-a462-c476dd0e2935",
+                        "fieldMetadataId": "6926b782-04e7-4fb0-bb06-64adc522e1c5",
+                        "isVisible": true,
+                        "position": 7,
+                        "size": 150
+                    },
+                    {
+                        "id": "1d1ad651-e055-4261-9582-18d25e0a76e7",
+                        "fieldMetadataId": "97f01519-3ae8-4098-959a-61a65a2ce474",
+                        "isVisible": true,
+                        "position": 8,
+                        "size": 150
+                    }
+                ],
+                "viewFilters": [],
+                "viewSorts": []
+            },
+            {
+                "id": "548a7e8e-d6b7-4d5c-b4b5-e36b38add7ef",
+                "type": "TABLE",
+                "objectMetadataId": "c0c4f5dc-efa5-451f-ba94-974451bbf269",
+                "key": "INDEX",
+                "isCustom": false,
+                "visibility": "WORKSPACE",
+                "name": "All Favorite Folders",
+                "viewFields": [
+                    {
+                        "id": "5fff3e9b-f1ad-4656-be41-be78b1455294",
+                        "fieldMetadataId": "7d89adad-55f6-43d1-917e-dbd7155eb513",
+                        "isVisible": true,
+                        "position": 0,
+                        "size": 150
+                    },
+                    {
+                        "id": "8335aba3-71e9-4312-b4b2-1757e5ff6146",
+                        "fieldMetadataId": "ca2fed93-15e8-4bd8-a972-865ea4692700",
+                        "isVisible": true,
+                        "position": 1,
+                        "size": 150
+                    }
+                ],
+                "viewFilters": [],
+                "viewSorts": []
+            },
+            {
+                "id": "262479f9-2382-4995-b999-80ebc6001d7b",
+                "type": "TABLE",
+                "objectMetadataId": "242488e5-89c7-4f0d-866f-92be6ea16a28",
+                "key": "INDEX",
+                "isCustom": false,
+                "visibility": "WORKSPACE",
+                "name": "All Messages",
+                "viewFields": [
+                    {
+                        "id": "3456933f-389c-4077-83d0-e0ad810dc6f5",
+                        "fieldMetadataId": "003f5bab-2f7c-461e-a214-6d5f5471cc00",
+                        "isVisible": true,
+                        "position": 0,
+                        "size": 180
+                    },
+                    {
+                        "id": "b4edc8c3-6969-47f8-9a31-a56111b5ecd2",
+                        "fieldMetadataId": "9fbd406d-2dc5-49f7-8238-0ee55ec90b0f",
+                        "isVisible": true,
+                        "position": 1,
+                        "size": 150
+                    },
+                    {
+                        "id": "10b6712a-0c09-489d-91e9-fd6b7013af36",
+                        "fieldMetadataId": "30c6d041-e755-4e3f-8c0e-06c89b4211c0",
+                        "isVisible": true,
+                        "position": 2,
+                        "size": 150
+                    },
+                    {
+                        "id": "dd52951c-853e-4983-be50-f2cfaa60061a",
+                        "fieldMetadataId": "c1f5c480-8b1d-4bd7-9e4a-fb606a73fb9c",
+                        "isVisible": true,
+                        "position": 3,
+                        "size": 150
+                    },
+                    {
+                        "id": "2fb7867a-4032-4224-beda-9438d1d7d1b4",
+                        "fieldMetadataId": "2d9003d6-b1d1-4331-bad3-d54a1f07c23f",
+                        "isVisible": true,
+                        "position": 4,
+                        "size": 180
+                    },
+                    {
+                        "id": "595384d2-8d7a-46c6-8585-8009b0056499",
+                        "fieldMetadataId": "6542fe3d-ee50-4c47-8c0b-75d984f403da",
+                        "isVisible": true,
+                        "position": 5,
+                        "size": 200
+                    },
+                    {
+                        "id": "0b76b58d-5f32-4b66-8b5f-6148a9e786c5",
+                        "fieldMetadataId": "9e13c754-6a88-4eb8-9399-30730b1fc3fa",
+                        "isVisible": true,
+                        "position": 6,
+                        "size": 150
+                    }
+                ],
+                "viewFilters": [],
+                "viewSorts": []
+            },
+            {
+                "id": "744440a0-5bc9-4f32-ad44-76654d67840b",
+                "type": "TABLE",
+                "objectMetadataId": "79d7c675-855c-45fa-b3fc-35a72f6c2b53",
+                "key": "INDEX",
+                "isCustom": false,
+                "visibility": "WORKSPACE",
+                "name": "All Message Channels",
+                "viewFields": [
+                    {
+                        "id": "be15fcda-d8d9-4815-8e1f-6a5242d996db",
+                        "fieldMetadataId": "6f847e58-2df8-4af3-8065-df35d7431a22",
+                        "isVisible": true,
+                        "position": 0,
+                        "size": 150
+                    },
+                    {
+                        "id": "3e181dc1-7d1e-4007-a004-869f74369542",
+                        "fieldMetadataId": "6c113da1-90ff-40ec-a32d-6493fe30cfeb",
+                        "isVisible": true,
+                        "position": 1,
+                        "size": 150
+                    },
+                    {
+                        "id": "61083e86-24b5-4692-b131-408d8d857a5c",
+                        "fieldMetadataId": "ae2fd90d-a8c3-4857-92c5-34c1d483e4d4",
+                        "isVisible": true,
+                        "position": 2,
+                        "size": 150
+                    },
+                    {
+                        "id": "3fe8e120-85b4-4219-b4a3-378513cc880a",
+                        "fieldMetadataId": "26fd5f5f-e4c3-41b0-99dd-72c6ccf75dcf",
+                        "isVisible": true,
+                        "position": 3,
+                        "size": 150
+                    },
+                    {
+                        "id": "8aee9c43-bff4-461a-84a8-d8577da63a20",
+                        "fieldMetadataId": "1d8b2a9e-c5bd-4420-9168-082cc545adce",
+                        "isVisible": true,
+                        "position": 4,
+                        "size": 150
+                    },
+                    {
+                        "id": "452e5b73-82a7-45f9-a6dc-771cd7b03c06",
+                        "fieldMetadataId": "acf162ce-52db-4962-bba6-6ef4182c7bf5",
+                        "isVisible": true,
+                        "position": 5,
+                        "size": 150
+                    },
+                    {
+                        "id": "6ebff4a0-d2d3-441b-9261-640845153b75",
+                        "fieldMetadataId": "df5fe3b5-e20b-4232-ba0b-f5685ae95e48",
+                        "isVisible": true,
+                        "position": 6,
+                        "size": 150
+                    }
+                ],
+                "viewFilters": [],
+                "viewSorts": []
+            },
+            {
+                "id": "3720f97c-f1a3-447e-b6b3-a007c0dd4860",
+                "type": "TABLE",
+                "objectMetadataId": "809a9fbd-43b6-4a74-98ed-7de63edd84ea",
+                "key": "INDEX",
+                "isCustom": false,
+                "visibility": "WORKSPACE",
+                "name": "All Message Channel Message Associations",
+                "viewFields": [
+                    {
+                        "id": "facb73a3-592b-4bc8-9709-f598ec994829",
+                        "fieldMetadataId": "174c8b21-fb31-4c17-b40a-b8cf1fbb84a8",
+                        "isVisible": true,
+                        "position": 0,
+                        "size": 150
+                    },
+                    {
+                        "id": "dfeb187e-bf0b-4a8b-8bd9-d4b5582dbb73",
+                        "fieldMetadataId": "a379f43d-4239-42d1-9821-9a620f35efd0",
+                        "isVisible": true,
+                        "position": 1,
+                        "size": 150
+                    },
+                    {
+                        "id": "10221853-3675-4046-b984-29bd5f28f294",
+                        "fieldMetadataId": "954193dc-373b-44db-9751-5a1bdcd8bd32",
+                        "isVisible": true,
+                        "position": 2,
+                        "size": 150
+                    },
+                    {
+                        "id": "901406c7-2735-4fcd-85ba-923ff6a54176",
+                        "fieldMetadataId": "b3779096-7d51-4899-9b8f-a0e35419ec75",
+                        "isVisible": true,
+                        "position": 3,
+                        "size": 150
+                    },
+                    {
+                        "id": "c25840e6-cc5e-4ae1-a1db-9e816fdf8dfb",
+                        "fieldMetadataId": "bfaa78b7-d429-4e36-9fec-5634b0e89c98",
+                        "isVisible": true,
+                        "position": 4,
+                        "size": 150
+                    }
+                ],
+                "viewFilters": [],
+                "viewSorts": []
+            },
+            {
+                "id": "4fb34a20-d275-47ff-a863-278c6638e9ec",
+                "type": "TABLE",
+                "objectMetadataId": "aa69a65c-4bcd-4672-9dde-134d35328154",
+                "key": "INDEX",
+                "isCustom": false,
+                "visibility": "WORKSPACE",
+                "name": "All Message Channel Message Association Message Folders",
+                "viewFields": [
+                    {
+                        "id": "df572e2a-4993-421b-a2c1-1f1fdb2f1026",
+                        "fieldMetadataId": "6015c74b-2720-4cda-bdd6-a6e309908092",
+                        "isVisible": true,
+                        "position": 0,
+                        "size": 150
+                    },
+                    {
+                        "id": "704040b0-3615-47f5-923d-0bf81fad716f",
+                        "fieldMetadataId": "8458deef-ee46-40dc-94d3-bf6c3532daf0",
+                        "isVisible": true,
+                        "position": 1,
+                        "size": 150
+                    },
+                    {
+                        "id": "d6b2156d-463c-41a2-a66f-ba8784cf2d9b",
+                        "fieldMetadataId": "13610b43-57f4-4f78-ab4e-9d909d873360",
+                        "isVisible": true,
+                        "position": 2,
+                        "size": 150
+                    }
+                ],
+                "viewFilters": [],
+                "viewSorts": []
+            },
+            {
+                "id": "40745653-a5cb-4a94-b9c8-ff0895c0b4f2",
+                "type": "TABLE",
+                "objectMetadataId": "3f47e8c7-f7d6-4d41-b5d0-c5999feebcbc",
+                "key": "INDEX",
+                "isCustom": false,
+                "visibility": "WORKSPACE",
+                "name": "All Message Folders",
+                "viewFields": [
+                    {
+                        "id": "fe915d9c-f6e5-42ac-87de-2b3f3838bc74",
+                        "fieldMetadataId": "09246369-47f5-4ae2-b1f3-e66ab28977cc",
+                        "isVisible": true,
+                        "position": 0,
+                        "size": 150
+                    },
+                    {
+                        "id": "0872a9eb-891b-42d8-9e89-5f530a8684b5",
+                        "fieldMetadataId": "3ea6f1f6-1e51-4064-945b-f7f6bc6d2bad",
+                        "isVisible": true,
+                        "position": 1,
+                        "size": 150
+                    },
+                    {
+                        "id": "16f97310-d15d-498f-bd4a-2d7dbecd5ee3",
+                        "fieldMetadataId": "5d058272-7632-4d63-b896-4b4676c09371",
+                        "isVisible": true,
+                        "position": 2,
+                        "size": 150
+                    },
+                    {
+                        "id": "78842a9d-12b5-42c3-b5f9-03bc0842e5ee",
+                        "fieldMetadataId": "045b2f3c-7bd1-4b83-9a62-e4ff0d650e4e",
+                        "isVisible": true,
+                        "position": 3,
+                        "size": 150
+                    },
+                    {
+                        "id": "83760696-9299-4184-9812-bbba18ed8efb",
+                        "fieldMetadataId": "23ce3d75-7908-4f84-8d2e-41d15f7fe853",
+                        "isVisible": true,
+                        "position": 4,
+                        "size": 150
+                    }
+                ],
+                "viewFilters": [],
+                "viewSorts": []
+            },
+            {
+                "id": "62d94f59-3248-486e-8c0e-7fab4b52eb37",
+                "type": "TABLE",
+                "objectMetadataId": "30792b38-3752-42ee-a485-dad05ef0ffb9",
+                "key": "INDEX",
+                "isCustom": false,
+                "visibility": "WORKSPACE",
+                "name": "All Message Participants",
+                "viewFields": [
+                    {
+                        "id": "44c4ef1f-2314-429f-b04e-c2ef93571375",
+                        "fieldMetadataId": "412531b7-f66f-458c-a7e8-efd74516ce5c",
+                        "isVisible": true,
+                        "position": 0,
+                        "size": 150
+                    },
+                    {
+                        "id": "342dae65-8f38-4246-b69f-1ada0ac11286",
+                        "fieldMetadataId": "e6a16805-8638-42fb-99b6-fe09820dd78e",
+                        "isVisible": true,
+                        "position": 1,
+                        "size": 150
+                    },
+                    {
+                        "id": "cd042150-3fc4-45ac-82de-3e3f0c2186e3",
+                        "fieldMetadataId": "e98ab181-0c8e-44fb-8c58-596066faccf6",
+                        "isVisible": true,
+                        "position": 2,
+                        "size": 150
+                    },
+                    {
+                        "id": "fe0c4502-9d99-4ee7-9333-53b58c01528a",
+                        "fieldMetadataId": "01d18a86-6f9c-4f1c-922e-ed46742c7655",
+                        "isVisible": true,
+                        "position": 3,
+                        "size": 150
+                    },
+                    {
+                        "id": "0fbacf40-f78f-45b3-932c-5bec85b8cbac",
+                        "fieldMetadataId": "f8a2ef3b-1101-45bb-995e-f341844bc243",
+                        "isVisible": true,
+                        "position": 4,
+                        "size": 150
+                    },
+                    {
+                        "id": "7d14efb1-dee6-4f09-ab4a-47067f6881bd",
+                        "fieldMetadataId": "a183aacc-cfb3-485e-b212-0ec41bbe90ca",
+                        "isVisible": true,
+                        "position": 5,
+                        "size": 150
+                    },
+                    {
+                        "id": "1779dc3f-70b4-40d6-bafd-505fa099131d",
+                        "fieldMetadataId": "435f831c-c9fc-405b-a10f-16987952ee59",
+                        "isVisible": true,
+                        "position": 6,
+                        "size": 150
+                    }
+                ],
+                "viewFilters": [],
+                "viewSorts": []
+            },
+            {
+                "id": "de0994f9-68f8-4c10-9453-9cfe2312bc1b",
+                "type": "TABLE",
+                "objectMetadataId": "39411826-fa43-4b73-a89c-631e418e91f8",
+                "key": "INDEX",
+                "isCustom": false,
+                "visibility": "WORKSPACE",
+                "name": "All Message Threads",
+                "viewFields": [
+                    {
+                        "id": "aa8fea48-e527-4895-8d2e-213d32e60458",
+                        "fieldMetadataId": "132405ce-1a8a-4448-bc38-3572b63c8d5b",
+                        "isVisible": true,
+                        "position": 0,
+                        "size": 180
+                    },
+                    {
+                        "id": "7b83c5e4-a6b3-4699-9aa5-20ed5251b131",
+                        "fieldMetadataId": "a6e4e252-957c-4d0f-87e0-227da7d88e7b",
+                        "isVisible": true,
+                        "position": 1,
+                        "size": 150
+                    }
+                ],
+                "viewFilters": [],
+                "viewSorts": []
+            },
+            {
+                "id": "76d02f7c-f752-4de6-bea4-6a4f3c58f754",
+                "type": "TABLE",
+                "objectMetadataId": "1df80fa9-1f2e-4ba7-af02-bb5d0bc39785",
+                "key": "INDEX",
+                "isCustom": false,
+                "visibility": "WORKSPACE",
+                "name": "All Notes",
+                "viewFields": [
+                    {
+                        "id": "04dab9da-6be8-4b03-89be-eaf2a78043de",
+                        "fieldMetadataId": "648f4a33-cbd3-4e24-a47b-7c27dc0ad47f",
+                        "isVisible": true,
+                        "position": 0,
+                        "size": 210
+                    },
+                    {
+                        "id": "1d45d73e-0996-4a8e-8ef5-312ba864ce32",
+                        "fieldMetadataId": "0ad98f45-c04b-4ba2-ae7b-6732320dad2d",
+                        "isVisible": true,
+                        "position": 1,
+                        "size": 150
+                    },
+                    {
+                        "id": "ce35b758-1a39-492a-ad0a-93b7b6128886",
+                        "fieldMetadataId": "3f844a40-255b-4208-bf99-5d092b3e45f6",
+                        "isVisible": true,
+                        "position": 2,
+                        "size": 150
+                    },
+                    {
+                        "id": "b2c9d594-fb6b-4c3b-9253-eeccb27c3a07",
+                        "fieldMetadataId": "0ee491bd-8177-42c7-bdde-9f70bf8187ae",
+                        "isVisible": true,
+                        "position": 3,
+                        "size": 150
+                    },
+                    {
+                        "id": "0201074e-054f-4ad5-9704-55156816a956",
+                        "fieldMetadataId": "f3033b4a-2ab7-4413-a7e5-798a135caf05",
+                        "isVisible": true,
+                        "position": 4,
+                        "size": 150
+                    }
+                ],
+                "viewFilters": [],
+                "viewSorts": []
+            },
+            {
+                "id": "e3412a35-a12c-49d5-bfda-dcbb9f745ce3",
+                "type": "TABLE",
+                "objectMetadataId": "bdc17096-d1db-447f-8641-cb23ec3e6cda",
+                "key": "INDEX",
+                "isCustom": false,
+                "visibility": "WORKSPACE",
+                "name": "All Note Targets",
+                "viewFields": [
+                    {
+                        "id": "215746b7-3f34-4c3f-a838-a5327152f1e5",
+                        "fieldMetadataId": "5052182b-e7db-417a-9263-44236fdac105",
+                        "isVisible": true,
+                        "position": 0,
+                        "size": 210
+                    },
+                    {
+                        "id": "0710a192-bdd9-4c93-87a3-d2be3436e6f1",
+                        "fieldMetadataId": "8f7d937f-ef3c-4ba5-a15c-2e60842f2324",
+                        "isVisible": true,
+                        "position": 1,
+                        "size": 150
+                    },
+                    {
+                        "id": "38327897-4e6c-4d8c-a870-f984adc8bb85",
+                        "fieldMetadataId": "8bb7b8ec-9173-4650-b003-f2d32579f69b",
+                        "isVisible": true,
+                        "position": 2,
+                        "size": 150
+                    },
+                    {
+                        "id": "0faddcee-823e-478c-8237-3b29d49af9e0",
+                        "fieldMetadataId": "d60ddbc1-2e46-4f8e-9d35-187c06ab38cb",
+                        "isVisible": true,
+                        "position": 3,
+                        "size": 150
+                    },
+                    {
+                        "id": "7d4924ec-83e4-4e71-96d5-06070264689c",
+                        "fieldMetadataId": "56307ac7-7f56-4e3e-bbe5-606bd7efe12c",
+                        "isVisible": true,
+                        "position": 4,
+                        "size": 150
+                    }
+                ],
+                "viewFilters": [],
+                "viewSorts": []
+            },
+            {
+                "id": "af4b4ded-4c3f-4134-a2d0-7bfa0ee7138c",
+                "type": "TABLE",
+                "objectMetadataId": "1c666129-4bb6-4268-8ffc-b1cc3641b2b5",
+                "key": "INDEX",
+                "isCustom": false,
+                "visibility": "WORKSPACE",
+                "name": "All Opportunities",
+                "viewFields": [
+                    {
+                        "id": "0ed32c70-d651-480f-95f1-64424d972feb",
+                        "fieldMetadataId": "c0949012-1221-4ca5-b5e0-974a8b81449c",
+                        "isVisible": true,
+                        "position": 0,
+                        "size": 150
+                    },
+                    {
+                        "id": "acc7e208-f4fa-4a0b-8e49-2939c5520e22",
+                        "fieldMetadataId": "f816ea15-0df0-488a-8ebf-74950e28453d",
+                        "isVisible": true,
+                        "position": 1,
+                        "size": 150
+                    },
+                    {
+                        "id": "36985439-5483-4765-8ff9-7e63bf6db398",
+                        "fieldMetadataId": "06830a0c-b0c9-4e21-8ba1-cfb59703d701",
+                        "isVisible": true,
+                        "position": 2,
+                        "size": 150
+                    },
+                    {
+                        "id": "3c9ea1a7-3432-470c-a23c-34ad5599af5a",
+                        "fieldMetadataId": "c3ccf6b1-f5d7-4bb6-85ef-ce1c0a2c9fe9",
+                        "isVisible": true,
+                        "position": 3,
+                        "size": 150
+                    },
+                    {
+                        "id": "b0352fcf-adee-408a-b848-594c1a8d90df",
+                        "fieldMetadataId": "e97af6a2-9825-4a27-824d-630617496246",
+                        "isVisible": true,
+                        "position": 4,
+                        "size": 150
+                    },
+                    {
+                        "id": "257e07e2-af8e-445a-91ca-957b7d0eade4",
+                        "fieldMetadataId": "b901d00a-0f6c-4cc4-bd33-71d74475bf9b",
+                        "isVisible": true,
+                        "position": 5,
+                        "size": 150
+                    }
+                ],
+                "viewFilters": [],
+                "viewSorts": []
+            },
+            {
+                "id": "0eecf6fb-deed-46ea-ad51-a694d1727858",
+                "type": "TABLE",
+                "objectMetadataId": "59cfafd8-befe-42f3-8bf9-2c450c12d369",
+                "key": "INDEX",
+                "isCustom": false,
+                "visibility": "WORKSPACE",
+                "name": "All People",
+                "viewFields": [
+                    {
+                        "id": "bcf5d535-c72a-46dd-9334-a8d90a0c7899",
+                        "fieldMetadataId": "f690a1c6-04c7-4b12-b25f-169d27b99c0a",
+                        "isVisible": true,
+                        "position": 0,
+                        "size": 210
+                    },
+                    {
+                        "id": "e2ca7fd1-73f2-48a8-a2b4-441a4b0add3e",
+                        "fieldMetadataId": "f36856fd-d35b-4ba5-8281-bf53cc6f9bd0",
+                        "isVisible": true,
+                        "position": 1,
+                        "size": 150
+                    },
+                    {
+                        "id": "12b90d5e-b4d8-4e6f-aad6-2cb0519d1002",
+                        "fieldMetadataId": "5c298daf-b15a-40e8-9825-040cebfaa157",
+                        "isVisible": true,
+                        "position": 2,
+                        "size": 150
+                    },
+                    {
+                        "id": "608d8612-6951-49a9-8333-9a88d98c74ce",
+                        "fieldMetadataId": "fbabf8a8-d507-463c-8e76-6ae96e352764",
+                        "isVisible": true,
+                        "position": 3,
+                        "size": 150
+                    },
+                    {
+                        "id": "a4d317fe-957a-44cc-80cf-b42dfc002304",
+                        "fieldMetadataId": "7cb621e6-2660-4e48-bc62-8742e30fc222",
+                        "isVisible": true,
+                        "position": 4,
+                        "size": 150
+                    },
+                    {
+                        "id": "e7d3d203-5713-48d2-a160-8e6f39ca1955",
+                        "fieldMetadataId": "afc41d65-ab09-470e-9d05-74eda7568b39",
+                        "isVisible": true,
+                        "position": 5,
+                        "size": 150
+                    },
+                    {
+                        "id": "7f9c8442-da68-424b-95e8-9c629b051ac8",
+                        "fieldMetadataId": "17f0ffc0-da35-449c-9a90-32f17f58fc3c",
+                        "isVisible": true,
+                        "position": 6,
+                        "size": 150
+                    },
+                    {
+                        "id": "7e7349ae-4433-421b-9a6e-849c14cc3a84",
+                        "fieldMetadataId": "3f4721b7-5492-45be-8bca-f123ad210b8a",
+                        "isVisible": true,
+                        "position": 7,
+                        "size": 150
+                    },
+                    {
+                        "id": "654df492-22ba-4762-a3a1-ad98a555c8fd",
+                        "fieldMetadataId": "cafb0ca3-544b-4bba-b5bb-75a95ee54aa1",
+                        "isVisible": true,
+                        "position": 8,
+                        "size": 150
+                    },
+                    {
+                        "id": "0e754e97-74a7-42cf-9f81-c12f4e9da453",
+                        "fieldMetadataId": "fd6e00d1-1963-497c-8caa-9d8f37c3632c",
+                        "isVisible": true,
+                        "position": 9,
+                        "size": 150
+                    }
+                ],
+                "viewFilters": [],
+                "viewSorts": []
+            },
+            {
+                "id": "1138b482-c033-46e7-becc-5c3db53619f2",
+                "type": "TABLE",
+                "objectMetadataId": "483c7abb-fc9b-4adb-b185-c6b90e2c2a30",
+                "key": "INDEX",
+                "isCustom": false,
+                "visibility": "WORKSPACE",
+                "name": "All Tasks",
+                "viewFields": [
+                    {
+                        "id": "febabcde-a96d-4091-b7c5-e908c08913c9",
+                        "fieldMetadataId": "5fccf926-7f49-4206-bf38-8b21719b4dd7",
+                        "isVisible": true,
+                        "position": 0,
+                        "size": 210
+                    },
+                    {
+                        "id": "020c668c-5aa7-4039-ad05-a7384fed9533",
+                        "fieldMetadataId": "cb9961fe-1218-46ca-ae6d-877b8a29d220",
+                        "isVisible": true,
+                        "position": 2,
+                        "size": 150
+                    },
+                    {
+                        "id": "12692fc1-6993-431d-860d-bb4953cd37af",
+                        "fieldMetadataId": "17938020-145b-48c6-aada-64b9f0ed0f9d",
+                        "isVisible": true,
+                        "position": 3,
+                        "size": 150
+                    },
+                    {
+                        "id": "d24bad08-4f9c-4751-80b6-00d90d674a15",
+                        "fieldMetadataId": "ea0a21e5-d607-4ef5-9939-2fc2531bf7b1",
+                        "isVisible": true,
+                        "position": 4,
+                        "size": 150
+                    },
+                    {
+                        "id": "d2356116-1039-4be9-b9b6-8113cf7b106f",
+                        "fieldMetadataId": "d0bbb170-b082-4346-a62c-7ccd58ba2705",
+                        "isVisible": true,
+                        "position": 5,
+                        "size": 150
+                    },
+                    {
+                        "id": "2e850b97-1c66-4d91-82aa-a1224a65ebb5",
+                        "fieldMetadataId": "faea65d2-f638-4c48-bd0a-f9a3300d855b",
+                        "isVisible": true,
+                        "position": 6,
+                        "size": 150
+                    },
+                    {
+                        "id": "4fcb7994-73b8-4518-b4fd-353bd60ee6d2",
+                        "fieldMetadataId": "26fa652b-d186-4701-bdfe-6a3911be7830",
+                        "isVisible": true,
+                        "position": 7,
+                        "size": 150
+                    },
+                    {
+                        "id": "f445ee09-0697-4a6f-abea-afee000e10b6",
+                        "fieldMetadataId": "59355d23-f106-473c-89c2-47b92303ccd2",
+                        "isVisible": true,
+                        "position": 8,
+                        "size": 150
+                    }
+                ],
+                "viewFilters": [],
+                "viewSorts": []
+            },
+            {
+                "id": "922d39fb-4f1f-453f-be2b-ef7d3649e746",
+                "type": "TABLE",
+                "objectMetadataId": "dca7a9c2-3213-4a81-8096-55895fc9b41e",
+                "key": "INDEX",
+                "isCustom": false,
+                "visibility": "WORKSPACE",
+                "name": "All Task Targets",
+                "viewFields": [
+                    {
+                        "id": "3f6d7f50-5077-44a3-8b2f-2ead48ae8347",
+                        "fieldMetadataId": "f8071026-4166-4cfc-8fc9-5404100689d2",
+                        "isVisible": true,
+                        "position": 0,
+                        "size": 210
+                    },
+                    {
+                        "id": "f16c464b-d908-4087-b503-e3b7eb4d306a",
+                        "fieldMetadataId": "9f995fb6-cd30-479e-bae8-50431b24c9c2",
+                        "isVisible": true,
+                        "position": 1,
+                        "size": 150
+                    },
+                    {
+                        "id": "4e3d7817-49d3-43ec-baa0-e17fceffd162",
+                        "fieldMetadataId": "7490261e-fe70-42fa-91d4-1ebf20b014cb",
+                        "isVisible": true,
+                        "position": 2,
+                        "size": 150
+                    },
+                    {
+                        "id": "6d567f6c-6e2e-404b-8ecd-7e316c77eb7f",
+                        "fieldMetadataId": "8c89411f-9283-48aa-9f29-052879d039cf",
+                        "isVisible": true,
+                        "position": 3,
+                        "size": 150
+                    },
+                    {
+                        "id": "d849a84a-5da1-4037-9c6a-15275d85a54e",
+                        "fieldMetadataId": "9df3738b-553f-458e-9b59-d2ef6affea68",
+                        "isVisible": true,
+                        "position": 4,
+                        "size": 150
+                    }
+                ],
+                "viewFilters": [],
+                "viewSorts": []
+            },
+            {
+                "id": "5455a942-edd0-43d2-bed6-d17f2d5772bd",
+                "type": "TABLE",
+                "objectMetadataId": "f4507080-123e-457b-9c77-5fe8afc15aad",
+                "key": "INDEX",
+                "isCustom": false,
+                "visibility": "WORKSPACE",
+                "name": "All Timeline Activities",
+                "viewFields": [
+                    {
+                        "id": "65f17118-83f3-4973-bed9-7b43bc3de78f",
+                        "fieldMetadataId": "66cf7ea3-5cc3-44f6-a84c-fda758041bc4",
+                        "isVisible": true,
+                        "position": 0,
+                        "size": 210
+                    },
+                    {
+                        "id": "b0848e06-3e9e-4889-8b2b-64642231362c",
+                        "fieldMetadataId": "c2f87a78-ff3f-4665-be50-6fbe69802a88",
+                        "isVisible": true,
+                        "position": 1,
+                        "size": 150
+                    },
+                    {
+                        "id": "35548ed7-4136-41f3-a71c-7c2bca823f81",
+                        "fieldMetadataId": "5799bd03-87b8-4a17-a3db-5512ffbfceb6",
+                        "isVisible": true,
+                        "position": 2,
+                        "size": 150
+                    },
+                    {
+                        "id": "d59c149b-1973-41fe-af77-181d9f3a9824",
+                        "fieldMetadataId": "33071ce4-3b25-4602-8152-35c28b3d3a8d",
+                        "isVisible": true,
+                        "position": 3,
+                        "size": 150
+                    },
+                    {
+                        "id": "ea848aff-02f7-4705-811c-9ecade6bf819",
+                        "fieldMetadataId": "23c4659e-572b-4f1d-b9ea-bf2eae0111f2",
+                        "isVisible": true,
+                        "position": 4,
+                        "size": 150
+                    },
+                    {
+                        "id": "0253b2d8-efed-4a2f-abee-be3610c4bd6c",
+                        "fieldMetadataId": "5bcf7088-9bb2-433e-8c34-a267c9ffc789",
+                        "isVisible": true,
+                        "position": 5,
+                        "size": 150
+                    },
+                    {
+                        "id": "8cf928b9-509e-4ee7-9382-0ebf13ae1ec8",
+                        "fieldMetadataId": "32a1980d-ab75-424b-937f-18e610a53cc4",
+                        "isVisible": true,
+                        "position": 6,
+                        "size": 150
+                    },
+                    {
+                        "id": "fa0744a3-05d4-4774-8edb-d7612288a4a5",
+                        "fieldMetadataId": "5a1454a7-5b7c-463e-8779-0e0a42e5d948",
+                        "isVisible": true,
+                        "position": 7,
+                        "size": 150
+                    },
+                    {
+                        "id": "a7ebf4ce-4032-4052-8f37-e6c98cbe481f",
+                        "fieldMetadataId": "7f805fa6-6c07-45fa-bac0-4a9668831c74",
+                        "isVisible": true,
+                        "position": 8,
+                        "size": 150
+                    },
+                    {
+                        "id": "757c5682-ce42-405e-ae69-2eac912c5f07",
+                        "fieldMetadataId": "bfa27e74-ff48-4a9f-9070-ae5720dab961",
+                        "isVisible": true,
+                        "position": 9,
+                        "size": 150
+                    },
+                    {
+                        "id": "894cebde-10e9-4650-9b74-8994e4cd1bfa",
+                        "fieldMetadataId": "b0e56528-b72d-43a6-9d14-a65b15283a14",
+                        "isVisible": true,
+                        "position": 10,
+                        "size": 150
+                    },
+                    {
+                        "id": "126e029b-8f4b-447c-ba7a-bc881e78efef",
+                        "fieldMetadataId": "dcc0b726-3e7d-4479-8445-dd1660e3b227",
+                        "isVisible": true,
+                        "position": 11,
+                        "size": 150
+                    }
+                ],
+                "viewFilters": [],
+                "viewSorts": []
+            },
+            {
+                "id": "b38b5237-11cb-4530-bea8-66c0142ccc2d",
+                "type": "TABLE",
+                "objectMetadataId": "04d6d662-db7d-462a-8504-8fdab5094e21",
+                "key": "INDEX",
+                "isCustom": false,
+                "visibility": "WORKSPACE",
+                "name": "All Workflows",
+                "viewFields": [
+                    {
+                        "id": "14ba557b-4027-498e-af04-9ba5ee1c06f0",
+                        "fieldMetadataId": "3cae27f9-9205-408f-b441-b2b83038c293",
+                        "isVisible": true,
+                        "position": 0,
+                        "size": 150
+                    },
+                    {
+                        "id": "9f100613-e5c0-45b0-a57c-33ac4014abea",
+                        "fieldMetadataId": "afaf59f7-0446-43ca-a58a-a2d2e030071b",
+                        "isVisible": true,
+                        "position": 1,
+                        "size": 150
+                    },
+                    {
+                        "id": "738107b3-c4f9-484f-a477-add00b721a84",
+                        "fieldMetadataId": "de11329f-5977-4c81-a711-02e026844b4b",
+                        "isVisible": true,
+                        "position": 2,
+                        "size": 150
+                    },
+                    {
+                        "id": "b0715f41-8f2e-4e27-aacb-4712c3775706",
+                        "fieldMetadataId": "5bb5c946-e2c2-4b5e-b899-511d050c270f",
+                        "isVisible": true,
+                        "position": 3,
+                        "size": 150
+                    },
+                    {
+                        "id": "f2ec039e-e889-4bb4-a053-05947fdf39a1",
+                        "fieldMetadataId": "a16c5502-a0f7-40c8-8212-2e9d91f253b9",
+                        "isVisible": true,
+                        "position": 4,
+                        "size": 150
+                    },
+                    {
+                        "id": "8efaf324-3e29-42e6-b77c-7d22a0796887",
+                        "fieldMetadataId": "9dfa09f4-9501-48cd-80f2-cfa9cb465761",
+                        "isVisible": true,
+                        "position": 5,
+                        "size": 150
+                    }
+                ],
+                "viewFilters": [],
+                "viewSorts": []
+            },
+            {
+                "id": "113d53f4-7ea2-4dc8-a47f-0c38e731a1b5",
+                "type": "TABLE",
+                "objectMetadataId": "a5f9d91e-c0eb-4c17-8c7a-f2703290fdce",
+                "key": "INDEX",
+                "isCustom": false,
+                "visibility": "WORKSPACE",
+                "name": "All Workflow Automated Triggers",
+                "viewFields": [
+                    {
+                        "id": "aedae1a7-26f2-4345-841c-770196862b32",
+                        "fieldMetadataId": "033f6a9c-4e65-41a9-8327-cacea88e1b34",
+                        "isVisible": true,
+                        "position": 0,
+                        "size": 150
+                    },
+                    {
+                        "id": "707eb7dd-b298-4ea7-a175-e25409e3a3f6",
+                        "fieldMetadataId": "70bf831a-4869-44ab-afa3-d95f88819a5c",
+                        "isVisible": true,
+                        "position": 1,
+                        "size": 150
+                    },
+                    {
+                        "id": "e24a0334-85ad-474d-8639-9e31f55d4f93",
+                        "fieldMetadataId": "22452892-8345-4f49-b072-fa253a433a05",
+                        "isVisible": true,
+                        "position": 2,
+                        "size": 150
+                    }
+                ],
+                "viewFilters": [],
+                "viewSorts": []
+            },
+            {
+                "id": "3717ad7f-eb51-4fdf-b312-9e19910eacbc",
+                "type": "TABLE",
+                "objectMetadataId": "76e2c6fd-aa39-418a-a5d7-6114c694128f",
+                "key": "INDEX",
+                "isCustom": false,
+                "visibility": "WORKSPACE",
+                "name": "Runs",
+                "viewFields": [
+                    {
+                        "id": "869dceec-38be-41b1-aad4-dbd2472da514",
+                        "fieldMetadataId": "5913b031-e8e6-4f5d-b25d-377cda5d2e1d",
+                        "isVisible": true,
+                        "position": 0,
+                        "size": 150
+                    },
+                    {
+                        "id": "da66a60e-f6c9-4c78-9e40-0a78424bbbdc",
+                        "fieldMetadataId": "d45e8e71-473a-4778-9cf5-4e8275447399",
+                        "isVisible": true,
+                        "position": 1,
+                        "size": 150
+                    },
+                    {
+                        "id": "e06d2a19-822d-4d12-9cd0-31c90e61e84c",
+                        "fieldMetadataId": "98565e0b-3e2e-4261-917e-2a0a6225744a",
+                        "isVisible": true,
+                        "position": 2,
+                        "size": 150
+                    }
+                ],
+                "viewFilters": [],
+                "viewSorts": []
+            },
+            {
+                "id": "1cf452f8-2f4d-498c-8714-bd79833b6b28",
+                "type": "TABLE",
+                "objectMetadataId": "d05a1e4a-8d85-4271-809b-526ccf7fdf6e",
+                "key": "INDEX",
+                "isCustom": false,
+                "visibility": "WORKSPACE",
+                "name": "Versions",
+                "viewFields": [
+                    {
+                        "id": "10aade72-789a-4aba-a089-46bd0b68d637",
+                        "fieldMetadataId": "d1c241a6-1fa5-4370-8ec5-f687b0f14f32",
+                        "isVisible": true,
+                        "position": 0,
+                        "size": 150
+                    },
+                    {
+                        "id": "cb2a2ea5-2da4-4462-a21b-47630fd3ef52",
+                        "fieldMetadataId": "d9063bf0-1a36-48a3-ae05-22c805afede3",
+                        "isVisible": true,
+                        "position": 1,
+                        "size": 150
+                    },
+                    {
+                        "id": "a85e24c1-1aba-44a1-b8db-b8c9fd38d6c5",
+                        "fieldMetadataId": "3bfa0ecc-aa19-42c4-8283-1f5341a6de4d",
+                        "isVisible": true,
+                        "position": 2,
+                        "size": 150
+                    },
+                    {
+                        "id": "89a46277-ef31-400f-b7ad-a449b4eda612",
+                        "fieldMetadataId": "061eebf4-a593-4891-8abb-15ecceb9f6fb",
+                        "isVisible": true,
+                        "position": 3,
+                        "size": 150
+                    },
+                    {
+                        "id": "ae6e0b29-c996-414f-98da-e8448da556c9",
+                        "fieldMetadataId": "a753a25e-eaf8-440d-8c0a-241d2d6cc4a7",
+                        "isVisible": true,
+                        "position": 4,
+                        "size": 150
+                    }
+                ],
+                "viewFilters": [],
+                "viewSorts": []
+            },
+            {
+                "id": "e1f99eef-241f-4c92-af0f-7c538137b580",
+                "type": "TABLE",
+                "objectMetadataId": "a221ba07-844e-43ed-9966-18139659e6e6",
+                "key": "INDEX",
+                "isCustom": false,
+                "visibility": "WORKSPACE",
+                "name": "All Workspace Members",
+                "viewFields": [
+                    {
+                        "id": "56347ba9-11b4-4bc6-b339-64b62db8f1a3",
+                        "fieldMetadataId": "bdcc7125-a48d-4b6f-b269-4a9fea4ced15",
+                        "isVisible": true,
+                        "position": 0,
+                        "size": 210
+                    },
+                    {
+                        "id": "2cef2e00-1e08-4de1-b9f0-98dc4fff53bc",
+                        "fieldMetadataId": "c3ad4717-0d77-4d8d-8de9-6c98647a38ba",
+                        "isVisible": true,
+                        "position": 1,
+                        "size": 150
+                    },
+                    {
+                        "id": "39448b9f-6b4a-4aab-886c-acc77569ba16",
+                        "fieldMetadataId": "eed014b6-527d-432c-9d87-0ea0edbabbe6",
+                        "isVisible": true,
+                        "position": 2,
+                        "size": 150
+                    },
+                    {
+                        "id": "653dcfcc-c56f-47db-8c3f-270d508f6d21",
+                        "fieldMetadataId": "0422a648-80cc-42b4-98d7-6f3d83270be6",
+                        "isVisible": true,
+                        "position": 3,
+                        "size": 150
+                    }
+                ],
+                "viewFilters": [],
+                "viewSorts": []
+            },
+            {
+                "id": "b6f2c694-7ef2-4191-88fd-035b6587860d",
+                "type": "TABLE",
+                "objectMetadataId": "0fb541ef-9d3e-49a3-9f2e-db2f9730f1c0",
+                "key": "INDEX",
+                "isCustom": true,
+                "visibility": "WORKSPACE",
+                "name": "All Departments",
+                "viewFields": [],
+                "viewFilters": [],
+                "viewSorts": []
+            },
+            {
+                "id": "e8ea3e56-c475-47b6-af13-35036abb38b7",
+                "type": "TABLE",
+                "objectMetadataId": "044e142f-181a-4aa7-acfe-8c9c48288d5b",
+                "key": "INDEX",
+                "isCustom": true,
+                "visibility": "WORKSPACE",
+                "name": "All Meeting Notes",
+                "viewFields": [],
+                "viewFilters": [],
+                "viewSorts": []
+            },
+            {
+                "id": "f57d01b4-6718-4232-856b-e307cb72c27b",
+                "type": "TABLE",
+                "objectMetadataId": "2e688912-bf88-4456-882d-2e68a7b5a162",
+                "key": "INDEX",
+                "isCustom": true,
+                "visibility": "WORKSPACE",
+                "name": "All LATs",
+                "viewFields": [],
+                "viewFilters": [],
+                "viewSorts": []
+            },
+            {
+                "id": "bd18e63e-8d28-47b5-8dff-0367e34f5b0a",
+                "type": "TABLE",
+                "objectMetadataId": "1235ad8b-2435-41a1-9ea4-2586cfd24f37",
+                "key": "INDEX",
+                "isCustom": true,
+                "visibility": "WORKSPACE",
+                "name": "All Factories",
+                "viewFields": [],
+                "viewFilters": [],
+                "viewSorts": []
+            },
+            {
+                "id": "d96a0aa0-0fa6-434f-afcd-487ab6c6df42",
+                "type": "TABLE",
+                "objectMetadataId": "3fa8b72b-996d-4f40-a8c9-7b601bfbbc51",
+                "key": "INDEX",
+                "isCustom": true,
+                "visibility": "WORKSPACE",
+                "name": "All Emails",
+                "viewFields": [
+                    {
+                        "id": "006b4523-4da8-4070-8761-e28f77c2e977",
+                        "fieldMetadataId": "766874cf-0d50-4120-84d8-5f8c5332c244",
+                        "isVisible": true,
+                        "position": 0,
+                        "size": 200
+                    },
+                    {
+                        "id": "4b000712-8854-4612-a388-3db6110d8d1d",
+                        "fieldMetadataId": "1cc905af-9ff2-4b23-9ab0-0844498ceea8",
+                        "isVisible": true,
+                        "position": 1,
+                        "size": 200
+                    },
+                    {
+                        "id": "f4219d03-9886-4463-9ad0-49fb005958df",
+                        "fieldMetadataId": "222ac5fe-c852-498a-9e5a-591c2b4f0d33",
+                        "isVisible": true,
+                        "position": 2,
+                        "size": 300
+                    },
+                    {
+                        "id": "33b180c7-1c52-49ce-bf93-bd7ec1efb8ee",
+                        "fieldMetadataId": "b72f410f-dedd-4a5e-adab-ebbbf47f2368",
+                        "isVisible": true,
+                        "position": 3,
+                        "size": 120
+                    },
+                    {
+                        "id": "1de3c130-9361-4180-8152-6eac4926cdbf",
+                        "fieldMetadataId": "f6fd3939-2eca-4173-807e-307d220af3e0",
+                        "isVisible": true,
+                        "position": 6,
+                        "size": 150
+                    },
+                    {
+                        "id": "d12d1c7b-c2c2-470c-b70f-98fef92ce681",
+                        "fieldMetadataId": "9aa5d74d-1461-4f3a-88d4-3f39df441df1",
+                        "isVisible": true,
+                        "position": 4,
+                        "size": 150
+                    },
+                    {
+                        "id": "f4f76d7b-5971-4584-a77d-40d955b8903f",
+                        "fieldMetadataId": "f5b49de6-fd7e-44b6-ae90-55270f2fb6eb",
+                        "isVisible": true,
+                        "position": 5,
+                        "size": 150
+                    }
+                ],
+                "viewFilters": [],
+                "viewSorts": []
+            },
+            {
+                "id": "1115fe91-34e7-466b-83aa-9a5c1d802081",
+                "type": "TABLE",
+                "objectMetadataId": "73407588-ac2c-48c1-9438-13804732f3f4",
+                "key": null,
+                "isCustom": true,
+                "visibility": "WORKSPACE",
+                "name": "All AI Model Configs",
+                "viewFields": [
+                    {
+                        "id": "f438b5c9-41dc-4661-b0e4-167b9acd592b",
+                        "fieldMetadataId": "c12bb6af-de1c-4eaa-a4f3-638ee9059271",
+                        "isVisible": true,
+                        "position": 0,
+                        "size": 180
+                    },
+                    {
+                        "id": "10bf63c3-e5a9-461b-99bc-f77c0f12fb29",
+                        "fieldMetadataId": "14e3b6e1-10cc-443c-a610-2f0fc2be7ac7",
+                        "isVisible": true,
+                        "position": 1,
+                        "size": 180
+                    },
+                    {
+                        "id": "eba33581-1a95-4492-af9d-9b1aa7f2048a",
+                        "fieldMetadataId": "fc21dda0-42bb-4969-bb4a-367bbdbeae95",
+                        "isVisible": true,
+                        "position": 2,
+                        "size": 180
+                    },
+                    {
+                        "id": "cf018056-76b4-48d2-a4d1-c7fa888682fd",
+                        "fieldMetadataId": "fa95c71e-0b81-407f-b7a9-be9250e86f4a",
+                        "isVisible": true,
+                        "position": 3,
+                        "size": 180
+                    },
+                    {
+                        "id": "df202beb-3465-4e89-8831-cefcb4828bc3",
+                        "fieldMetadataId": "8b755e18-4271-4327-94ec-aca815e005e4",
+                        "isVisible": true,
+                        "position": 4,
+                        "size": 180
+                    },
+                    {
+                        "id": "bfc18567-097f-4d39-8634-ec010ba23cd0",
+                        "fieldMetadataId": "8cf61d86-4f4b-42d2-a44a-11baf95a60c3",
+                        "isVisible": true,
+                        "position": 5,
+                        "size": 180
+                    },
+                    {
+                        "id": "7af21f75-bc87-4d7f-a5f1-c21a3e85e6a3",
+                        "fieldMetadataId": "f2474007-d4d4-40ac-8903-608af4007ea8",
+                        "isVisible": true,
+                        "position": 6,
+                        "size": 180
+                    },
+                    {
+                        "id": "cd54d193-29da-4e07-9e1d-0310737bf84e",
+                        "fieldMetadataId": "ba36f66c-955e-4caf-a377-239a8bb3653e",
+                        "isVisible": true,
+                        "position": 7,
+                        "size": 180
+                    },
+                    {
+                        "id": "41e9fa55-009b-41a3-89d6-cd2a892c6ad9",
+                        "fieldMetadataId": "0655274a-e891-449c-85ed-4247ff2be677",
+                        "isVisible": true,
+                        "position": 8,
+                        "size": 180
+                    },
+                    {
+                        "id": "1c2a94e4-e010-4f3f-8b88-8143a2b73b90",
+                        "fieldMetadataId": "3e74c859-42ef-4ac6-900c-8cf06f5e8768",
+                        "isVisible": true,
+                        "position": 9,
+                        "size": 180
+                    },
+                    {
+                        "id": "43a86db7-1ff6-4c89-8bbb-bf03cc2854c8",
+                        "fieldMetadataId": "b067a0b5-7344-4589-a3ca-e0d65a06a94a",
+                        "isVisible": true,
+                        "position": 10,
+                        "size": 180
+                    },
+                    {
+                        "id": "b3983ad9-ad48-4558-8551-357da110d732",
+                        "fieldMetadataId": "a89a17a3-4e04-4ca8-b1a3-7dd8e0cbd8b0",
+                        "isVisible": true,
+                        "position": 11,
+                        "size": 180
+                    },
+                    {
+                        "id": "5f26a7c7-7de8-4466-aba9-553917c8c877",
+                        "fieldMetadataId": "72d97630-ea4a-4d14-832f-9bd77498d7da",
+                        "isVisible": true,
+                        "position": 12,
+                        "size": 180
+                    }
+                ],
+                "viewFilters": [],
+                "viewSorts": []
+            },
+            {
+                "id": "43de866b-1055-44d0-ae89-7159f2fdfa42",
+                "type": "TABLE",
+                "objectMetadataId": "0fb541ef-9d3e-49a3-9f2e-db2f9730f1c0",
+                "key": null,
+                "isCustom": true,
+                "visibility": "WORKSPACE",
+                "name": "All Departments",
+                "viewFields": [],
+                "viewFilters": [],
+                "viewSorts": []
+            },
+            {
+                "id": "91c2609c-b0ab-470a-bd6e-9397501c40f4",
+                "type": "TABLE",
+                "objectMetadataId": "1235ad8b-2435-41a1-9ea4-2586cfd24f37",
+                "key": null,
+                "isCustom": true,
+                "visibility": "WORKSPACE",
+                "name": "All Factories",
+                "viewFields": [],
+                "viewFilters": [],
+                "viewSorts": []
+            },
+            {
+                "id": "bc61f03d-5781-4322-9f3b-b440f8c19cbb",
+                "type": "TABLE",
+                "objectMetadataId": "2e688912-bf88-4456-882d-2e68a7b5a162",
+                "key": null,
+                "isCustom": true,
+                "visibility": "WORKSPACE",
+                "name": "All Licensor Approvals",
+                "viewFields": [],
+                "viewFilters": [],
+                "viewSorts": []
+            },
+            {
+                "id": "b0a5de7e-ff84-450e-9115-40c9890a78e6",
+                "type": "TABLE",
+                "objectMetadataId": "30e0fbc3-ee73-4a2b-a303-05f12f6b6ab7",
+                "key": "INDEX",
+                "isCustom": true,
+                "visibility": "WORKSPACE",
+                "viewFields": [
+                    {
+                        "id": "e77bafc1-c0d1-4f37-8597-f9c37b0ec8be",
+                        "fieldMetadataId": "d88dfcfe-82df-4513-9cb3-d0167c6a5b12",
+                        "isVisible": true,
+                        "position": 0,
+                        "size": 180
+                    },
+                    {
+                        "id": "17a7f215-fcc8-4afa-b503-1fb0411a1faa",
+                        "fieldMetadataId": "6666d158-d474-4083-abe3-9ee656dbe320",
+                        "isVisible": true,
+                        "position": 1,
+                        "size": 180
+                    },
+                    {
+                        "id": "e9cb4d19-f9f3-48fb-91c6-a02111d07cf7",
+                        "fieldMetadataId": "3656d69a-a2f4-47e4-a4e3-f656807c1296",
+                        "isVisible": true,
+                        "position": 2,
+                        "size": 180
+                    },
+                    {
+                        "id": "6b2c51b5-8359-446a-9bed-762aecb936c2",
+                        "fieldMetadataId": "a89b1260-84e7-436f-8140-884cf9ae98a5",
+                        "isVisible": true,
+                        "position": 3,
+                        "size": 180
+                    },
+                    {
+                        "id": "f25bb1d8-f8ea-4757-8828-4419129e5653",
+                        "fieldMetadataId": "7cc8311c-0fb4-4f09-88c2-6e39eba77cf6",
+                        "isVisible": true,
+                        "position": 4,
+                        "size": 180
+                    },
+                    {
+                        "id": "c7e0188d-4f1e-4558-bfa3-e3a6c4732e8e",
+                        "fieldMetadataId": "d5073db3-506e-4e1c-afb1-e7aa084a6a45",
+                        "isVisible": true,
+                        "position": 5,
+                        "size": 180
+                    },
+                    {
+                        "id": "cb90a18c-3b54-4040-8d06-2734211499c0",
+                        "fieldMetadataId": "c6d43362-73e0-4431-9828-911a51fe320f",
+                        "isVisible": true,
+                        "position": 6,
+                        "size": 180
+                    },
+                    {
+                        "id": "3c4063bc-ff7c-42a4-8ac1-467eb1479f6d",
+                        "fieldMetadataId": "f2a5a343-1a99-4b05-9093-1f20de6459ef",
+                        "isVisible": true,
+                        "position": 7,
+                        "size": 180
+                    },
+                    {
+                        "id": "e4ad440d-48ce-4e35-b6b5-540e76c0c841",
+                        "fieldMetadataId": "8e70243c-ba54-443a-a7c0-e804679b36b4",
+                        "isVisible": true,
+                        "position": 8,
+                        "size": 180
+                    },
+                    {
+                        "id": "e9864746-d0b4-462c-95ff-2f9544d91cfc",
+                        "fieldMetadataId": "069c1c04-ed93-49cc-8a39-a7e09fbb6ffb",
+                        "isVisible": true,
+                        "position": 9,
+                        "size": 180
+                    },
+                    {
+                        "id": "838c327d-c9ab-40af-a2e1-f2a081fe50ad",
+                        "fieldMetadataId": "99012213-ab66-408f-b5dc-45742fc9fe5f",
+                        "isVisible": true,
+                        "position": 10,
+                        "size": 180
+                    },
+                    {
+                        "id": "fb3a75e1-bcc8-4bf7-9f67-1fc1f76b939f",
+                        "fieldMetadataId": "7041e722-491d-46eb-a321-ef09d26fa52b",
+                        "isVisible": true,
+                        "position": 11,
+                        "size": 180
+                    }
+                ],
+                "viewFilters": [],
+                "viewSorts": [],
+                "name": "All Meeting Attendees"
+            },
+            {
+                "id": "64f1714f-c299-411a-85ff-df9054e76b06",
+                "type": "TABLE",
+                "objectMetadataId": "7c16ce3f-8c36-4c81-b4a7-50b067a63aff",
+                "key": "INDEX",
+                "isCustom": true,
+                "visibility": "WORKSPACE",
+                "viewFields": [
+                    {
+                        "id": "72d3a4f3-bf5d-4de6-99c9-38d88b55bd90",
+                        "fieldMetadataId": "292008f6-08ec-4316-b844-d96ddd4b346e",
+                        "isVisible": true,
+                        "position": 0,
+                        "size": 180
+                    },
+                    {
+                        "id": "5046423d-6416-4d66-b692-75fd8ede20d7",
+                        "fieldMetadataId": "778748a2-c893-4e51-8cfb-e6216c45b6c0",
+                        "isVisible": true,
+                        "position": 1,
+                        "size": 180
+                    },
+                    {
+                        "id": "5b82d947-c044-4170-a985-f860225fe897",
+                        "fieldMetadataId": "c186336b-fb12-4693-b68c-156fe92c72a1",
+                        "isVisible": true,
+                        "position": 2,
+                        "size": 180
+                    },
+                    {
+                        "id": "4cfe0273-3952-46f4-8ebd-37e6af8a30cc",
+                        "fieldMetadataId": "50a0abed-3a35-4785-83f2-22f59e7c6f0f",
+                        "isVisible": true,
+                        "position": 3,
+                        "size": 180
+                    },
+                    {
+                        "id": "d8f28ab2-8d87-44bf-972d-7d7dacc217ff",
+                        "fieldMetadataId": "47bd832b-1351-4d21-845b-259e4e931be4",
+                        "isVisible": true,
+                        "position": 4,
+                        "size": 180
+                    },
+                    {
+                        "id": "3028e0e4-32d1-4391-bad8-4a247c18ae4a",
+                        "fieldMetadataId": "7c6aee81-5850-4a4a-bd97-ed7bd72ee264",
+                        "isVisible": true,
+                        "position": 5,
+                        "size": 180
+                    },
+                    {
+                        "id": "e25e72a0-72ce-4b2e-9511-17cc518fe7b7",
+                        "fieldMetadataId": "08649a35-c213-4c52-8248-f97f1af4abd7",
+                        "isVisible": true,
+                        "position": 6,
+                        "size": 180
+                    },
+                    {
+                        "id": "b04a7a06-9b89-4e5a-960a-ddbba5b1345e",
+                        "fieldMetadataId": "d92cd17b-1aed-490a-98ee-aaa6d075db5d",
+                        "isVisible": true,
+                        "position": 7,
+                        "size": 180
+                    },
+                    {
+                        "id": "449da7ae-00b6-4bcc-9a48-52d347506608",
+                        "fieldMetadataId": "e9b1745b-0c16-42e9-89bc-8234083574df",
+                        "isVisible": true,
+                        "position": 8,
+                        "size": 180
+                    },
+                    {
+                        "id": "b284db23-39f8-408b-bd40-d53602a97f60",
+                        "fieldMetadataId": "f2764de8-9b29-4f74-8585-090aaf009760",
+                        "isVisible": true,
+                        "position": 9,
+                        "size": 180
+                    },
+                    {
+                        "id": "61364422-f808-42c2-b93a-e7d3c963d28b",
+                        "fieldMetadataId": "cc0fedb3-847b-4c95-af8d-8bf62b8c00b4",
+                        "isVisible": true,
+                        "position": 10,
+                        "size": 180
+                    },
+                    {
+                        "id": "9f526e27-6c49-4d94-8745-42269ac54a4a",
+                        "fieldMetadataId": "c573c964-ca0e-426f-872a-4b28e026251c",
+                        "isVisible": true,
+                        "position": 11,
+                        "size": 180
+                    },
+                    {
+                        "id": "6f127608-3192-42e5-bdfa-fa2de04dde3d",
+                        "fieldMetadataId": "1f9faa71-9d71-4f0d-ae7a-cc85117ac719",
+                        "isVisible": true,
+                        "position": -1,
+                        "size": 180
+                    }
+                ],
+                "viewFilters": [],
+                "viewSorts": [],
+                "name": "All Ignore Rules"
+            },
+            {
+                "id": "a1a5ee77-ad7f-4b46-92f9-ded83ca8ccb1",
+                "type": "KANBAN",
+                "objectMetadataId": "483c7abb-fc9b-4adb-b185-c6b90e2c2a30",
+                "key": null,
+                "isCustom": false,
+                "visibility": "WORKSPACE",
+                "name": "By Status",
+                "viewFields": [
+                    {
+                        "id": "0a576ba9-1f15-425b-aeaa-265f17b55736",
+                        "fieldMetadataId": "5fccf926-7f49-4206-bf38-8b21719b4dd7",
+                        "isVisible": true,
+                        "position": 0,
+                        "size": 210
+                    },
+                    {
+                        "id": "25c28fb6-9d45-4389-a1e0-91e51294fb0c",
+                        "fieldMetadataId": "cb9961fe-1218-46ca-ae6d-877b8a29d220",
+                        "isVisible": true,
+                        "position": 2,
+                        "size": 150
+                    },
+                    {
+                        "id": "bf3cdbd2-fbf1-41aa-970a-9b5655aa1c13",
+                        "fieldMetadataId": "d0bbb170-b082-4346-a62c-7ccd58ba2705",
+                        "isVisible": true,
+                        "position": 3,
+                        "size": 150
+                    },
+                    {
+                        "id": "b7c98daf-dd01-497b-a6cb-3d7cb3d96fd4",
+                        "fieldMetadataId": "faea65d2-f638-4c48-bd0a-f9a3300d855b",
+                        "isVisible": true,
+                        "position": 4,
+                        "size": 150
+                    },
+                    {
+                        "id": "34d73e96-a12d-48ac-af30-86db2e8e3e42",
+                        "fieldMetadataId": "59355d23-f106-473c-89c2-47b92303ccd2",
+                        "isVisible": true,
+                        "position": 6,
+                        "size": 150
+                    }
+                ],
+                "viewFilters": [],
+                "viewSorts": []
+            },
+            {
+                "id": "8becc181-a12f-4735-88ef-ffdf35b70cf3",
+                "type": "KANBAN",
+                "objectMetadataId": "1c666129-4bb6-4268-8ffc-b1cc3641b2b5",
+                "key": null,
+                "isCustom": false,
+                "visibility": "WORKSPACE",
+                "name": "By Stage",
+                "viewFields": [
+                    {
+                        "id": "ca46c402-ef7e-430c-b5db-d20cd33a4516",
+                        "fieldMetadataId": "c0949012-1221-4ca5-b5e0-974a8b81449c",
+                        "isVisible": true,
+                        "position": 0,
+                        "size": 150
+                    },
+                    {
+                        "id": "13d9f7ed-89d1-44e3-bca0-f71e533a3763",
+                        "fieldMetadataId": "f816ea15-0df0-488a-8ebf-74950e28453d",
+                        "isVisible": true,
+                        "position": 1,
+                        "size": 150
+                    },
+                    {
+                        "id": "053e2d62-6632-4630-9a82-919d2af98fc3",
+                        "fieldMetadataId": "06830a0c-b0c9-4e21-8ba1-cfb59703d701",
+                        "isVisible": true,
+                        "position": 2,
+                        "size": 150
+                    },
+                    {
+                        "id": "eb640daa-d813-4bee-9bad-6da78555db92",
+                        "fieldMetadataId": "c3ccf6b1-f5d7-4bb6-85ef-ce1c0a2c9fe9",
+                        "isVisible": true,
+                        "position": 3,
+                        "size": 150
+                    },
+                    {
+                        "id": "c9d52d76-02cd-451d-a9a3-5ea24b0aa32b",
+                        "fieldMetadataId": "e97af6a2-9825-4a27-824d-630617496246",
+                        "isVisible": true,
+                        "position": 4,
+                        "size": 150
+                    },
+                    {
+                        "id": "b803a0fe-bdb1-4e12-a1ed-bf87d1debaf5",
+                        "fieldMetadataId": "b901d00a-0f6c-4cc4-bd33-71d74475bf9b",
+                        "isVisible": true,
+                        "position": 5,
+                        "size": 150
+                    }
+                ],
+                "viewFilters": [],
+                "viewSorts": []
+            },
+            {
+                "id": "51b8d74f-79b1-4802-9c5c-435ed7e9eaab",
+                "type": "TABLE",
+                "objectMetadataId": "483c7abb-fc9b-4adb-b185-c6b90e2c2a30",
+                "key": null,
+                "isCustom": false,
+                "visibility": "WORKSPACE",
+                "name": "Assigned to Me",
+                "viewFields": [
+                    {
+                        "id": "dd33ac2f-4bc9-40a9-a056-6ec9334e211d",
+                        "fieldMetadataId": "5fccf926-7f49-4206-bf38-8b21719b4dd7",
+                        "isVisible": true,
+                        "position": 0,
+                        "size": 210
+                    },
+                    {
+                        "id": "da1ed8fd-cacb-45b8-b9bf-1a5d27213cef",
+                        "fieldMetadataId": "17938020-145b-48c6-aada-64b9f0ed0f9d",
+                        "isVisible": true,
+                        "position": 3,
+                        "size": 150
+                    },
+                    {
+                        "id": "647659e9-79c9-4bb8-a960-438bbb5d0169",
+                        "fieldMetadataId": "ea0a21e5-d607-4ef5-9939-2fc2531bf7b1",
+                        "isVisible": true,
+                        "position": 4,
+                        "size": 150
+                    },
+                    {
+                        "id": "f83367fa-f7d8-4b11-ab5a-7277f4ce874b",
+                        "fieldMetadataId": "d0bbb170-b082-4346-a62c-7ccd58ba2705",
+                        "isVisible": true,
+                        "position": 5,
+                        "size": 150
+                    },
+                    {
+                        "id": "67fc06b4-92c2-49f0-a00e-5ef9a6509390",
+                        "fieldMetadataId": "faea65d2-f638-4c48-bd0a-f9a3300d855b",
+                        "isVisible": true,
+                        "position": 6,
+                        "size": 150
+                    },
+                    {
+                        "id": "7e6e6a07-4261-4fa0-b38e-deab785c7f60",
+                        "fieldMetadataId": "26fa652b-d186-4701-bdfe-6a3911be7830",
+                        "isVisible": true,
+                        "position": 7,
+                        "size": 150
+                    },
+                    {
+                        "id": "195f8358-8e10-47dc-88f8-d336fb764205",
+                        "fieldMetadataId": "59355d23-f106-473c-89c2-47b92303ccd2",
+                        "isVisible": true,
+                        "position": 8,
+                        "size": 150
+                    }
+                ],
+                "viewFilters": [
+                    {
+                        "id": "966154f4-c84e-4b7e-be92-19b16307f340",
+                        "fieldMetadataId": "faea65d2-f638-4c48-bd0a-f9a3300d855b",
+                        "operand": "IS",
+                        "value": "{\"isCurrentWorkspaceMemberSelected\":true,\"selectedRecordIds\":[]}"
+                    }
+                ],
+                "viewSorts": []
+            }
+        ]
+    }
+}

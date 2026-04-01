@@ -1,0 +1,64 @@
+=== CUSTOM OBJECTS (standardId values for @WorkspaceEntity) ===
+
+aiModelConfig                       standardId: 3b6c3623-dce6-4ae4-91a4-c212e5e9efe2  appId: b7ad46a7-1784-4fab-9f09-9eed6eedb0bf
+  attachments                       standardId: 1bf2ce6e-34b0-5b73-8406-e50f43d4fcd2  type: RELATION        appId: b7ad46a7-1784-4fab-9f09-9eed6eedb0bf
+  noteTargets                       standardId: 13078569-cd5a-5cff-9de5-0efc5e4d074d  type: RELATION        appId: b7ad46a7-1784-4fab-9f09-9eed6eedb0bf
+  timelineActivities                standardId: 14bdde9a-3fe9-5a9c-9653-b783787e6d21  type: RELATION        appId: b7ad46a7-1784-4fab-9f09-9eed6eedb0bf
+
+department                          standardId: 1b9e366d-b0a1-40e6-b253-115079fed63d  appId: b7ad46a7-1784-4fab-9f09-9eed6eedb0bf
+  favorites                         standardId: 1d644242-de69-5943-9d33-1f9251754a06  type: RELATION        appId: b7ad46a7-1784-4fab-9f09-9eed6eedb0bf
+  meetingNotes                      standardId: 0eaa59b7-c15a-4a6a-b207-23b67b086865  type: RELATION        appId: b7ad46a7-1784-4fab-9f09-9eed6eedb0bf
+
+emailMessage                        standardId: c0233f86-fdb6-4a32-9693-6c6fb1d5e740  appId: b7ad46a7-1784-4fab-9f09-9eed6eedb0bf
+  receivedAt                        standardId: 00860179-974b-4edc-a48d-22cb832af5ce  type: DATE            appId: b7ad46a7-1784-4fab-9f09-9eed6eedb0bf
+  subject                           standardId: 0c5b20cb-36e2-4b46-bcd5-c45401c4cb63  type: TEXT            appId: b7ad46a7-1784-4fab-9f09-9eed6eedb0bf
+
+factory                             standardId: 1e10f8ed-8571-48b8-8571-32e53b44d63e  appId: b7ad46a7-1784-4fab-9f09-9eed6eedb0bf
+
+ignoreRule                          standardId: c0baf376-8e17-4d5b-b31a-39122aae9db5  appId: f99617d1-aa3d-4009-8211-53a7b747f5f2
+  matchType                         standardId: 0b6a0cbd-e640-45dc-a018-ee18fdbb6ca4  type: SELECT          appId: f99617d1-aa3d-4009-8211-53a7b747f5f2
+
+licensorApprovalThread              standardId: b654e699-2912-433f-93dd-c97d9a5bb7e1  appId: b7ad46a7-1784-4fab-9f09-9eed6eedb0bf
+  licensorComments                  standardId: 1d78e531-c814-44df-8dcf-9ec5ccedc5ce  type: TEXT            appId: b7ad46a7-1784-4fab-9f09-9eed6eedb0bf
+  name                              standardId: 19dacb5f-de6a-523f-a9a0-d1e60bdcdc37  type: TEXT            appId: b7ad46a7-1784-4fab-9f09-9eed6eedb0bf
+
+meetingNote                         standardId: 79e9be9f-d969-40f7-988d-efc83a8e7049  appId: b7ad46a7-1784-4fab-9f09-9eed6eedb0bf
+  company                           standardId: 1525d1cf-ec54-4687-855e-2491e1e2bccc  type: RELATION        appId: b7ad46a7-1784-4fab-9f09-9eed6eedb0bf
+  firefliesTranscriptId             standardId: 173395b1-abd5-44d0-83d4-45730435162e  type: TEXT            appId: b7ad46a7-1784-4fab-9f09-9eed6eedb0bf
+  taskTargets                       standardId: 0944d2a9-a87b-56d3-94d4-4468b6a552d6  type: RELATION        appId: b7ad46a7-1784-4fab-9f09-9eed6eedb0bf
+
+meetingNoteAttendee                 standardId: 78e3ad65-5495-461b-842e-672f1e10d78d  appId: f99617d1-aa3d-4009-8211-53a7b747f5f2
+
+
+=== CUSTOM FIELDS ON STANDARD OBJECTS ===
+
+--- attachment (objectId: 8f05aacc-53d0-4696-9502-f0e9574bab0d) ---
+  targetDepartment                  standardId: 0a732954-089f-54ab-9cee-15ebda168d5d  type: MORPH_RELATION  appId: b7ad46a7-1784-4fab-9f09-9eed6eedb0bf
+  targetIgnoreRule                  standardId: 1577aadb-6e48-4163-896b-6e660813a62e  type: MORPH_RELATION  appId: f99617d1-aa3d-4009-8211-53a7b747f5f2
+  targetLicensorApprovalThread      standardId: 00511308-1baf-5425-ae2f-3a1b74485c73  type: MORPH_RELATION  appId: b7ad46a7-1784-4fab-9f09-9eed6eedb0bf
+
+--- favorite (objectId: efe9b7bb-cd1c-4506-839f-1404abd9bf96) ---
+  targetDepartment                  standardId: 1ec895e7-288b-5067-9be8-a8b8b63e4ace  type: RELATION        appId: b7ad46a7-1784-4fab-9f09-9eed6eedb0bf
+  targetLicensorApprovalThread      standardId: 178245a2-b1cc-5368-b99c-22ace6922663  type: RELATION        appId: b7ad46a7-1784-4fab-9f09-9eed6eedb0bf
+
+--- noteTarget (objectId: bdc17096-d1db-447f-8641-cb23ec3e6cda) ---
+  targetEmailMessage                standardId: 1f6f5e22-8a4a-56ff-814e-fc98ae7a15ad  type: MORPH_RELATION  appId: b7ad46a7-1784-4fab-9f09-9eed6eedb0bf
+
+--- opportunity (objectId: 1c666129-4bb6-4268-8ffc-b1cc3641b2b5) ---
+  division                          standardId: 01d23cb3-41c4-466f-9938-4ff13a1405ef  type: SELECT          appId: b7ad46a7-1784-4fab-9f09-9eed6eedb0bf
+  emailMessages                     standardId: 194b0d6e-f67d-4a4a-99d5-c0766a112655  type: RELATION        appId: b7ad46a7-1784-4fab-9f09-9eed6eedb0bf
+  factory                           standardId: 0938ff91-ae1c-4d1a-be95-16e1db12f99b  type: RELATION        appId: b7ad46a7-1784-4fab-9f09-9eed6eedb0bf
+  productionPoNumber                standardId: 0a674bc2-18b1-40d5-86af-1cbf4d8e214a  type: TEXT            appId: b7ad46a7-1784-4fab-9f09-9eed6eedb0bf
+  requiresNewPricing                standardId: 119c94b6-1588-43f9-b3cc-8f66eb606fbe  type: BOOLEAN         appId: b7ad46a7-1784-4fab-9f09-9eed6eedb0bf
+  sampleApprovalMethod              standardId: 0f8bb3d0-5ebd-4883-b9d6-783284732f3c  type: SELECT          appId: b7ad46a7-1784-4fab-9f09-9eed6eedb0bf
+
+--- person (objectId: 59cfafd8-befe-42f3-8bf9-2c450c12d369) ---
+  meetingNotes                      standardId: 19301d41-9b9d-42d3-ab7c-026569b39f1e  type: RELATION        appId: b7ad46a7-1784-4fab-9f09-9eed6eedb0bf
+
+--- taskTarget (objectId: dca7a9c2-3213-4a81-8096-55895fc9b41e) ---
+  targetAiModelConfig               standardId: 030d19aa-eebe-57fa-820b-8457fd99b864  type: MORPH_RELATION  appId: b7ad46a7-1784-4fab-9f09-9eed6eedb0bf
+  targetFactory                     standardId: 01639dfa-7af0-5626-b6d6-fce0101ae6ab  type: MORPH_RELATION  appId: b7ad46a7-1784-4fab-9f09-9eed6eedb0bf
+
+--- timelineActivity (objectId: f4507080-123e-457b-9c77-5fe8afc15aad) ---
+  targetLicensorApprovalThread      standardId: 09e64000-f765-5856-94cd-83b54a9ea794  type: MORPH_RELATION  appId: b7ad46a7-1784-4fab-9f09-9eed6eedb0bf
+

@@ -1,0 +1,1957 @@
+{
+  "aiModelConfig": {
+    "universalIdentifier": "3b6c3623-dce6-4ae4-91a4-c212e5e9efe2",
+    "fields": {
+      "attachments": {
+        "universalIdentifier": "1bf2ce6e-34b0-5b73-8406-e50f43d4fcd2",
+        "type": "RELATION",
+        "isNullable": true,
+        "options": null,
+        "settings": {
+          "relationType": "ONE_TO_MANY"
+        },
+        "defaultValue": null
+      },
+      "createdAt": {
+        "universalIdentifier": "3093d572-2a3d-51cc-8bda-f1aa4d18de71",
+        "type": "DATE_TIME",
+        "isNullable": false,
+        "options": null,
+        "settings": null,
+        "defaultValue": "now"
+      },
+      "createdBy": {
+        "universalIdentifier": "6875c912-ccaf-5409-b22c-297b3dc3c858",
+        "type": "ACTOR",
+        "isNullable": false,
+        "options": null,
+        "settings": null,
+        "defaultValue": {
+          "name": "''",
+          "source": "'MANUAL'"
+        }
+      },
+      "deletedAt": {
+        "universalIdentifier": "d053864f-c6be-52fe-9915-9414dc033688",
+        "type": "DATE_TIME",
+        "isNullable": true,
+        "options": null,
+        "settings": null,
+        "defaultValue": null
+      },
+      "emailRoutingModel": {
+        "universalIdentifier": "36dfa259-fe7b-4bc4-8c91-3a313e25356b",
+        "type": "SELECT",
+        "isNullable": true,
+        "options": [
+          {
+            "id": "a1b2c3d4-e5f6-4a7b-8c9d-e0f1a2b3c4d5",
+            "color": "green",
+            "label": "gpt 5.4 $2.50/$15",
+            "value": "GPT_5_4",
+            "position": 0
+          },
+          {
+            "id": "b2c3d4e5-f6a7-4b8c-9d0e-f1a2b3c4d5e6",
+            "color": "green",
+            "label": "gpt 5.4 mini $0.75/$4.50",
+            "value": "GPT_5_4_MINI",
+            "position": 1
+          },
+          {
+            "id": "e3f4a5b6-c7d8-4e9f-a0b1-c2d3e4f5a6b7",
+            "color": "green",
+            "label": "gpt 5.4 nano $0.20/$1.25",
+            "value": "GPT_5_4_NANO",
+            "position": 2
+          },
+          {
+            "id": "f4a5b6c7-d8e9-4f0a-b1c2-d3e4f5a6b7c8",
+            "color": "blue",
+            "label": "gem 3.2 pro $2/$12",
+            "value": "GEMINI_3_1_PRO",
+            "position": 3
+          },
+          {
+            "id": "a5b6c7d8-e9f0-4a1b-9c2d-e3f4a5b6c7d8",
+            "color": "blue",
+            "label": "gem 3 flash $0.50/$3",
+            "value": "GEMINI_3_FLASH",
+            "position": 4
+          },
+          {
+            "id": "b6c7d8e9-f0a1-4b2c-8d3e-f4a5b6c7d8e9",
+            "color": "blue",
+            "label": "gem 3.1 flash lite $0.25/$1.50",
+            "value": "GEMINI_3_1_FLASH_LITE",
+            "position": 5
+          },
+          {
+            "id": "c7d8e9f0-a1b2-4c3d-8e4f-a5b6c7d8e9f0",
+            "color": "blue",
+            "label": "gem 3.1 flash image $0.50/$60",
+            "value": "GEMINI_3_1_FLASH_IMAGE",
+            "position": 6
+          },
+          {
+            "id": "d8e9f0a1-b2c3-4d4e-8f5a-b6c7d8e9f0a1",
+            "color": "purple",
+            "label": "sonnet 4.6 $3/$15",
+            "value": "CLAUDE_SONNET_4_6",
+            "position": 7
+          },
+          {
+            "id": "e9f0a1b2-c3d4-4e5f-8a6b-c7d8e9f0a1b2",
+            "color": "purple",
+            "label": "haiku 4.5 $1/$5",
+            "value": "CLAUDE_HAIKU_4_5",
+            "position": 8
+          }
+        ],
+        "settings": null,
+        "defaultValue": null
+      },
+      "favorites": {
+        "universalIdentifier": "3f087e3b-939d-5a58-aaf7-7cc0ec07f37a",
+        "type": "RELATION",
+        "isNullable": true,
+        "options": null,
+        "settings": {
+          "relationType": "ONE_TO_MANY"
+        },
+        "defaultValue": null
+      },
+      "firefliesRoutingModel": {
+        "universalIdentifier": "fa3f161c-12d5-43f7-9181-a35aad2533cb",
+        "type": "SELECT",
+        "isNullable": true,
+        "options": [
+          {
+            "id": "a1b2c3d4-e5f6-4a7b-8c9d-e0f1a2b3c4d5",
+            "color": "green",
+            "label": "gpt 5.4 $2.50/$15",
+            "value": "GPT_5_4",
+            "position": 0
+          },
+          {
+            "id": "b2c3d4e5-f6a7-4b8c-9d0e-f1a2b3c4d5e6",
+            "color": "green",
+            "label": "gpt 5.4 mini $0.75/$4.50",
+            "value": "GPT_5_4_MINI",
+            "position": 1
+          },
+          {
+            "id": "e3f4a5b6-c7d8-4e9f-a0b1-c2d3e4f5a6b7",
+            "color": "green",
+            "label": "gpt 5.4 nano $0.20/$1.25",
+            "value": "GPT_5_4_NANO",
+            "position": 2
+          },
+          {
+            "id": "f4a5b6c7-d8e9-4f0a-b1c2-d3e4f5a6b7c8",
+            "color": "blue",
+            "label": "gem 3.2 pro $2/$12",
+            "value": "GEMINI_3_1_PRO",
+            "position": 3
+          },
+          {
+            "id": "a5b6c7d8-e9f0-4a1b-9c2d-e3f4a5b6c7d8",
+            "color": "blue",
+            "label": "gem 3 flash $0.50/$3",
+            "value": "GEMINI_3_FLASH",
+            "position": 4
+          },
+          {
+            "id": "b6c7d8e9-f0a1-4b2c-8d3e-f4a5b6c7d8e9",
+            "color": "blue",
+            "label": "gem 3.1 flash lite $0.25/$1.50",
+            "value": "GEMINI_3_1_FLASH_LITE",
+            "position": 5
+          },
+          {
+            "id": "c7d8e9f0-a1b2-4c3d-8e4f-a5b6c7d8e9f0",
+            "color": "blue",
+            "label": "gem 3.1 flash image $0.50/$60",
+            "value": "GEMINI_3_1_FLASH_IMAGE",
+            "position": 6
+          },
+          {
+            "id": "d8e9f0a1-b2c3-4d4e-8f5a-b6c7d8e9f0a1",
+            "color": "purple",
+            "label": "sonnet 4.6 $3/$15",
+            "value": "CLAUDE_SONNET_4_6",
+            "position": 7
+          },
+          {
+            "id": "e9f0a1b2-c3d4-4e5f-8a6b-c7d8e9f0a1b2",
+            "color": "purple",
+            "label": "haiku 4.5 $1/$5",
+            "value": "CLAUDE_HAIKU_4_5",
+            "position": 8
+          }
+        ],
+        "settings": null,
+        "defaultValue": null
+      },
+      "id": {
+        "universalIdentifier": "d5d3a647-b8af-5666-8849-5432299a0e73",
+        "type": "UUID",
+        "isNullable": false,
+        "options": null,
+        "settings": null,
+        "defaultValue": "uuid"
+      },
+      "name": {
+        "universalIdentifier": "bb017c07-5477-4843-8940-076bede63a14",
+        "type": "TEXT",
+        "isNullable": true,
+        "options": null,
+        "settings": null,
+        "defaultValue": null
+      },
+      "noteTargets": {
+        "universalIdentifier": "13078569-cd5a-5cff-9de5-0efc5e4d074d",
+        "type": "RELATION",
+        "isNullable": true,
+        "options": null,
+        "settings": {
+          "relationType": "ONE_TO_MANY"
+        },
+        "defaultValue": null
+      },
+      "position": {
+        "universalIdentifier": "f30ea1c9-673f-57f9-88d9-382c1ca41eff",
+        "type": "POSITION",
+        "isNullable": false,
+        "options": null,
+        "settings": null,
+        "defaultValue": 0
+      },
+      "searchVector": {
+        "universalIdentifier": "a1875d6b-8bf2-5d94-9b50-d79b89c22e47",
+        "type": "TS_VECTOR",
+        "isNullable": true,
+        "options": null,
+        "settings": null,
+        "defaultValue": null
+      },
+      "taskTargets": {
+        "universalIdentifier": "655550a6-5c4c-5245-b604-18c1a9122aa9",
+        "type": "RELATION",
+        "isNullable": true,
+        "options": null,
+        "settings": {
+          "relationType": "ONE_TO_MANY"
+        },
+        "defaultValue": null
+      },
+      "timelineActivities": {
+        "universalIdentifier": "14bdde9a-3fe9-5a9c-9653-b783787e6d21",
+        "type": "RELATION",
+        "isNullable": true,
+        "options": null,
+        "settings": {
+          "relationType": "ONE_TO_MANY"
+        },
+        "defaultValue": null
+      },
+      "transcriptSplitModel": {
+        "universalIdentifier": "475e8556-1aef-4f13-ac4e-7a963feaed05",
+        "type": "SELECT",
+        "isNullable": true,
+        "options": [
+          {
+            "id": "a1b2c3d4-e5f6-4a7b-8c9d-e0f1a2b3c4d5",
+            "color": "green",
+            "label": "gpt 5.4 $2.50/$15",
+            "value": "GPT_5_4",
+            "position": 0
+          },
+          {
+            "id": "b2c3d4e5-f6a7-4b8c-9d0e-f1a2b3c4d5e6",
+            "color": "green",
+            "label": "gpt 5.4 mini $0.75/$4.50",
+            "value": "GPT_5_4_MINI",
+            "position": 1
+          },
+          {
+            "id": "e3f4a5b6-c7d8-4e9f-a0b1-c2d3e4f5a6b7",
+            "color": "green",
+            "label": "gpt 5.4 nano $0.20/$1.25",
+            "value": "GPT_5_4_NANO",
+            "position": 2
+          },
+          {
+            "id": "f4a5b6c7-d8e9-4f0a-b1c2-d3e4f5a6b7c8",
+            "color": "blue",
+            "label": "gem 3.2 pro $2/$12",
+            "value": "GEMINI_3_1_PRO",
+            "position": 3
+          },
+          {
+            "id": "a5b6c7d8-e9f0-4a1b-9c2d-e3f4a5b6c7d8",
+            "color": "blue",
+            "label": "gem 3 flash $0.50/$3",
+            "value": "GEMINI_3_FLASH",
+            "position": 4
+          },
+          {
+            "id": "b6c7d8e9-f0a1-4b2c-8d3e-f4a5b6c7d8e9",
+            "color": "blue",
+            "label": "gem 3.1 flash lite $0.25/$1.50",
+            "value": "GEMINI_3_1_FLASH_LITE",
+            "position": 5
+          },
+          {
+            "id": "c7d8e9f0-a1b2-4c3d-8e4f-a5b6c7d8e9f0",
+            "color": "blue",
+            "label": "gem 3.1 flash image $0.50/$60",
+            "value": "GEMINI_3_1_FLASH_IMAGE",
+            "position": 6
+          },
+          {
+            "id": "d8e9f0a1-b2c3-4d4e-8f5a-b6c7d8e9f0a1",
+            "color": "purple",
+            "label": "sonnet 4.6 $3/$15",
+            "value": "CLAUDE_SONNET_4_6",
+            "position": 7
+          },
+          {
+            "id": "e9f0a1b2-c3d4-4e5f-8a6b-c7d8e9f0a1b2",
+            "color": "purple",
+            "label": "haiku 4.5 $1/$5",
+            "value": "CLAUDE_HAIKU_4_5",
+            "position": 8
+          }
+        ],
+        "settings": null,
+        "defaultValue": null
+      },
+      "updatedAt": {
+        "universalIdentifier": "86f07a3e-1859-5a39-be32-04f51a0ac957",
+        "type": "DATE_TIME",
+        "isNullable": false,
+        "options": null,
+        "settings": null,
+        "defaultValue": "now"
+      },
+      "updatedBy": {
+        "universalIdentifier": "a5f4cc18-bedd-5f3b-95be-796dc63babc9",
+        "type": "ACTOR",
+        "isNullable": false,
+        "options": null,
+        "settings": null,
+        "defaultValue": {
+          "name": "''",
+          "source": "'MANUAL'"
+        }
+      }
+    }
+  },
+  "department": {
+    "universalIdentifier": "1b9e366d-b0a1-40e6-b253-115079fed63d",
+    "fields": {
+      "active": {
+        "universalIdentifier": "ca3d9af1-efb1-4fbd-9320-b335839c38b6",
+        "type": "BOOLEAN",
+        "isNullable": true,
+        "options": null,
+        "settings": null,
+        "defaultValue": true
+      },
+      "attachments": {
+        "universalIdentifier": "6846b66d-f127-5dd8-8dcd-40dcdc136ee0",
+        "type": "RELATION",
+        "isNullable": true,
+        "options": null,
+        "settings": {
+          "relationType": "ONE_TO_MANY"
+        },
+        "defaultValue": null
+      },
+      "category": {
+        "universalIdentifier": "2369b48a-c075-4baf-97f7-fd234130489f",
+        "type": "SELECT",
+        "isNullable": true,
+        "options": [
+          {
+            "id": "d4f8274a-e570-4dad-9227-a028258ab980",
+            "color": "orange",
+            "label": "Seasonal",
+            "value": "SEASONAL",
+            "position": 0
+          },
+          {
+            "id": "dd2c0f9a-3fb4-4bab-8284-6c3079a7ee92",
+            "color": "blue",
+            "label": "Everyday",
+            "value": "EVERYDAY",
+            "position": 1
+          },
+          {
+            "id": "3368572b-dfce-4979-94b0-82e513d71acc",
+            "color": "purple",
+            "label": "Soft Home",
+            "value": "SOFT_HOME",
+            "position": 2
+          },
+          {
+            "id": "c10f5b1a-0891-46d2-b7f6-93a26b962e30",
+            "color": "green",
+            "label": "Outdoor",
+            "value": "OUTDOOR",
+            "position": 3
+          },
+          {
+            "id": "50d5b552-33bd-4422-ba5e-d185e5694219",
+            "color": "red",
+            "label": "Holiday",
+            "value": "HOLIDAY",
+            "position": 4
+          },
+          {
+            "id": "489425ca-62df-4fe7-abd2-b8efe4a1288b",
+            "color": "gray",
+            "label": "Other",
+            "value": "OTHER",
+            "position": 5
+          }
+        ],
+        "settings": null,
+        "defaultValue": null
+      },
+      "company": {
+        "universalIdentifier": "5fc10371-cc92-4a04-a10b-993a1e523faa",
+        "type": "RELATION",
+        "isNullable": true,
+        "options": null,
+        "settings": {
+          "onDelete": "SET_NULL",
+          "relationType": "MANY_TO_ONE",
+          "joinColumnName": "companyId"
+        },
+        "defaultValue": null
+      },
+      "createdAt": {
+        "universalIdentifier": "2b640bba-e1d7-5b50-8c0b-033fbc2eb4a1",
+        "type": "DATE_TIME",
+        "isNullable": false,
+        "options": null,
+        "settings": null,
+        "defaultValue": "now"
+      },
+      "createdBy": {
+        "universalIdentifier": "63ef7bd5-8e4d-58bd-93c9-1885cfcf74b3",
+        "type": "ACTOR",
+        "isNullable": false,
+        "options": null,
+        "settings": null,
+        "defaultValue": {
+          "name": "''",
+          "source": "'MANUAL'"
+        }
+      },
+      "deletedAt": {
+        "universalIdentifier": "504be219-c25e-59be-af56-40d8e0e5819e",
+        "type": "DATE_TIME",
+        "isNullable": true,
+        "options": null,
+        "settings": null,
+        "defaultValue": null
+      },
+      "division": {
+        "universalIdentifier": "f390c2c9-2c81-414c-82c3-0916d85781c1",
+        "type": "SELECT",
+        "isNullable": true,
+        "options": [
+          {
+            "id": "d1",
+            "color": "blue",
+            "label": "POP",
+            "value": "POP",
+            "position": 0
+          },
+          {
+            "id": "d2",
+            "color": "green",
+            "label": "Spruce",
+            "value": "SPRUCE",
+            "position": 1
+          },
+          {
+            "id": "d3",
+            "color": "purple",
+            "label": "Both",
+            "value": "BOTH",
+            "position": 2
+          }
+        ],
+        "settings": null,
+        "defaultValue": null
+      },
+      "emails": {
+        "universalIdentifier": "c4d5e6f7-a8b9-4c0d-1e2f-3a4b5c6d7e8f",
+        "type": "RELATION",
+        "isNullable": true,
+        "options": null,
+        "settings": {
+          "relationType": "ONE_TO_MANY"
+        },
+        "defaultValue": null
+      },
+      "favorites": {
+        "universalIdentifier": "1d644242-de69-5943-9d33-1f9251754a06",
+        "type": "RELATION",
+        "isNullable": true,
+        "options": null,
+        "settings": {
+          "relationType": "ONE_TO_MANY"
+        },
+        "defaultValue": null
+      },
+      "id": {
+        "universalIdentifier": "b920df77-7d8e-5a10-868c-b95da6603510",
+        "type": "UUID",
+        "isNullable": false,
+        "options": null,
+        "settings": null,
+        "defaultValue": "uuid"
+      },
+      "meetingNotes": {
+        "universalIdentifier": "0eaa59b7-c15a-4a6a-b207-23b67b086865",
+        "type": "RELATION",
+        "isNullable": true,
+        "options": null,
+        "settings": {
+          "relationType": "ONE_TO_MANY"
+        },
+        "defaultValue": null
+      },
+      "name": {
+        "universalIdentifier": "4cc779b2-eb11-4cdb-ae8d-3edddfb8af5b",
+        "type": "TEXT",
+        "isNullable": true,
+        "options": null,
+        "settings": null,
+        "defaultValue": null
+      },
+      "noteTargets": {
+        "universalIdentifier": "5e8e89cc-bb4e-51c8-92a9-064eaeaadafd",
+        "type": "RELATION",
+        "isNullable": true,
+        "options": null,
+        "settings": {
+          "relationType": "ONE_TO_MANY"
+        },
+        "defaultValue": null
+      },
+      "people": {
+        "universalIdentifier": "7efc7d0e-d0b8-4f86-a904-296ddf84f4d9",
+        "type": "RELATION",
+        "isNullable": true,
+        "options": null,
+        "settings": {
+          "relationType": "ONE_TO_MANY"
+        },
+        "defaultValue": null
+      },
+      "position": {
+        "universalIdentifier": "b4d5bb67-525f-5157-ae1b-6dbf1c818a1f",
+        "type": "POSITION",
+        "isNullable": false,
+        "options": null,
+        "settings": null,
+        "defaultValue": 0
+      },
+      "primaryBuyer": {
+        "universalIdentifier": "62c20a55-b87b-4408-8219-95913592922d",
+        "type": "RELATION",
+        "isNullable": true,
+        "options": null,
+        "settings": {
+          "onDelete": "SET_NULL",
+          "relationType": "MANY_TO_ONE",
+          "joinColumnName": "primaryBuyerId"
+        },
+        "defaultValue": null
+      },
+      "programs": {
+        "universalIdentifier": "55753e0e-94a9-4a60-b241-bc5588f4f970",
+        "type": "RELATION",
+        "isNullable": true,
+        "options": null,
+        "settings": {
+          "relationType": "ONE_TO_MANY"
+        },
+        "defaultValue": null
+      },
+      "searchVector": {
+        "universalIdentifier": "134d1e57-0050-5f9b-9aaf-e1d44060f5fc",
+        "type": "TS_VECTOR",
+        "isNullable": true,
+        "options": null,
+        "settings": null,
+        "defaultValue": null
+      },
+      "taskTargets": {
+        "universalIdentifier": "feff6933-ce75-5a79-8c03-c07cbc654bfb",
+        "type": "RELATION",
+        "isNullable": true,
+        "options": null,
+        "settings": {
+          "relationType": "ONE_TO_MANY"
+        },
+        "defaultValue": null
+      },
+      "timelineActivities": {
+        "universalIdentifier": "c4d7d364-1b0c-56ed-a3f2-51911d8ded07",
+        "type": "RELATION",
+        "isNullable": true,
+        "options": null,
+        "settings": {
+          "relationType": "ONE_TO_MANY"
+        },
+        "defaultValue": null
+      },
+      "updatedAt": {
+        "universalIdentifier": "719bfdab-8a1c-5f89-91b4-edf23df0b51f",
+        "type": "DATE_TIME",
+        "isNullable": false,
+        "options": null,
+        "settings": null,
+        "defaultValue": "now"
+      },
+      "updatedBy": {
+        "universalIdentifier": "94b3bbd4-9447-5226-8a61-8ca309a0ce65",
+        "type": "ACTOR",
+        "isNullable": false,
+        "options": null,
+        "settings": null,
+        "defaultValue": {
+          "name": "''",
+          "source": "'MANUAL'"
+        }
+      }
+    }
+  },
+  "emailMessage": {
+    "universalIdentifier": "c0233f86-fdb6-4a32-9693-6c6fb1d5e740",
+    "fields": {
+      "attachments": {
+        "universalIdentifier": "2c6a7d44-7dd6-52fa-a8be-734354435c6f",
+        "type": "RELATION",
+        "isNullable": true,
+        "options": null,
+        "settings": {
+          "relationType": "ONE_TO_MANY"
+        },
+        "defaultValue": null
+      },
+      "bodyPreview": {
+        "universalIdentifier": "9f45ef52-f749-4a56-b6ff-4f3b22c1574c",
+        "type": "TEXT",
+        "isNullable": true,
+        "options": null,
+        "settings": null,
+        "defaultValue": null
+      },
+      "company": {
+        "universalIdentifier": "a2b3c4d5-e6f7-4a8b-9c0d-1e2f3a4b5c6d",
+        "type": "RELATION",
+        "isNullable": true,
+        "options": null,
+        "settings": {
+          "onDelete": "SET_NULL",
+          "relationType": "MANY_TO_ONE",
+          "joinColumnName": "companyId"
+        },
+        "defaultValue": null
+      },
+      "createdAt": {
+        "universalIdentifier": "480cc733-1053-5e75-a63f-f2402fa51368",
+        "type": "DATE_TIME",
+        "isNullable": false,
+        "options": null,
+        "settings": null,
+        "defaultValue": "now"
+      },
+      "createdBy": {
+        "universalIdentifier": "a9487fc7-d00c-5145-93bf-8df9d879d313",
+        "type": "ACTOR",
+        "isNullable": false,
+        "options": null,
+        "settings": null,
+        "defaultValue": {
+          "name": "''",
+          "source": "'MANUAL'"
+        }
+      },
+      "deletedAt": {
+        "universalIdentifier": "32e90751-def3-5b82-98e8-56957adb08fb",
+        "type": "DATE_TIME",
+        "isNullable": true,
+        "options": null,
+        "settings": null,
+        "defaultValue": null
+      },
+      "department": {
+        "universalIdentifier": "b3c4d5e6-f7a8-4b9c-0d1e-2f3a4b5c6d7e",
+        "type": "RELATION",
+        "isNullable": true,
+        "options": null,
+        "settings": {
+          "onDelete": "SET_NULL",
+          "relationType": "MANY_TO_ONE",
+          "joinColumnName": "departmentId"
+        },
+        "defaultValue": null
+      },
+      "favorites": {
+        "universalIdentifier": "f79094a6-ab94-5ebb-8f82-51389ce22952",
+        "type": "RELATION",
+        "isNullable": true,
+        "options": null,
+        "settings": {
+          "relationType": "ONE_TO_MANY"
+        },
+        "defaultValue": null
+      },
+      "id": {
+        "universalIdentifier": "eee3ebfe-f719-5d8d-acaf-7c63c2237113",
+        "type": "UUID",
+        "isNullable": false,
+        "options": null,
+        "settings": null,
+        "defaultValue": "uuid"
+      },
+      "name": {
+        "universalIdentifier": "9e14f162-c9e8-55c0-8626-df24fd3b1f38",
+        "type": "TEXT",
+        "isNullable": true,
+        "options": null,
+        "settings": null,
+        "defaultValue": null
+      },
+      "noteTargets": {
+        "universalIdentifier": "c7473279-fc63-590e-900c-807a71d4992d",
+        "type": "RELATION",
+        "isNullable": true,
+        "options": null,
+        "settings": {
+          "relationType": "ONE_TO_MANY"
+        },
+        "defaultValue": null
+      },
+      "outlookMessageId": {
+        "universalIdentifier": "848a0c80-5fcb-4652-b793-404f719e9586",
+        "type": "TEXT",
+        "isNullable": true,
+        "options": null,
+        "settings": null,
+        "defaultValue": null
+      },
+      "position": {
+        "universalIdentifier": "9750ab73-4d31-5af8-91f1-59bbbc3e86e5",
+        "type": "POSITION",
+        "isNullable": false,
+        "options": null,
+        "settings": null,
+        "defaultValue": 0
+      },
+      "program": {
+        "universalIdentifier": "503aed88-8f5c-487a-9222-c31a46a9a7de",
+        "type": "RELATION",
+        "isNullable": true,
+        "options": null,
+        "settings": {
+          "onDelete": "SET_NULL",
+          "relationType": "MANY_TO_ONE",
+          "joinColumnName": "programId"
+        },
+        "defaultValue": null
+      },
+      "receivedAt": {
+        "universalIdentifier": "00860179-974b-4edc-a48d-22cb832af5ce",
+        "type": "DATE",
+        "isNullable": true,
+        "options": null,
+        "settings": null,
+        "defaultValue": null
+      },
+      "recipients": {
+        "universalIdentifier": "9a120aa3-c80e-44f3-9d3a-48444fe548d6",
+        "type": "TEXT",
+        "isNullable": true,
+        "options": null,
+        "settings": null,
+        "defaultValue": null
+      },
+      "routingMethod": {
+        "universalIdentifier": "5abe6d5f-d055-421a-8b30-b31c8c2b80ca",
+        "type": "SELECT",
+        "isNullable": true,
+        "options": [
+          {
+            "id": "b1d53f7a-29e4-4c8a-bd34-e5a1c7f9d3b2",
+            "color": "blue",
+            "label": "PO Number",
+            "value": "PO_NUMBER",
+            "position": 0
+          },
+          {
+            "id": "c4e82b19-5f7a-4d3b-8e1c-a9b2f4e6c8d1",
+            "color": "purple",
+            "label": "SO Number",
+            "value": "SO_NUMBER",
+            "position": 1
+          },
+          {
+            "id": "d7f14c28-6a8b-4e5c-9f2d-b3c5e7a1d9f4",
+            "color": "cyan",
+            "label": "Retailer Domain",
+            "value": "EMAIL_DOMAIN",
+            "position": 2
+          },
+          {
+            "id": "f9b36e47-8c1d-4a7e-b234-d5e8f0a2bc16",
+            "color": "pink",
+            "label": "Fuzzy Match",
+            "value": "FUZZY_NAME",
+            "position": 3
+          },
+          {
+            "id": "a1c47f58-9d2e-4b8f-8345-e6f9a1b3cd27",
+            "color": "violet",
+            "label": "AI Matched",
+            "value": "AI",
+            "position": 4
+          },
+          {
+            "id": "e8a25d39-7b9c-4f6d-a031-c4d6f8b2ea05",
+            "color": "orange",
+            "label": "Manual",
+            "value": "MANUAL",
+            "position": 5
+          }
+        ],
+        "settings": null,
+        "defaultValue": null
+      },
+      "routingStatus": {
+        "universalIdentifier": "c18a5764-d901-421d-8907-210e50333a48",
+        "type": "SELECT",
+        "isNullable": true,
+        "options": [
+          {
+            "id": "e6b3a0c2-54b8-4a3e-b1e3-cc6f62c8a8f1",
+            "color": "green",
+            "label": "Routed",
+            "value": "ROUTED",
+            "position": 0
+          },
+          {
+            "id": "f5d01829-bc73-42e7-a6ed-3e95b1a1c3b4",
+            "color": "yellow",
+            "label": "Needs Review",
+            "value": "UNROUTED",
+            "position": 1
+          },
+          {
+            "id": "a3c44e8d-1f09-4c51-8b3a-9f2e8b7c5d21",
+            "color": "gray",
+            "label": "Skipped",
+            "value": "SKIPPED",
+            "position": 2
+          }
+        ],
+        "settings": null,
+        "defaultValue": null
+      },
+      "searchVector": {
+        "universalIdentifier": "d3cd742b-cced-5a9f-be5e-746741329008",
+        "type": "TS_VECTOR",
+        "isNullable": true,
+        "options": null,
+        "settings": null,
+        "defaultValue": null
+      },
+      "sender": {
+        "universalIdentifier": "c14e7bc1-c97c-40e3-8156-da8f9e3cb12c",
+        "type": "TEXT",
+        "isNullable": true,
+        "options": null,
+        "settings": null,
+        "defaultValue": null
+      },
+      "subject": {
+        "universalIdentifier": "0c5b20cb-36e2-4b46-bcd5-c45401c4cb63",
+        "type": "TEXT",
+        "isNullable": true,
+        "options": null,
+        "settings": null,
+        "defaultValue": null
+      },
+      "taskTargets": {
+        "universalIdentifier": "4b6f9154-297a-505a-8f06-7a7fccea774c",
+        "type": "RELATION",
+        "isNullable": true,
+        "options": null,
+        "settings": {
+          "relationType": "ONE_TO_MANY"
+        },
+        "defaultValue": null
+      },
+      "timelineActivities": {
+        "universalIdentifier": "9ae4124f-10dd-5db7-be10-c7d22002baf1",
+        "type": "RELATION",
+        "isNullable": true,
+        "options": null,
+        "settings": {
+          "relationType": "ONE_TO_MANY"
+        },
+        "defaultValue": null
+      },
+      "updatedAt": {
+        "universalIdentifier": "bcb781fa-b012-5b69-a47e-9810d4bc8c5a",
+        "type": "DATE_TIME",
+        "isNullable": false,
+        "options": null,
+        "settings": null,
+        "defaultValue": "now"
+      },
+      "updatedBy": {
+        "universalIdentifier": "311ec407-7906-59c7-80d5-5a607f696303",
+        "type": "ACTOR",
+        "isNullable": false,
+        "options": null,
+        "settings": null,
+        "defaultValue": {
+          "name": "''",
+          "source": "'MANUAL'"
+        }
+      }
+    }
+  },
+  "factory": {
+    "universalIdentifier": "1e10f8ed-8571-48b8-8571-32e53b44d63e",
+    "fields": {
+      "attachments": {
+        "universalIdentifier": "3ae4050f-8471-589e-8f99-6780e9cf9f28",
+        "type": "RELATION",
+        "isNullable": true,
+        "options": null,
+        "settings": {
+          "relationType": "ONE_TO_MANY"
+        },
+        "defaultValue": null
+      },
+      "capabilities": {
+        "universalIdentifier": "e7efa3ad-b86b-426c-8e96-0587b6f5bb0f",
+        "type": "TEXT",
+        "isNullable": true,
+        "options": null,
+        "settings": null,
+        "defaultValue": null
+      },
+      "contactEmail": {
+        "universalIdentifier": "ce93b50f-c313-484c-b8ce-99e166b6aa49",
+        "type": "EMAILS",
+        "isNullable": true,
+        "options": null,
+        "settings": null,
+        "defaultValue": null
+      },
+      "contactName": {
+        "universalIdentifier": "7c85c016-ea83-4a3a-b6a1-f9319c041728",
+        "type": "TEXT",
+        "isNullable": true,
+        "options": null,
+        "settings": null,
+        "defaultValue": null
+      },
+      "createdAt": {
+        "universalIdentifier": "364b69b2-6926-5669-8c33-e2eff4475b99",
+        "type": "DATE_TIME",
+        "isNullable": false,
+        "options": null,
+        "settings": null,
+        "defaultValue": "now"
+      },
+      "createdBy": {
+        "universalIdentifier": "2cde00d4-b264-5f01-9ac6-ed5197c7f3e1",
+        "type": "ACTOR",
+        "isNullable": false,
+        "options": null,
+        "settings": null,
+        "defaultValue": {
+          "name": "''",
+          "source": "'MANUAL'"
+        }
+      },
+      "deletedAt": {
+        "universalIdentifier": "6cc1267e-76f8-57b9-9193-60f61d50fa1a",
+        "type": "DATE_TIME",
+        "isNullable": true,
+        "options": null,
+        "settings": null,
+        "defaultValue": null
+      },
+      "favorites": {
+        "universalIdentifier": "f80efd93-2d1b-506f-855e-abed7a753d41",
+        "type": "RELATION",
+        "isNullable": true,
+        "options": null,
+        "settings": {
+          "relationType": "ONE_TO_MANY"
+        },
+        "defaultValue": null
+      },
+      "id": {
+        "universalIdentifier": "0c762be0-dc28-50b0-bda6-95f0526defcc",
+        "type": "UUID",
+        "isNullable": false,
+        "options": null,
+        "settings": null,
+        "defaultValue": "uuid"
+      },
+      "location": {
+        "universalIdentifier": "a410e3f9-5421-4332-a461-0a9bbb35089c",
+        "type": "TEXT",
+        "isNullable": true,
+        "options": null,
+        "settings": null,
+        "defaultValue": null
+      },
+      "name": {
+        "universalIdentifier": "c0c9c643-157b-4da2-a978-4ff5ce7c4834",
+        "type": "TEXT",
+        "isNullable": true,
+        "options": null,
+        "settings": null,
+        "defaultValue": null
+      },
+      "noteTargets": {
+        "universalIdentifier": "3e6cd227-8d7d-5dd0-a248-857daa8621b2",
+        "type": "RELATION",
+        "isNullable": true,
+        "options": null,
+        "settings": {
+          "relationType": "ONE_TO_MANY"
+        },
+        "defaultValue": null
+      },
+      "notes": {
+        "universalIdentifier": "82899353-7557-4bbd-8cc9-1bcaf8462f73",
+        "type": "TEXT",
+        "isNullable": true,
+        "options": null,
+        "settings": null,
+        "defaultValue": null
+      },
+      "position": {
+        "universalIdentifier": "c13ceb80-dae7-5c44-9266-0a0fecb78f6d",
+        "type": "POSITION",
+        "isNullable": false,
+        "options": null,
+        "settings": null,
+        "defaultValue": 0
+      },
+      "programs": {
+        "universalIdentifier": "6d3fb902-10db-4c87-b7a7-27ee02bc73af",
+        "type": "RELATION",
+        "isNullable": true,
+        "options": null,
+        "settings": {
+          "relationType": "ONE_TO_MANY"
+        },
+        "defaultValue": null
+      },
+      "searchVector": {
+        "universalIdentifier": "0dfa3a62-6a45-5dc9-bf29-8db12476e77b",
+        "type": "TS_VECTOR",
+        "isNullable": true,
+        "options": null,
+        "settings": null,
+        "defaultValue": null
+      },
+      "taskTargets": {
+        "universalIdentifier": "2bbdc5ad-c2e1-5ec2-98a2-1981ef496961",
+        "type": "RELATION",
+        "isNullable": true,
+        "options": null,
+        "settings": {
+          "relationType": "ONE_TO_MANY"
+        },
+        "defaultValue": null
+      },
+      "timelineActivities": {
+        "universalIdentifier": "b3ed5814-0774-5cad-a75b-ce16df5fd14b",
+        "type": "RELATION",
+        "isNullable": true,
+        "options": null,
+        "settings": {
+          "relationType": "ONE_TO_MANY"
+        },
+        "defaultValue": null
+      },
+      "updatedAt": {
+        "universalIdentifier": "49b61095-3a1f-59f2-b56f-84da5a637310",
+        "type": "DATE_TIME",
+        "isNullable": false,
+        "options": null,
+        "settings": null,
+        "defaultValue": "now"
+      },
+      "updatedBy": {
+        "universalIdentifier": "e76e1a6d-1ae2-5e52-af30-46e4bdf5f0fe",
+        "type": "ACTOR",
+        "isNullable": false,
+        "options": null,
+        "settings": null,
+        "defaultValue": {
+          "name": "''",
+          "source": "'MANUAL'"
+        }
+      }
+    }
+  },
+  "ignoreRule": {
+    "universalIdentifier": "c0baf376-8e17-4d5b-b31a-39122aae9db5",
+    "fields": {
+      "attachments": {
+        "universalIdentifier": "78d9a29d-e639-454e-88cb-f65850c815d4",
+        "type": "RELATION",
+        "isNullable": true,
+        "options": null,
+        "settings": {
+          "relationType": "ONE_TO_MANY"
+        },
+        "defaultValue": null
+      },
+      "createdAt": {
+        "universalIdentifier": "7dfe4821-a808-4207-9e66-113c95fc9708",
+        "type": "DATE_TIME",
+        "isNullable": false,
+        "options": null,
+        "settings": null,
+        "defaultValue": "now"
+      },
+      "createdBy": {
+        "universalIdentifier": "0b503a9b-5a08-4d3c-8b93-f37108dd5734",
+        "type": "ACTOR",
+        "isNullable": false,
+        "options": null,
+        "settings": null,
+        "defaultValue": {
+          "name": "''",
+          "source": "'MANUAL'"
+        }
+      },
+      "deletedAt": {
+        "universalIdentifier": "726dcc88-60ce-40f5-b686-0e9d1b2c0fcb",
+        "type": "DATE_TIME",
+        "isNullable": true,
+        "options": null,
+        "settings": null,
+        "defaultValue": null
+      },
+      "emailsSkipped": {
+        "universalIdentifier": "99e9b43e-3dc0-47b1-a2c8-6d28df681072",
+        "type": "NUMBER",
+        "isNullable": true,
+        "options": null,
+        "settings": null,
+        "defaultValue": 0
+      },
+      "favorites": {
+        "universalIdentifier": "6cfbe5b9-4001-4134-a198-deff54e50810",
+        "type": "RELATION",
+        "isNullable": true,
+        "options": null,
+        "settings": {
+          "relationType": "ONE_TO_MANY"
+        },
+        "defaultValue": null
+      },
+      "id": {
+        "universalIdentifier": "45679b9c-c44f-4bc0-bdf8-5bba26abc6e3",
+        "type": "UUID",
+        "isNullable": false,
+        "options": null,
+        "settings": null,
+        "defaultValue": "uuid"
+      },
+      "matchType": {
+        "universalIdentifier": "0b6a0cbd-e640-45dc-a018-ee18fdbb6ca4",
+        "type": "SELECT",
+        "isNullable": true,
+        "options": [
+          {
+            "id": "2e501d39-c9aa-4469-9c01-53268838b556",
+            "color": "blue",
+            "label": "Contains",
+            "value": "CONTAINS",
+            "position": 0
+          },
+          {
+            "id": "13ddfa50-72da-46c4-b4ff-eb25e0ae4211",
+            "color": "green",
+            "label": "Exact Match",
+            "value": "EXACT",
+            "position": 1
+          },
+          {
+            "id": "eae4afef-5800-45e8-8ccf-1fe70fcc0cb9",
+            "color": "purple",
+            "label": "Starts With",
+            "value": "STARTS_WITH",
+            "position": 2
+          }
+        ],
+        "settings": null,
+        "defaultValue": "'CONTAINS'"
+      },
+      "name": {
+        "universalIdentifier": "e8b85df7-ebd7-4281-b8f6-521f63192a02",
+        "type": "TEXT",
+        "isNullable": true,
+        "options": null,
+        "settings": null,
+        "defaultValue": null
+      },
+      "noteTargets": {
+        "universalIdentifier": "2f04b8cc-9a5f-416e-bd5a-4fddd16c686d",
+        "type": "RELATION",
+        "isNullable": true,
+        "options": null,
+        "settings": {
+          "relationType": "ONE_TO_MANY"
+        },
+        "defaultValue": null
+      },
+      "pattern": {
+        "universalIdentifier": "76189600-b805-4fe4-a3b0-258c2e74d70c",
+        "type": "TEXT",
+        "isNullable": true,
+        "options": null,
+        "settings": null,
+        "defaultValue": null
+      },
+      "position": {
+        "universalIdentifier": "1eba8567-baef-4d14-8521-6934bba4d7e3",
+        "type": "POSITION",
+        "isNullable": false,
+        "options": null,
+        "settings": null,
+        "defaultValue": 0
+      },
+      "searchVector": {
+        "universalIdentifier": "c363ddaa-2236-4cfa-a982-d928171a626b",
+        "type": "TS_VECTOR",
+        "isNullable": true,
+        "options": null,
+        "settings": {
+          "asExpression": "to_tsvector('simple', COALESCE(public.unaccent_immutable(\"pattern\"), ''))",
+          "generatedType": "STORED"
+        },
+        "defaultValue": null
+      },
+      "taskTargets": {
+        "universalIdentifier": "97b6b134-0fdd-4c68-84c3-67b0dbef5761",
+        "type": "RELATION",
+        "isNullable": true,
+        "options": null,
+        "settings": {
+          "relationType": "ONE_TO_MANY"
+        },
+        "defaultValue": null
+      },
+      "timelineActivities": {
+        "universalIdentifier": "4087539a-dc53-4719-93aa-31dbe57a7345",
+        "type": "RELATION",
+        "isNullable": true,
+        "options": null,
+        "settings": {
+          "relationType": "ONE_TO_MANY"
+        },
+        "defaultValue": null
+      },
+      "updatedAt": {
+        "universalIdentifier": "8340e9ec-8ca2-4ce6-b689-aa4c0c0ec397",
+        "type": "DATE_TIME",
+        "isNullable": false,
+        "options": null,
+        "settings": null,
+        "defaultValue": "now"
+      },
+      "updatedBy": {
+        "universalIdentifier": "0a4bd5e0-d572-4eb7-9d5e-c3fb2ec13d04",
+        "type": "ACTOR",
+        "isNullable": false,
+        "options": null,
+        "settings": null,
+        "defaultValue": {
+          "name": "''",
+          "source": "'MANUAL'"
+        }
+      }
+    }
+  },
+  "licensorApprovalThread": {
+    "universalIdentifier": "b654e699-2912-433f-93dd-c97d9a5bb7e1",
+    "fields": {
+      "attachments": {
+        "universalIdentifier": "ab39aa4e-7a95-5c3f-a38c-6cb18df10253",
+        "type": "RELATION",
+        "isNullable": true,
+        "options": null,
+        "settings": {
+          "relationType": "ONE_TO_MANY"
+        },
+        "defaultValue": null
+      },
+      "createdAt": {
+        "universalIdentifier": "4956a0b7-aeab-5d4e-b021-24802975616b",
+        "type": "DATE_TIME",
+        "isNullable": false,
+        "options": null,
+        "settings": null,
+        "defaultValue": "now"
+      },
+      "createdBy": {
+        "universalIdentifier": "86ec880b-cd75-57e4-b344-2f289e6c7079",
+        "type": "ACTOR",
+        "isNullable": false,
+        "options": null,
+        "settings": null,
+        "defaultValue": {
+          "name": "''",
+          "source": "'MANUAL'"
+        }
+      },
+      "deletedAt": {
+        "universalIdentifier": "e1248338-8f06-53e9-992e-3bde8fa80760",
+        "type": "DATE_TIME",
+        "isNullable": true,
+        "options": null,
+        "settings": null,
+        "defaultValue": null
+      },
+      "dueDate": {
+        "universalIdentifier": "a417b468-0e97-4a28-b30a-cc5b076947eb",
+        "type": "DATE",
+        "isNullable": true,
+        "options": null,
+        "settings": null,
+        "defaultValue": null
+      },
+      "favorites": {
+        "universalIdentifier": "cbc8806a-bae9-584a-953b-ceca3b6b3789",
+        "type": "RELATION",
+        "isNullable": true,
+        "options": null,
+        "settings": {
+          "relationType": "ONE_TO_MANY"
+        },
+        "defaultValue": null
+      },
+      "id": {
+        "universalIdentifier": "387de985-db41-566c-b9e1-34e30aa2cd0a",
+        "type": "UUID",
+        "isNullable": false,
+        "options": null,
+        "settings": null,
+        "defaultValue": "uuid"
+      },
+      "licensorComments": {
+        "universalIdentifier": "1d78e531-c814-44df-8dcf-9ec5ccedc5ce",
+        "type": "TEXT",
+        "isNullable": true,
+        "options": null,
+        "settings": null,
+        "defaultValue": null
+      },
+      "name": {
+        "universalIdentifier": "19dacb5f-de6a-523f-a9a0-d1e60bdcdc37",
+        "type": "TEXT",
+        "isNullable": true,
+        "options": null,
+        "settings": null,
+        "defaultValue": null
+      },
+      "noteTargets": {
+        "universalIdentifier": "7e58ec15-eb41-5eef-9868-f229e01f86ba",
+        "type": "RELATION",
+        "isNullable": true,
+        "options": null,
+        "settings": {
+          "relationType": "ONE_TO_MANY"
+        },
+        "defaultValue": null
+      },
+      "position": {
+        "universalIdentifier": "fc6c54a7-67eb-5e94-b4e3-baa30cf1a429",
+        "type": "POSITION",
+        "isNullable": false,
+        "options": null,
+        "settings": null,
+        "defaultValue": 0
+      },
+      "program": {
+        "universalIdentifier": "7face116-c580-4ed3-a6af-68ed85f4b2b6",
+        "type": "RELATION",
+        "isNullable": true,
+        "options": null,
+        "settings": {
+          "onDelete": "CASCADE",
+          "relationType": "MANY_TO_ONE",
+          "joinColumnName": "programId"
+        },
+        "defaultValue": null
+      },
+      "propertyName": {
+        "universalIdentifier": "3842091c-8380-4cf9-8d50-5d2eebc23223",
+        "type": "TEXT",
+        "isNullable": true,
+        "options": null,
+        "settings": null,
+        "defaultValue": null
+      },
+      "responseDate": {
+        "universalIdentifier": "43f0bd59-3631-4fdf-873f-b25d0f5c6012",
+        "type": "DATE",
+        "isNullable": true,
+        "options": null,
+        "settings": null,
+        "defaultValue": null
+      },
+      "searchVector": {
+        "universalIdentifier": "9446ef8d-d3fa-5669-b260-b8810faa3dda",
+        "type": "TS_VECTOR",
+        "isNullable": true,
+        "options": null,
+        "settings": null,
+        "defaultValue": null
+      },
+      "stage": {
+        "universalIdentifier": "9db02329-d094-4522-96ce-a758207c2ffa",
+        "type": "SELECT",
+        "isNullable": true,
+        "options": [
+          {
+            "id": "8689edaa-215b-4736-80da-ece66e901cd3",
+            "color": "blue",
+            "label": "Concept Submit",
+            "value": "CONCEPT_SUBMIT",
+            "position": 0
+          },
+          {
+            "id": "4fe39827-f8a4-4936-8480-819e3ea03d85",
+            "color": "orange",
+            "label": "Concept Revisions",
+            "value": "CONCEPT_REVISIONS",
+            "position": 1
+          },
+          {
+            "id": "d7249dba-872a-4a66-b8e1-da5807ed2154",
+            "color": "yellow",
+            "label": "Resubmit",
+            "value": "RESUBMIT",
+            "position": 2
+          },
+          {
+            "id": "0ea5cfa2-d152-425d-b5a3-5cbfa101c3aa",
+            "color": "turquoise",
+            "label": "Concept Approved w Comments",
+            "value": "CONCEPT_APPROVED_WITH_COMMENTS",
+            "position": 3
+          },
+          {
+            "id": "865d6679-7d46-4e34-92f0-3e514d066e16",
+            "color": "green",
+            "label": "Concept Approved",
+            "value": "CONCEPT_APPROVED",
+            "position": 4
+          },
+          {
+            "id": "4aa61780-64bf-4dff-8d32-99191a107baa",
+            "color": "purple",
+            "label": "PPS Submit",
+            "value": "PPS_SUBMIT",
+            "position": 5
+          },
+          {
+            "id": "986a6e6f-e9d9-4cd9-af5f-241f9127be74",
+            "color": "sky",
+            "label": "PPS Approved",
+            "value": "PPS_APPROVED",
+            "position": 6
+          }
+        ],
+        "settings": null,
+        "defaultValue": null
+      },
+      "submittedDate": {
+        "universalIdentifier": "ec787e4e-1fa1-484a-a48a-7927981f37dd",
+        "type": "DATE",
+        "isNullable": true,
+        "options": null,
+        "settings": null,
+        "defaultValue": null
+      },
+      "taskTargets": {
+        "universalIdentifier": "bd63f834-bc4a-5366-8a9b-2478ac325cd2",
+        "type": "RELATION",
+        "isNullable": true,
+        "options": null,
+        "settings": {
+          "relationType": "ONE_TO_MANY"
+        },
+        "defaultValue": null
+      },
+      "timelineActivities": {
+        "universalIdentifier": "beb0ea6f-baca-54a0-8385-e03fed14cee8",
+        "type": "RELATION",
+        "isNullable": true,
+        "options": null,
+        "settings": {
+          "relationType": "ONE_TO_MANY"
+        },
+        "defaultValue": null
+      },
+      "updatedAt": {
+        "universalIdentifier": "f75b8004-8904-5e98-8724-ceb96be0c6d1",
+        "type": "DATE_TIME",
+        "isNullable": false,
+        "options": null,
+        "settings": null,
+        "defaultValue": "now"
+      },
+      "updatedBy": {
+        "universalIdentifier": "1e8b7ef6-e128-5e8c-8cde-083fd8f17d54",
+        "type": "ACTOR",
+        "isNullable": false,
+        "options": null,
+        "settings": null,
+        "defaultValue": {
+          "name": "''",
+          "source": "'MANUAL'"
+        }
+      }
+    }
+  },
+  "meetingNote": {
+    "universalIdentifier": "79e9be9f-d969-40f7-988d-efc83a8e7049",
+    "fields": {
+      "actionItems": {
+        "universalIdentifier": "3ce7eaf9-ff09-4ac2-a543-cd8bc516aebb",
+        "type": "TEXT",
+        "isNullable": true,
+        "options": null,
+        "settings": null,
+        "defaultValue": null
+      },
+      "attachments": {
+        "universalIdentifier": "fd8fc31d-64d6-5e04-b4aa-56e58fa9c1d9",
+        "type": "RELATION",
+        "isNullable": true,
+        "options": null,
+        "settings": {
+          "relationType": "ONE_TO_MANY"
+        },
+        "defaultValue": null
+      },
+      "attendees": {
+        "universalIdentifier": "336d6039-1c04-4704-97b8-8d60bf48cbde",
+        "type": "RELATION",
+        "isNullable": true,
+        "options": null,
+        "settings": {
+          "relationType": "ONE_TO_MANY"
+        },
+        "defaultValue": null
+      },
+      "company": {
+        "universalIdentifier": "1525d1cf-ec54-4687-855e-2491e1e2bccc",
+        "type": "RELATION",
+        "isNullable": true,
+        "options": null,
+        "settings": {
+          "onDelete": "SET_NULL",
+          "relationType": "MANY_TO_ONE",
+          "joinColumnName": "companyId"
+        },
+        "defaultValue": null
+      },
+      "createdAt": {
+        "universalIdentifier": "c7f18f55-3a20-5140-8a23-054414537cc6",
+        "type": "DATE_TIME",
+        "isNullable": false,
+        "options": null,
+        "settings": null,
+        "defaultValue": "now"
+      },
+      "createdBy": {
+        "universalIdentifier": "aba43b3c-a9ad-529d-b759-1eac070477f7",
+        "type": "ACTOR",
+        "isNullable": false,
+        "options": null,
+        "settings": null,
+        "defaultValue": {
+          "name": "''",
+          "source": "'MANUAL'"
+        }
+      },
+      "date": {
+        "universalIdentifier": "b882c2bc-25a9-4574-b52e-1fd82d8b6ca7",
+        "type": "DATE",
+        "isNullable": true,
+        "options": null,
+        "settings": null,
+        "defaultValue": null
+      },
+      "deletedAt": {
+        "universalIdentifier": "ea12f40c-68a0-52a3-8a21-b4241244d81e",
+        "type": "DATE_TIME",
+        "isNullable": true,
+        "options": null,
+        "settings": null,
+        "defaultValue": null
+      },
+      "department": {
+        "universalIdentifier": "609a34c5-2f92-4475-92dd-bf7e24eadb96",
+        "type": "RELATION",
+        "isNullable": true,
+        "options": null,
+        "settings": {
+          "onDelete": "SET_NULL",
+          "relationType": "MANY_TO_ONE",
+          "joinColumnName": "departmentId"
+        },
+        "defaultValue": null
+      },
+      "favorites": {
+        "universalIdentifier": "3c200515-f07a-562e-9369-6041f3d6ee49",
+        "type": "RELATION",
+        "isNullable": true,
+        "options": null,
+        "settings": {
+          "relationType": "ONE_TO_MANY"
+        },
+        "defaultValue": null
+      },
+      "firefliesTranscriptId": {
+        "universalIdentifier": "173395b1-abd5-44d0-83d4-45730435162e",
+        "type": "TEXT",
+        "isNullable": true,
+        "options": null,
+        "settings": null,
+        "defaultValue": null
+      },
+      "id": {
+        "universalIdentifier": "2caad179-2ed8-5baa-a3fb-fad94f0d5745",
+        "type": "UUID",
+        "isNullable": false,
+        "options": null,
+        "settings": null,
+        "defaultValue": "uuid"
+      },
+      "name": {
+        "universalIdentifier": "c5d01e23-7a84-4f21-b9e3-1234567890ab",
+        "type": "TEXT",
+        "isNullable": true,
+        "options": null,
+        "settings": null,
+        "defaultValue": null
+      },
+      "noteTargets": {
+        "universalIdentifier": "216685a0-9007-57ba-9d60-b8fa441fb9f5",
+        "type": "RELATION",
+        "isNullable": true,
+        "options": null,
+        "settings": {
+          "relationType": "ONE_TO_MANY"
+        },
+        "defaultValue": null
+      },
+      "participants": {
+        "universalIdentifier": "6fec3289-ce46-4024-abdf-99a2efb781dd",
+        "type": "TEXT",
+        "isNullable": true,
+        "options": null,
+        "settings": null,
+        "defaultValue": null
+      },
+      "person": {
+        "universalIdentifier": "b50ce35f-9e77-4bda-9cdc-27267c3607aa",
+        "type": "RELATION",
+        "isNullable": true,
+        "options": null,
+        "settings": {
+          "onDelete": "SET_NULL",
+          "relationType": "MANY_TO_ONE",
+          "joinColumnName": "personId"
+        },
+        "defaultValue": null
+      },
+      "position": {
+        "universalIdentifier": "968a63f8-3b34-52e4-ab49-594cc786fb05",
+        "type": "POSITION",
+        "isNullable": false,
+        "options": null,
+        "settings": null,
+        "defaultValue": 0
+      },
+      "program": {
+        "universalIdentifier": "a59b3c45-4426-41fa-be7a-7d16b5d9b14f",
+        "type": "RELATION",
+        "isNullable": true,
+        "options": null,
+        "settings": {
+          "onDelete": "SET_NULL",
+          "relationType": "MANY_TO_ONE",
+          "joinColumnName": "programId"
+        },
+        "defaultValue": null
+      },
+      "searchVector": {
+        "universalIdentifier": "9efb4c5a-62f8-5b70-bcd5-f709996434e7",
+        "type": "TS_VECTOR",
+        "isNullable": true,
+        "options": null,
+        "settings": null,
+        "defaultValue": null
+      },
+      "source": {
+        "universalIdentifier": "a6540557-49b3-4f37-93b0-dd179588b6a6",
+        "type": "SELECT",
+        "isNullable": true,
+        "options": [
+          {
+            "id": "4ea985c5-087f-460f-8638-5915826d8f14",
+            "color": "blue",
+            "label": "Fireflies Auto-Import",
+            "value": "FIREFLIES_AUTO_IMPORT",
+            "position": 0
+          },
+          {
+            "id": "8b97c48c-50bc-4961-88c5-1fc45776af31",
+            "color": "gray",
+            "label": "Manual",
+            "value": "MANUAL",
+            "position": 1
+          }
+        ],
+        "settings": null,
+        "defaultValue": null
+      },
+      "summary": {
+        "universalIdentifier": "3ce0731a-a786-4397-b20a-7460fbfa2293",
+        "type": "TEXT",
+        "isNullable": true,
+        "options": null,
+        "settings": null,
+        "defaultValue": null
+      },
+      "taskTargets": {
+        "universalIdentifier": "0944d2a9-a87b-56d3-94d4-4468b6a552d6",
+        "type": "RELATION",
+        "isNullable": true,
+        "options": null,
+        "settings": {
+          "relationType": "ONE_TO_MANY"
+        },
+        "defaultValue": null
+      },
+      "timelineActivities": {
+        "universalIdentifier": "dbfbe0d9-645c-517d-8328-0aab701020ea",
+        "type": "RELATION",
+        "isNullable": true,
+        "options": null,
+        "settings": {
+          "relationType": "ONE_TO_MANY"
+        },
+        "defaultValue": null
+      },
+      "updatedAt": {
+        "universalIdentifier": "12c1a8b5-5507-5622-9617-fd053ae936f6",
+        "type": "DATE_TIME",
+        "isNullable": false,
+        "options": null,
+        "settings": null,
+        "defaultValue": "now"
+      },
+      "updatedBy": {
+        "universalIdentifier": "2d295359-b442-5ff5-9975-3bcbeab7f440",
+        "type": "ACTOR",
+        "isNullable": false,
+        "options": null,
+        "settings": null,
+        "defaultValue": {
+          "name": "''",
+          "source": "'MANUAL'"
+        }
+      }
+    }
+  },
+  "meetingNoteAttendee": {
+    "universalIdentifier": "78e3ad65-5495-461b-842e-672f1e10d78d",
+    "fields": {
+      "attachments": {
+        "universalIdentifier": "451e3cf5-ab98-4d17-9659-75c88c321e28",
+        "type": "RELATION",
+        "isNullable": true,
+        "options": null,
+        "settings": {
+          "relationType": "ONE_TO_MANY"
+        },
+        "defaultValue": null
+      },
+      "createdAt": {
+        "universalIdentifier": "87266dc7-bf19-4cae-88e2-c5d1d751ea39",
+        "type": "DATE_TIME",
+        "isNullable": false,
+        "options": null,
+        "settings": null,
+        "defaultValue": "now"
+      },
+      "createdBy": {
+        "universalIdentifier": "a14505ac-dcb1-410c-ac71-8cdbab1d48ee",
+        "type": "ACTOR",
+        "isNullable": false,
+        "options": null,
+        "settings": null,
+        "defaultValue": {
+          "name": "''",
+          "source": "'MANUAL'"
+        }
+      },
+      "deletedAt": {
+        "universalIdentifier": "9e4706f2-9c4d-40a7-a190-ee737165eeab",
+        "type": "DATE_TIME",
+        "isNullable": true,
+        "options": null,
+        "settings": null,
+        "defaultValue": null
+      },
+      "favorites": {
+        "universalIdentifier": "90d727ed-6842-4dac-8337-43242c7e336e",
+        "type": "RELATION",
+        "isNullable": true,
+        "options": null,
+        "settings": {
+          "relationType": "ONE_TO_MANY"
+        },
+        "defaultValue": null
+      },
+      "id": {
+        "universalIdentifier": "8b1fb206-39c1-4636-9af5-eb990f0a2593",
+        "type": "UUID",
+        "isNullable": false,
+        "options": null,
+        "settings": null,
+        "defaultValue": "uuid"
+      },
+      "meetingNote": {
+        "universalIdentifier": "94654d72-fff5-49e1-8201-7eab056f5c14",
+        "type": "RELATION",
+        "isNullable": true,
+        "options": null,
+        "settings": {
+          "onDelete": "CASCADE",
+          "relationType": "MANY_TO_ONE",
+          "joinColumnName": "meetingNoteId"
+        },
+        "defaultValue": null
+      },
+      "name": {
+        "universalIdentifier": "ec86f029-5663-40b8-bc1c-25dc08245721",
+        "type": "TEXT",
+        "isNullable": true,
+        "options": null,
+        "settings": null,
+        "defaultValue": null
+      },
+      "noteTargets": {
+        "universalIdentifier": "c386084c-3b58-4c5e-9e16-20ba07b05393",
+        "type": "RELATION",
+        "isNullable": true,
+        "options": null,
+        "settings": {
+          "relationType": "ONE_TO_MANY"
+        },
+        "defaultValue": null
+      },
+      "person": {
+        "universalIdentifier": "58148be8-b5db-40dd-af33-03889ab03761",
+        "type": "RELATION",
+        "isNullable": true,
+        "options": null,
+        "settings": {
+          "onDelete": "CASCADE",
+          "relationType": "MANY_TO_ONE",
+          "joinColumnName": "personId"
+        },
+        "defaultValue": null
+      },
+      "position": {
+        "universalIdentifier": "2a008c3f-d168-40d2-8140-fbbae6e0f2e7",
+        "type": "POSITION",
+        "isNullable": false,
+        "options": null,
+        "settings": null,
+        "defaultValue": 0
+      },
+      "searchVector": {
+        "universalIdentifier": "c4cbf4d4-66a9-48ca-aac0-9b99f1e0a395",
+        "type": "TS_VECTOR",
+        "isNullable": true,
+        "options": null,
+        "settings": {
+          "asExpression": "to_tsvector('simple', COALESCE(public.unaccent_immutable(\"name\"), ''))",
+          "generatedType": "STORED"
+        },
+        "defaultValue": null
+      },
+      "taskTargets": {
+        "universalIdentifier": "8dc83088-1061-4a11-85a0-e0128e038c6e",
+        "type": "RELATION",
+        "isNullable": true,
+        "options": null,
+        "settings": {
+          "relationType": "ONE_TO_MANY"
+        },
+        "defaultValue": null
+      },
+      "timelineActivities": {
+        "universalIdentifier": "70303ba7-8dea-45f0-b98f-e0ef66fcd70b",
+        "type": "RELATION",
+        "isNullable": true,
+        "options": null,
+        "settings": {
+          "relationType": "ONE_TO_MANY"
+        },
+        "defaultValue": null
+      },
+      "updatedAt": {
+        "universalIdentifier": "19b945c4-41a7-4803-a46c-02baceb6a50a",
+        "type": "DATE_TIME",
+        "isNullable": false,
+        "options": null,
+        "settings": null,
+        "defaultValue": "now"
+      },
+      "updatedBy": {
+        "universalIdentifier": "23d524e3-e0b5-4b55-8d56-68a514b53261",
+        "type": "ACTOR",
+        "isNullable": false,
+        "options": null,
+        "settings": null,
+        "defaultValue": {
+          "name": "''",
+          "source": "'MANUAL'"
+        }
+      }
+    }
+  }
+}
