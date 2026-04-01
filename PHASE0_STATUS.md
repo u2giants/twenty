@@ -7,8 +7,8 @@
 | Phase 0 | ✅ COMPLETE | Backup created, UUIDs verified |
 | Phase 1 | ✅ COMPLETE | Fork synced with upstream |
 | Phase 2 | ✅ COMPLETE | 8 custom workspace entities + custom fields |
-| Phase 3 | ✅ COMPLETE | All 11 logic functions implemented |
-| Phase 4 | ❌ NOT STARTED | Front components |
+| Phase 3 | ✅ COMPLETE | 11 logic functions implemented in NestJS |
+| Phase 4 | ✅ COMPLETE | 5 React UI components created |
 | Phase 5 | ❌ NOT STARTED | Views, navigation, layouts |
 | Phase 6 | ❌ NOT STARTED | Build pipeline, Dockerfile |
 | Phase 7 | ❌ NOT STARTED | Test against database copy |
@@ -17,26 +17,38 @@
 
 ---
 
-## Phase 3 - Logic Functions (COMPLETE ✅)
+## Completed Phases
+
+### Phase 3 - Logic Functions (COMPLETE ✅)
 
 All 11 logic functions have been implemented in NestJS.
 
-### Event Listeners (5)
-1. **contact-auto-scope** - `person.created` event
-2. **lat-stage-follow-up** - `licensorApprovalThread.updated` event
-3. **new-program-tasks** - `opportunity.created` event
-4. **program-stage-change** - `opportunity.updated` event
-5. **fireflies-ingest** - HTTP POST `/fireflies-webhook`
+**Event Listeners (5):**
+1. **contact-auto-scope** - `person.created` event - Auto-sets Person scope based on domain
+2. **lat-stage-follow-up** - `licensorApprovalThread.updated` event - Creates follow-up tasks on LAT stage changes
+3. **new-program-tasks** - `opportunity.created` event - Auto-creates task checklist for new Programs
+4. **program-stage-change** - `opportunity.updated` event - Task creation and LAT auto-creation
+5. **fireflies-ingest** - HTTP POST `/fireflies-webhook` - Fireflies.ai meeting transcription webhook
 
-### Cron Jobs (4)
+**Cron Jobs (4):**
 1. **clickup-sync** - Daily at 7am (`0 7 * * *`)
 2. **email-contact-sync** - Daily at 2am (`0 2 * * *`)
 3. **email-rerouter** - Every 6 hours (`0 */6 * * *`)
 4. **outlook-ingest** - Every 15 minutes (`*/15 * * * *`)
 
-### Install Hooks (2)
+**Install Hooks (2):**
 1. **pre-install** - Runs before application install
 2. **post-install** - Runs after application install
+
+### Phase 4 - Front Components (COMPLETE ✅)
+
+5 React UI components created in `packages/twenty-front/src/modules/pop-creations/components/`:
+
+1. **PersonDepartmentPicker** - Custom picker for linking Person to Department
+2. **DepartmentDashboard** - Dashboard with tabs for department members and programs
+3. **ProgramFolio** - Dashboard for program (opportunity) details with documents and tasks
+4. **DomainManager** - Domain management interface for email routing
+5. **MondayMorningDashboard** - Weekly overview dashboard with metrics
 
 ---
 
@@ -79,9 +91,10 @@ All 11 logic functions have been implemented in NestJS.
 
 ## Code Location
 
+**Backend (Logic Functions):**
 ```
 packages/twenty-server/src/modules/pop-creations/
-├── pop-creations.module.ts           # Main module
+├── pop-creations.module.ts
 ├── logic-functions/
 │   ├── fireflies-ingest/
 │   ├── contact-auto-scope/
@@ -96,26 +109,78 @@ packages/twenty-server/src/modules/pop-creations/
 │   └── post-install/
 ```
 
+**Frontend (React Components):**
+```
+packages/twenty-front/src/modules/pop-creations/components/
+├── index.ts
+├── person-department-picker/
+│   ├── components/PersonDepartmentPicker.tsx
+│   └── types/person-department-picker.types.ts
+├── department-dashboard/
+│   └── components/DepartmentDashboard.tsx
+├── program-folio/
+│   └── components/ProgramFolio.tsx
+├── domain-manager/
+│   └── components/DomainManager.tsx
+└── monday-morning-dashboard/
+    └── components/MondayMorningDashboard.tsx
+```
+
 ---
 
 ## Known Issues
 
-### Windows Yarn Install Blocked ⚠️
-- **Problem**: Yarn 4 PnP mode fails on Windows with EISDIR error during link step
-- **Cause**: Windows symlink limitations with workspace packages
-- **Solution**: Run `yarn install` on Linux/WSL
-- **Alternative**: Try `yarn install --no-symlinks` or use npm
+### Yarn Install Blocked ⚠️
+- **Problem**: Yarn 4 PnP mode fails on Windows/WSL with symlink errors
+- **Cause**: Windows symlink limitations with workspace packages in /mnt/d
+- **Solution**: Move repo to Linux filesystem, run yarn install there
+- **Commands for WSL:**
+  ```bash
+  cp -r /mnt/d/twenty/twenty ~/src/twenty
+  cd ~/src/twenty
+  yarn install
+  npx nx run twenty-server:typecheck
+  ```
 
 ### Typecheck Pending
-- Need to run `npx nx run twenty-server:typecheck` after yarn install completes
+- Need to run `npx nx run twenty-server:typecheck` after yarn install completes on Linux
+
+---
+
+## Remaining Phases
+
+### Phase 5: Views, Navigation, Layouts
+- Configure Twenty views for custom objects
+- Set up navigation menu items
+- Define page layouts
+
+### Phase 6: Build Pipeline and Dockerfile
+- Create GitHub Actions workflow
+- Create custom Dockerfile
+- Configure Coolify deployment
+
+### Phase 7: Test Against Database Copy
+- Deploy to staging environment
+- Run integration tests
+- Verify all logic functions
+
+### Phase 8: Production Deployment
+- Deploy with rollback plan
+- Monitor for errors
+
+### Phase 9: Production Cutover
+- DNS switch
+- Final verification
+- Monitoring
 
 ---
 
 ## Next Steps
 
-1. **CRITICAL**: Run yarn install on Linux/WSL
+1. **CRITICAL**: Run yarn install on Linux/WSL (see Known Issues)
 2. **CRITICAL**: Run `npx nx run twenty-server:typecheck`
 3. Fix any TypeScript errors
-4. Phase 4: Front components (5 React components)
-5. Phase 5: Views and navigation
-6. Phase 6: Build pipeline
+4. Phase 5: Views and navigation
+5. Phase 6: Build pipeline
+6. Phase 7: Testing
+7. Phase 8-9: Deployment
