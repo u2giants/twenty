@@ -15,6 +15,11 @@ import { type PersonWorkspaceEntity } from 'src/modules/person/standard-objects/
 import { type TaskTargetWorkspaceEntity } from 'src/modules/task/standard-objects/task-target.workspace-entity';
 import { type TimelineActivityWorkspaceEntity } from 'src/modules/timeline/standard-objects/timeline-activity.workspace-entity';
 import { type WorkspaceMemberWorkspaceEntity } from 'src/modules/workspace-member/standard-objects/workspace-member.workspace-entity';
+import { type DepartmentWorkspaceEntity } from 'src/modules/pop-creations/standard-objects/department.workspace-entity';
+import { type EmailMessageWorkspaceEntity } from 'src/modules/pop-creations/standard-objects/email-message.workspace-entity';
+import { type FactoryWorkspaceEntity } from 'src/modules/pop-creations/standard-objects/factory.workspace-entity';
+import { type LicensorApprovalThreadWorkspaceEntity } from 'src/modules/pop-creations/standard-objects/licensor-approval-thread.workspace-entity';
+import { type MeetingNoteWorkspaceEntity } from 'src/modules/pop-creations/standard-objects/meeting-note.workspace-entity';
 
 const NAME_FIELD_NAME = 'name';
 
@@ -44,4 +49,31 @@ export class OpportunityWorkspaceEntity extends BaseWorkspaceEntity {
   /** @deprecated */
   probability: string;
   searchVector: string;
+
+  // --- POP Creations custom fields ---
+  programType: string | null;
+  seasonYear: string | null;
+  directiveSource: string | null;
+  division: string | null;
+  originCountry: string | null;
+  licensed: boolean | null;
+  productionPoNumber: string | null;
+  salesOrderNumber: string | null;
+  importPoNumber: string | null;
+  customerIncoterms: string | null;
+  factoryIncoterms: string | null;
+  hardDeliveryDate: Date | null;
+  sampleRequired: boolean | null;
+  sampleApprovalMethod: string | null;
+  requiresNewPricing: boolean | null;
+  clickupTaskId: string | null;
+  clickupStatus: string | null;
+  plmProjectId: string | null;
+  department: EntityRelation<DepartmentWorkspaceEntity> | null;
+  departmentId: string | null;
+  factory: EntityRelation<FactoryWorkspaceEntity> | null;
+  factoryId: string | null;
+  licensorApprovalThreads: EntityRelation<LicensorApprovalThreadWorkspaceEntity[]>;
+  emailMessages: EntityRelation<EmailMessageWorkspaceEntity[]>;
+  meetingNotes: EntityRelation<MeetingNoteWorkspaceEntity[]>;
 }

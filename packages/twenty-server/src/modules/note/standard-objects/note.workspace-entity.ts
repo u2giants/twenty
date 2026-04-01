@@ -31,4 +31,9 @@ export class NoteWorkspaceEntity extends BaseWorkspaceEntity {
   timelineActivities: EntityRelation<TimelineActivityWorkspaceEntity[]>;
   favorites: EntityRelation<FavoriteWorkspaceEntity[]>;
   searchVector: string;
+
+  // --- POP Creations custom fields ---
+  firefliesTranscriptId: string | null;
+  actionItems: string | null;
+  source: string | null;
 }

@@ -16,6 +16,9 @@ import { type PersonWorkspaceEntity } from 'src/modules/person/standard-objects/
 import { type TaskTargetWorkspaceEntity } from 'src/modules/task/standard-objects/task-target.workspace-entity';
 import { type TimelineActivityWorkspaceEntity } from 'src/modules/timeline/standard-objects/timeline-activity.workspace-entity';
 import { type WorkspaceMemberWorkspaceEntity } from 'src/modules/workspace-member/standard-objects/workspace-member.workspace-entity';
+import { type DepartmentWorkspaceEntity } from 'src/modules/pop-creations/standard-objects/department.workspace-entity';
+import { type EmailMessageWorkspaceEntity } from 'src/modules/pop-creations/standard-objects/email-message.workspace-entity';
+import { type MeetingNoteWorkspaceEntity } from 'src/modules/pop-creations/standard-objects/meeting-note.workspace-entity';
 
 const NAME_FIELD_NAME = 'name';
 const DOMAIN_NAME_FIELD_NAME = 'domainName';
@@ -58,4 +61,13 @@ export class CompanyWorkspaceEntity {
   favorites: EntityRelation<FavoriteWorkspaceEntity[]>;
   attachments: EntityRelation<AttachmentWorkspaceEntity[]>;
   timelineActivities: EntityRelation<TimelineActivityWorkspaceEntity[]>;
+
+  // --- POP Creations custom fields ---
+  customerStatus: string | null;
+  chainType: string | null;
+  departments: EntityRelation<DepartmentWorkspaceEntity[]>;
+  emailMessages: EntityRelation<EmailMessageWorkspaceEntity[]>;
+  meetingNotes: EntityRelation<MeetingNoteWorkspaceEntity[]>;
+  primarySalesperson: EntityRelation<WorkspaceMemberWorkspaceEntity> | null;
+  primarySalespersonId: string | null;
 }

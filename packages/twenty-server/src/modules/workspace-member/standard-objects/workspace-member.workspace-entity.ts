@@ -88,4 +88,8 @@ export class WorkspaceMemberWorkspaceEntity extends BaseWorkspaceEntity {
   ownedOpportunities: Relation<OpportunityWorkspaceEntity[]>;
   searchVector: string;
   numberFormat: string;
+
+  // --- POP Creations custom fields ---
+  division: string | null;
+  primarySalespersonCompanies: Relation<CompanyWorkspaceEntity[]>;
 }
