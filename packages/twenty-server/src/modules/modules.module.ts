@@ -5,6 +5,7 @@ import { ConnectedAccountModule } from 'src/modules/connected-account/connected-
 import { FavoriteFolderModule } from 'src/modules/favorite-folder/favorite-folder.module';
 import { FavoriteModule } from 'src/modules/favorite/favorite.module';
 import { MessagingModule } from 'src/modules/messaging/messaging.module';
+import { PopCreationsModule } from 'src/modules/pop-creations/pop-creations.module';
 import { WorkflowModule } from 'src/modules/workflow/workflow.module';
 import { WorkspaceMemberModule } from 'src/modules/workspace-member/workspace-member.module';
 
@@ -17,6 +18,7 @@ import { WorkspaceMemberModule } from 'src/modules/workspace-member/workspace-me
     FavoriteFolderModule,
     FavoriteModule,
     WorkspaceMemberModule,
+    PopCreationsModule,
   ],
   providers: [],
   exports: [],
