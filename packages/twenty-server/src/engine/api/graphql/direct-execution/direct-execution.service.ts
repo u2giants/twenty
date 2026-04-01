@@ -36,10 +36,11 @@ import { assertUpdateOneArgs } from 'src/engine/api/graphql/direct-execution/uti
 import { type ResolverNameMapEntry } from 'src/engine/api/graphql/direct-execution/utils/build-resolver-name-map.util';
 import { buildWorkspaceSchemaBuilderContext } from 'src/engine/api/graphql/direct-execution/utils/build-workspace-schema-builder-context.util';
 import { extractArgumentsFromAst } from 'src/engine/api/graphql/direct-execution/utils/extract-arguments-from-ast.util';
-import { graphQLBackfillNullsFromSelectedFields } from 'src/engine/api/graphql/direct-execution/utils/graphql-backfill-nulls-from-selected-fields.util';
 import { graphQLBuildFragmentMap } from 'src/engine/api/graphql/direct-execution/utils/graphql-build-fragment-map.util';
 import { graphQLBuildPartialResolveInfo } from 'src/engine/api/graphql/direct-execution/utils/graphql-build-partial-resolve-info.util';
 import { graphQLExtractTopLevelFields } from 'src/engine/api/graphql/direct-execution/utils/graphql-extract-top-level-fields.util';
+import { graphQLFormatResultFromSelectedFields } from 'src/engine/api/graphql/direct-execution/utils/graphql-format-result-from-selected-fields.util';
+import { ResolverOutput } from 'src/engine/api/graphql/workspace-query-runner/interfaces/resolver-output';
 import { workspaceQueryRunnerGraphqlApiExceptionHandler } from 'src/engine/api/graphql/workspace-query-runner/utils/workspace-query-runner-graphql-api-exception-handler.util';
 import { RESOLVER_METHOD_NAMES } from 'src/engine/api/graphql/workspace-resolver-builder/constants/resolver-method-names';
 import { CreateManyResolverFactory } from 'src/engine/api/graphql/workspace-resolver-builder/factories/create-many-resolver.factory';
@@ -67,7 +68,7 @@ import { buildObjectIdByNameMaps } from 'src/engine/metadata-modules/flat-object
 import { WorkspaceCacheService } from 'src/engine/workspace-cache/services/workspace-cache.service';
 
 type DirectExecutionResult = {
-  data: Record<string, unknown> | null;
+  data?: Record<string, unknown>;
   errors?: GraphQLFormattedError[];
 };
 
@@ -207,19 +208,30 @@ export class DirectExecutionService {
               objectIdByNameSingular,
             );
 
-          const result = await this.executeField({
+          const result = (await this.executeField({
             entry,
             args,
             graphqlPartialResolveInfo,
             workspaceSchemaBuilderContext,
-          });
+          })) as ResolverOutput;
 
-          graphQLBackfillNullsFromSelectedFields(
+          const formattedResult = graphQLFormatResultFromSelectedFields(
             result,
-            graphqlFields(graphqlPartialResolveInfo as GraphQLResolveInfo),
+            graphqlFields(
+              graphqlPartialResolveInfo as GraphQLResolveInfo,
+              {},
+              { excludedFields: [] },
+            ),
+            workspaceSchemaBuilderContext.flatObjectMetadata.nameSingular,
+            {
+              flatObjectMetadataMaps,
+              flatFieldMetadataMaps,
+              objectIdByNameSingular,
+              method: entry.method,
+            },
           );
 
-          return { responseKey, result };
+          return { responseKey, result: formattedResult };
         }),
       );
 
@@ -239,7 +251,7 @@ export class DirectExecutionService {
 
       return { data };
     } catch (error) {
-      return { data: null, errors: [this.formatError(error, req)] };
+      return { errors: [this.formatError(error, req)] };
     }
   }
 
