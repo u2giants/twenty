@@ -46,6 +46,18 @@ const Authorize = lazy(() =>
   })),
 );
 
+const PopDashboard = lazy(() =>
+  import('~/pages/pop-creations/MondayMorningDashboardPage').then((module) => ({
+    default: module.MondayMorningDashboardPage,
+  })),
+);
+
+const PopDomains = lazy(() =>
+  import('~/pages/pop-creations/DomainManagerPage').then((module) => ({
+    default: module.DomainManagerPage,
+  })),
+);
+
 const CreateWorkspace = lazy(() =>
   import('~/pages/onboarding/CreateWorkspace').then((module) => ({
     default: module.CreateWorkspace,
@@ -204,6 +216,22 @@ export const useCreateAppRouter = (
             }
           />
           <Route path={indexAppPath.getIndexAppPath()} element={<></>} />
+          <Route
+            path={AppPath.PopDashboard}
+            element={
+              <LazyRoute>
+                <PopDashboard />
+              </LazyRoute>
+            }
+          />
+          <Route
+            path={AppPath.PopDomains}
+            element={
+              <LazyRoute>
+                <PopDomains />
+              </LazyRoute>
+            }
+          />
           <Route
             path={AppPath.RecordIndexPage}
             element={

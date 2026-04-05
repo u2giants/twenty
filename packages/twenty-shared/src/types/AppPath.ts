@@ -31,6 +31,10 @@ export enum AppPath {
 
   Authorize = '/authorize',
 
+  // POP Creations custom pages
+  PopDashboard = '/pop/dashboard',
+  PopDomains = '/pop/domains',
+
   // 404 page not found
   NotFoundWildcard = '*',
   NotFound = '/not-found',
