@@ -1,0 +1,28 @@
+# Claude Code ignore file
+# Files listed here are excluded from Claude's context window but remain in git.
+# To restore visibility: remove the entry from this file.
+
+# Twenty packages kept in git but not relevant to POP Creations development
+packages/twenty-companion/
+packages/twenty-sdk/
+packages/twenty-client-sdk/
+packages/twenty-front-component-renderer/
+packages/twenty-oxlint-rules/
+
+# Large Twenty core directories we never modify
+# (read these only when doing an upstream merge)
+packages/twenty-front/src/pages/settings/
+packages/twenty-front/src/modules/workflow/
+packages/twenty-front/src/modules/auth/
+packages/twenty-front/src/modules/ui/
+packages/twenty-server/src/engine/core-modules/
+packages/twenty-server/src/engine/metadata-modules/
+packages/twenty-server/src/engine/api/
+
+# Build artifacts and tooling
+.twenty/
+dist/
+node_modules/
+.yarn/cache/
+coverage/
+.nx/cache/

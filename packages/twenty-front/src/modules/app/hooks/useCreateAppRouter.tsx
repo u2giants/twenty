@@ -5,6 +5,7 @@ import { VerifyLoginTokenEffect } from '@/auth/components/VerifyLoginTokenEffect
 
 import { VerifyEmailEffect } from '@/auth/components/VerifyEmailEffect';
 import indexAppPath from '@/navigation/utils/indexAppPath';
+import { PopCreationsRoutes } from '@/pop-creations/routes/popCreationsRoutes';
 import { BlankLayout } from '@/ui/layout/page/components/BlankLayout';
 import { DefaultLayout } from '@/ui/layout/page/components/DefaultLayout';
 import { AppPath } from 'twenty-shared/types';
@@ -43,18 +44,6 @@ const PasswordReset = lazy(() =>
 const Authorize = lazy(() =>
   import('~/pages/auth/Authorize').then((module) => ({
     default: module.Authorize,
-  })),
-);
-
-const PopDashboard = lazy(() =>
-  import('~/pages/pop-creations/MondayMorningDashboardPage').then((module) => ({
-    default: module.MondayMorningDashboardPage,
-  })),
-);
-
-const PopDomains = lazy(() =>
-  import('~/pages/pop-creations/DomainManagerPage').then((module) => ({
-    default: module.DomainManagerPage,
   })),
 );
 
@@ -216,22 +205,8 @@ export const useCreateAppRouter = (
             }
           />
           <Route path={indexAppPath.getIndexAppPath()} element={<></>} />
-          <Route
-            path={AppPath.PopDashboard}
-            element={
-              <LazyRoute>
-                <PopDashboard />
-              </LazyRoute>
-            }
-          />
-          <Route
-            path={AppPath.PopDomains}
-            element={
-              <LazyRoute>
-                <PopDomains />
-              </LazyRoute>
-            }
-          />
+          {/* POP Creations pages — to add a page, edit pop-creations/routes/popCreationsRoutes.tsx */}
+          <PopCreationsRoutes />
           <Route
             path={AppPath.RecordIndexPage}
             element={

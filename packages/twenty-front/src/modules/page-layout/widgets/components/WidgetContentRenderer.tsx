@@ -1,6 +1,5 @@
 import { type PageLayoutWidget } from '@/page-layout/types/PageLayoutWidget';
-import { DepartmentDashboardWidget } from '@/pop-creations/components/DepartmentDashboardWidget';
-import { ProgramFolioWidget } from '@/pop-creations/components/ProgramFolioWidget';
+import { POP_CREATIONS_WIDGET_REGISTRY } from '@/pop-creations/registry/widgetRegistry';
 import { CalendarWidget } from '@/page-layout/widgets/calendar/components/CalendarWidget';
 import { EmailWidget } from '@/page-layout/widgets/emails/components/EmailWidget';
 import { FieldRichTextWidgetRenderer } from '@/page-layout/widgets/field-rich-text/components/FieldRichTextWidgetRenderer';
@@ -74,18 +73,15 @@ export const WidgetContentRenderer = ({
       return <StandaloneRichTextWidgetRenderer widget={widget} />;
 
     case WidgetType.FRONT_COMPONENT: {
-      // Check for POP Creations native widgets by component name
+      // Dispatch to POP Creations native widgets by component name.
+      // To add a widget: edit pop-creations/registry/widgetRegistry.tsx only.
       const config = widget.configuration as any;
-      const componentName = config?.frontComponentName ?? config?.frontComponentId;
-
-      if (componentName === 'departmentDashboard') {
-        return <DepartmentDashboardWidget />;
-      }
-      if (componentName === 'programFolio') {
-        return <ProgramFolioWidget />;
-      }
-
-      // Fall back to SDK front component renderer for other components
+      const componentName =
+        config?.frontComponentName ?? config?.frontComponentId;
+      const PopWidget = componentName
+        ? POP_CREATIONS_WIDGET_REGISTRY[componentName]
+        : undefined;
+      if (PopWidget) return <PopWidget />;
       return <FrontComponentWidgetRenderer widget={widget} />;
     }
 
