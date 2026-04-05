@@ -20,6 +20,7 @@ Read docs/HANDOFF.md for infrastructure and deployment operations. Read this fil
 10. [Critical Incident Log](#10-critical-incident-log)
 11. [Pending Work](#11-pending-work)
 12. [Developer Advice](#12-developer-advice)
+13. [Fork Migration Plan](#13-fork-migration-plan)
 
 ---
 
@@ -563,3 +564,247 @@ A git push alone will not sync workspace metadata. You must also trigger or wait
 - Drops DB tables for deleted custom objects
 
 This is destructive. Always include the complete manifest. Never pass the Workspace App registration ID.
+
+---
+
+## 13. Fork Migration Plan
+
+### Why we forked
+
+Decision made 2026-03-31. The SDK app layer (`twenty-sdk`) has hard blockers that prevent needed customizations:
+
+1. `installApplication` fails for any non-empty manifest — can't deploy logic functions, front components, views, or page layouts
+2. FIELDS widget "not supported yet" — can't reorder record detail panel fields
+3. No computed/derived fields — can't auto-count contacts or departments per company
+4. No inline column filter/sort (AG Grid-style) — requires frontend component changes
+5. `applicationId` mismatches require direct DB fixes that the SDK can't handle
+
+The fork (`u2giants/twenty`, forked from `twentyhq/twenty`) replaces the SDK app approach with direct source-code modifications to Twenty's server and frontend packages.
+
+### Repository structure
+
+**Single repo:** `u2giants/twenty` (GitHub)
+
+**Branch strategy:**
+- `upstream` — Pure mirror of `twentyhq/twenty`. Never commit custom code here. Used only for pulling upstream releases.
+- `main` — Production branch with all POP Creations customizations. Deploys to `crm.designflow.app`.
+- `feature/*` — Development branches for individual features, merged to `main` via PR.
+
+**Upstream sync process:**
+1. `git fetch upstream && git merge upstream/main` into the `upstream` branch
+2. Create `feature/upstream-sync-YYYY-MM-DD` from `main`
+3. `git merge upstream` into the feature branch
+4. Resolve conflicts, test, PR to `main`
+
+### Phase summary
+
+| Phase | Description | Status |
+|---|---|---|
+| 0 | Fork repo, set up branches | COMPLETED 2026-03-31 |
+| 1 | Extract UIDs from production DB | COMPLETED 2026-03-31 |
+| 2 | Convert SDK app objects to native metadata | COMPLETED 2026-03-31 |
+| 3 | Convert logic functions to NestJS services | COMPLETED 2026-04-01 |
+| 4 | Convert front components to native React | NOT STARTED |
+| 5 | AG Grid filters, record panel, computed fields | NOT STARTED |
+| 6 | Build pipeline and Dockerfile | NOT STARTED |
+| 7 | Database migration testing | NOT STARTED |
+| 8 | Production cutover | NOT STARTED |
+
+### Phase 0 — Fork setup (COMPLETED)
+
+- Forked `twentyhq/twenty` to `u2giants/twenty`
+- Set up `upstream` remote pointing to `twentyhq/twenty`
+- Created branch structure
+
+### Phase 1 — UID extraction (COMPLETED)
+
+Extracted all `universalIdentifier` UUIDs from the production database to ensure the fork's metadata definitions use the exact same IDs. A UID mismatch would cause the server to treat existing tables as new entities, dropping and recreating them (with data loss).
+
+**Reference files created** in `/worksp/twenty/fork/migration-reference/`:
+- `CRITICAL_UID_MAP.txt` — Maps every custom object/field name to its database `universalIdentifier`
+- `all-objects-and-fields.json` — Full metadata API dump of all 38 objects
+- `all-views.json` — All view configurations
+- `all-roles.json` — Role definitions
+- `all-logic-functions.json` — 11 registered logic functions
+- `all-applications.json` — 3 applications (Workspace App, Twenty Standard, POP Creations CRM)
+- `complete-custom-object-fields.json` — Complete field data for all 8 custom objects
+- `custom-fields-on-standard-objects-raw.txt` — 81 custom fields on standard objects with UIDs
+- `all-custom-fields-raw.txt` — 164 fields across all custom objects
+
+### Phase 2 — Native metadata conversion (COMPLETED)
+
+Converted all 8 custom objects and ~90 custom fields from SDK app definitions to Twenty's native three-tier metadata system. This was committed in 4 commits (~15,000 lines across 46 files).
+
+**Three-tier system:**
+
+1. **`standard-object.constant.ts`** (`packages/twenty-shared/src/metadata/constants/`) — The UID registry. Every object, field, and relation has a `standardId` UUID here. These MUST match the production database `universalIdentifier` values exactly.
+
+2. **Field metadata builders** (`packages/twenty-server/src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/`) — Define field types, SELECT options, relation targets, and default values. Each object has a `compute{ObjectName}StandardFlatFieldMetadata.util.ts` file.
+
+3. **Workspace entity classes** (`packages/twenty-server/src/modules/`) — TypeScript type definitions for the ORM layer. Custom objects are in `src/modules/pop-creations/standard-objects/`.
+
+**Files created/modified:**
+
+Custom object builders (8 new files in `field-metadata/pop-creations/`):
+- `compute-department-standard-flat-field-metadata.util.ts`
+- `compute-email-message-standard-flat-field-metadata.util.ts`
+- `compute-meeting-note-standard-flat-field-metadata.util.ts`
+- `compute-meeting-note-attendee-standard-flat-field-metadata.util.ts`
+- `compute-factory-standard-flat-field-metadata.util.ts`
+- `compute-ignore-rule-standard-flat-field-metadata.util.ts`
+- `compute-licensor-approval-thread-standard-flat-field-metadata.util.ts`
+- `compute-ai-model-config-standard-flat-field-metadata.util.ts`
+
+Custom object entities (8 new files in `modules/pop-creations/standard-objects/`):
+- `department.workspace-entity.ts`
+- `email-message.workspace-entity.ts`
+- `meeting-note.workspace-entity.ts`
+- `meeting-note-attendee.workspace-entity.ts`
+- `factory.workspace-entity.ts`
+- `ignore-rule.workspace-entity.ts`
+- `licensor-approval-thread.workspace-entity.ts`
+- `ai-model-config.workspace-entity.ts`
+
+Standard object field builders modified (added custom fields):
+- `compute-company-standard-flat-field-metadata.util.ts` — 6 fields
+- `compute-person-standard-flat-field-metadata.util.ts` — 7 fields
+- `compute-opportunity-standard-flat-field-metadata.util.ts` — 21 fields
+- `compute-note-standard-flat-field-metadata.util.ts` — 3 fields
+- `compute-workspace-member-standard-flat-field-metadata.util.ts` — 2 fields
+
+Morph target system builders modified (added 8 targets each):
+- `compute-attachment-standard-flat-field-metadata.util.ts`
+- `compute-favorite-standard-flat-field-metadata.util.ts`
+- `compute-note-target-standard-flat-field-metadata.util.ts`
+- `compute-task-target-standard-flat-field-metadata.util.ts`
+- `compute-timeline-activity-standard-flat-field-metadata.util.ts`
+
+Registration files modified:
+- `build-standard-flat-field-metadata-maps.util.ts` — 8 new builder imports
+- `create-standard-flat-object-metadata.util.ts` — 8 new object entries
+
+Standard workspace entity classes modified:
+- `company.workspace-entity.ts` — Added POP fields and relations
+- `person.workspace-entity.ts` — Added POP fields and relations
+- `opportunity.workspace-entity.ts` — Added POP fields and relations
+- `note.workspace-entity.ts` — Added POP fields
+- `workspace-member.workspace-entity.ts` — Added POP fields
+
+### Phase 3 — Logic functions → NestJS services (COMPLETED 2026-04-01)
+
+Converted 16 SDK logic functions to native NestJS services in `packages/twenty-server/src/modules/pop-creations/`.
+
+**Module structure:**
+```
+modules/pop-creations/
+├── pop-creations.module.ts          — NestJS module (registered in modules.module.ts + jobs.module.ts)
+├── services/
+│   └── email-router.service.ts      — Five-step routing cascade (domain → dept → PO/SO → fuzzy → AI)
+├── controllers/
+│   └── fireflies-webhook.controller.ts — POST /webhooks/fireflies endpoint
+├── listeners/
+│   └── pop-creations-record.listener.ts — All database event listeners:
+│       - Company customerStatus → sync to People
+│       - Person created → sync companyCustomerStatus + auto-set scope
+│       - Person updated (companyId) → re-sync companyCustomerStatus
+│       - IgnoreRule created → bulk-skip matching UNROUTED emails
+│       - Opportunity stage changed → create follow-up tasks + LAT
+│       - Opportunity created → standard task checklist
+│       - LicensorApprovalThread stage changed → follow-up tasks
+├── crons/
+│   ├── jobs/
+│   │   ├── outlook-ingest.cron.job.ts    — Every 15 min, polls Microsoft Graph
+│   │   ├── email-rerouter.cron.job.ts    — Every 6 hours, re-routes partial matches
+│   │   ├── clickup-sync.cron.job.ts      — Daily 7am, syncs ClickUp task statuses
+│   │   └── email-contact-sync.cron.job.ts — Daily 2am, creates Company/Person from emails
+│   └── commands/
+│       ├── outlook-ingest.cron.command.ts
+│       └── pop-creations-cron.commands.ts — EmailRerouter, ClickUpSync, EmailContactSync
+└── standard-objects/                — 8 workspace entity files (from Phase 2)
+```
+
+**Key patterns used:**
+- `GlobalWorkspaceOrmManager.getRepository<T>()` for workspace-scoped database access
+- `@OnDatabaseBatchEvent('objectName', DatabaseEventAction.X)` for record event listeners
+- `@Processor(MessageQueue.cronQueue)` + `@Process()` for cron jobs
+- `@Command()` from `nest-commander` for cron job registration
+- `buildSystemAuthContext()` + `executeInWorkspaceContext()` for auth context
+
+### Phase 4 — Front components → native React (NOT STARTED)
+
+Convert 5 SDK front components to native Twenty React components in `packages/twenty-front/src/modules/pop-creations/`.
+
+| Component | Target location |
+|---|---|
+| PersonDepartmentPicker | Record detail field component |
+| DepartmentDashboard | Custom record page tab |
+| ProgramFolio | Custom record page tab |
+| DomainManager | Settings page component |
+| MondayMorningDashboard | Custom navigation page |
+
+**Approach:** Replace `defineFrontComponent()` + `twenty-sdk` hooks with direct use of Twenty's internal React hooks (`useObjectRecordTable`, `useRecordShowPage`, etc.) and Recoil state.
+
+### Phase 5 — UI customizations (NOT STARTED)
+
+The features that drove the fork decision:
+
+1. **AG Grid-style inline filters** — Add a filter row below every table column header in `RecordTable` component. Each cell gets an input that filters that column. Requires modifying `packages/twenty-front/src/modules/object-record/record-table/`.
+
+2. **Record detail panel field reordering** — Make Customer Status the top field, Chain Type second, etc. Requires modifying the `RecordDetailFieldSection` component to accept custom field ordering per object.
+
+3. **Computed fields** — `Employees` field on Company = count of People with `companyId` matching. New `Departments` count field = count of Departments linked. These need either database views/triggers or frontend-computed display values.
+
+### Phase 6 — Build pipeline (NOT STARTED)
+
+- Create `Dockerfile.pop` extending Twenty's base Dockerfile with custom modules
+- Set up GitHub Actions workflow: build → test → push image to GHCR
+- Configure Coolify to pull from `ghcr.io/u2giants/twenty:latest`
+- Remove old SDK app deployment workflow (`deploy-sdk-app.yml`)
+
+### Phase 7 — Database migration testing (NOT STARTED)
+
+**Critical step.** Before production cutover:
+
+1. Take a PostgreSQL dump of production (`pg_dump`)
+2. Restore to a test instance
+3. Run the fork's `workspace:sync-metadata` command against the test DB
+4. Verify: no tables dropped, no data lost, all custom fields recognized
+5. Verify: SELECT option IDs match (wrong option IDs = blank fields)
+6. Verify: relation foreign keys intact
+
+**The one-time migration concern:** Currently, custom objects/fields in the production DB are owned by the Workspace App (`applicationId = f99617d1-...`). The fork's metadata sync expects them to be owned by the Twenty Standard App (`applicationId = 58dd163b-...`). Before first sync, need a SQL migration:
+
+```sql
+-- Transfer ownership of custom entities from Workspace App to Twenty Standard App
+UPDATE core."fieldMetadata"
+SET "applicationId" = '58dd163b-b4d9-4b30-aca8-23b41518741d'
+WHERE "applicationId" = 'f99617d1-aa3d-4009-8211-53a7b747f5f2'
+AND "universalIdentifier" IN (/* list of all custom field UIDs */);
+
+UPDATE core."objectMetadata"
+SET "applicationId" = '58dd163b-b4d9-4b30-aca8-23b41518741d'
+WHERE "applicationId" = 'f99617d1-aa3d-4009-8211-53a7b747f5f2'
+AND "universalIdentifier" IN (/* list of all custom object UIDs */);
+```
+
+The exact list of UIDs is in `migration-reference/CRITICAL_UID_MAP.txt`.
+
+### Phase 8 — Production cutover (NOT STARTED)
+
+1. Schedule maintenance window (evenings/weekends — small team)
+2. Run the applicationId migration SQL (Phase 7)
+3. Deploy the fork image to Coolify
+4. Run `workspace:sync-metadata` to reconcile
+5. Verify all views, fields, and data intact
+6. Monitor for 24 hours
+7. Decommission the old SDK app repo (`u2giants/poc-twenty-app`)
+
+### Risk register
+
+| Risk | Mitigation |
+|---|---|
+| UID mismatch drops tables with data | Phase 1 extracted all UIDs from prod DB; Phase 7 tests against a copy first |
+| Upstream Twenty updates conflict with custom code | `upstream` branch tracks pure Twenty; merges are explicit and tested |
+| applicationId ownership transfer fails | SQL migration is reversible; test on copy first |
+| SELECT option IDs don't match | All option IDs extracted from prod and used verbatim in field builders |
+| Logic function conversion misses edge cases | Original SDK source in `app/src/logic-functions/` preserved for reference |

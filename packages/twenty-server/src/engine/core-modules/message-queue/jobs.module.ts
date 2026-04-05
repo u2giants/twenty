@@ -39,6 +39,7 @@ import { MessagingModule } from 'src/modules/messaging/messaging.module';
 import { TimelineJobModule } from 'src/modules/timeline/jobs/timeline-job.module';
 import { TimelineActivityModule } from 'src/modules/timeline/timeline-activity.module';
 import { WorkflowModule } from 'src/modules/workflow/workflow.module';
+import { PopCreationsModule } from 'src/modules/pop-creations/pop-creations.module';
 
 @Module({
   imports: [
@@ -71,6 +72,7 @@ import { WorkflowModule } from 'src/modules/workflow/workflow.module';
     AiChatModule,
     LogicFunctionModule,
     EnterpriseModule,
+    PopCreationsModule,
   ],
   providers: [
     CleanSuspendedWorkspacesJob,

@@ -1,43 +1,60 @@
 import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { ClickupSyncModule } from './logic-functions/clickup-sync/clickup-sync.module';
-import { ContactAutoScopeModule } from './logic-functions/contact-auto-scope/contact-auto-scope.module';
-import { EmailContactSyncModule } from './logic-functions/email-contact-sync/email-contact-sync.module';
-import { EmailRerouterModule } from './logic-functions/email-rerouter/email-rerouter.module';
-import { FirefliesIngestModule } from './logic-functions/fireflies-ingest/fireflies-ingest.module';
-import { LatStageFollowUpModule } from './logic-functions/lat-stage-follow-up/lat-stage-follow-up.module';
-import { NewProgramTasksModule } from './logic-functions/new-program-tasks/new-program-tasks.module';
-import { OutlookIngestModule } from './logic-functions/outlook-ingest/outlook-ingest.module';
-import { PostInstallModule } from './logic-functions/post-install/post-install.module';
-import { PreInstallModule } from './logic-functions/pre-install/pre-install.module';
-import { ProgramStageChangeModule } from './logic-functions/program-stage-change/program-stage-change.module';
+import { WorkspaceEntity } from 'src/engine/core-modules/workspace/workspace.entity';
+import { GlobalWorkspaceDataSourceModule } from 'src/engine/twenty-orm/global-workspace-datasource/global-workspace-datasource.module';
+
+import { EmailRouterService } from 'src/modules/pop-creations/services/email-router.service';
+import { FirefliesWebhookController } from 'src/modules/pop-creations/controllers/fireflies-webhook.controller';
+import { PopCreationsRecordListener } from 'src/modules/pop-creations/listeners/pop-creations-record.listener';
+
+// Cron jobs
+import { OutlookIngestCronJob } from 'src/modules/pop-creations/crons/jobs/outlook-ingest.cron.job';
+import { OutlookIngestCronCommand } from 'src/modules/pop-creations/crons/commands/outlook-ingest.cron.command';
+import { EmailRerouterCronJob } from 'src/modules/pop-creations/crons/jobs/email-rerouter.cron.job';
+import { ClickUpSyncCronJob } from 'src/modules/pop-creations/crons/jobs/clickup-sync.cron.job';
+import { EmailContactSyncCronJob } from 'src/modules/pop-creations/crons/jobs/email-contact-sync.cron.job';
+import {
+  EmailRerouterCronCommand,
+  ClickUpSyncCronCommand,
+  EmailContactSyncCronCommand,
+} from 'src/modules/pop-creations/crons/commands/pop-creations-cron.commands';
+
+// Query hooks
+import {
+  CompanyFindManyEnrichCountsPostQueryHook,
+  CompanyFindOneEnrichCountsPostQueryHook,
+} from 'src/modules/pop-creations/query-hooks/company-enrich-counts.post-query.hook';
 
 @Module({
   imports: [
-    FirefliesIngestModule,
-    ContactAutoScopeModule,
-    LatStageFollowUpModule,
-    NewProgramTasksModule,
-    ProgramStageChangeModule,
-    ClickupSyncModule,
-    EmailRerouterModule,
-    EmailContactSyncModule,
-    OutlookIngestModule,
-    PreInstallModule,
-    PostInstallModule,
+    TypeOrmModule.forFeature([WorkspaceEntity]),
+    GlobalWorkspaceDataSourceModule,
   ],
-  exports: [
-    FirefliesIngestModule,
-    ContactAutoScopeModule,
-    LatStageFollowUpModule,
-    NewProgramTasksModule,
-    ProgramStageChangeModule,
-    ClickupSyncModule,
-    EmailRerouterModule,
-    EmailContactSyncModule,
-    OutlookIngestModule,
-    PreInstallModule,
-    PostInstallModule,
+  controllers: [FirefliesWebhookController],
+  providers: [
+    // Services
+    EmailRouterService,
+
+    // Listeners
+    PopCreationsRecordListener,
+
+    // Query hooks
+    CompanyFindManyEnrichCountsPostQueryHook,
+    CompanyFindOneEnrichCountsPostQueryHook,
+
+    // Cron jobs
+    OutlookIngestCronJob,
+    EmailRerouterCronJob,
+    ClickUpSyncCronJob,
+    EmailContactSyncCronJob,
+
+    // Cron commands
+    OutlookIngestCronCommand,
+    EmailRerouterCronCommand,
+    ClickUpSyncCronCommand,
+    EmailContactSyncCronCommand,
   ],
+  exports: [EmailRouterService],
 })
 export class PopCreationsModule {}
