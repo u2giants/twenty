@@ -604,11 +604,11 @@ The fork (`u2giants/twenty`, forked from `twentyhq/twenty`) replaces the SDK app
 | 1 | Extract UIDs from production DB | COMPLETED 2026-03-31 |
 | 2 | Convert SDK app objects to native metadata | COMPLETED 2026-03-31 |
 | 3 | Convert logic functions to NestJS services | COMPLETED 2026-04-01 |
-| 4 | Convert front components to native React | NOT STARTED |
-| 5 | AG Grid filters, record panel, computed fields | NOT STARTED |
-| 6 | Build pipeline and Dockerfile | NOT STARTED |
-| 7 | Database migration testing | NOT STARTED |
-| 8 | Production cutover | NOT STARTED |
+| 4 | Convert front components to native React | COMPLETED 2026-04-05 |
+| 5 | AG Grid filters, record panel, computed fields | COMPLETED 2026-04-05 |
+| 6 | Build pipeline and Dockerfile | COMPLETED 2026-04-05 |
+| 7 | Database migration scripts | COMPLETED 2026-04-05 |
+| 8 | Production cutover runbook | COMPLETED 2026-04-05 |
 
 ### Phase 0 — Fork setup (COMPLETED)
 
