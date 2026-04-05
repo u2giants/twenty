@@ -49,6 +49,10 @@ import {
     ClickUpSyncCronJob,
     EmailContactSyncCronJob,
 
+    // Query hooks
+    CompanyFindManyEnrichCountsPostQueryHook,
+    CompanyFindOneEnrichCountsPostQueryHook,
+
     // Cron commands
     OutlookIngestCronCommand,
     EmailRerouterCronCommand,

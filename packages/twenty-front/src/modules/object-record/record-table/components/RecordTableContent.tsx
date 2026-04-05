@@ -12,6 +12,8 @@ import { useRecordTableContextOrThrow } from '@/object-record/record-table/conte
 import { RecordTableNoRecordGroupBody } from '@/object-record/record-table/record-table-body/components/RecordTableNoRecordGroupBody';
 import { RecordTableRecordGroupsBody } from '@/object-record/record-table/record-table-body/components/RecordTableRecordGroupsBody';
 import { RecordTableHeader } from '@/object-record/record-table/record-table-header/components/RecordTableHeader';
+import { RecordTableFilterRow } from '@/object-record/record-table/record-table-filter-row/components/RecordTableFilterRow';
+import { isRecordTableFilterRowVisibleComponentState } from '@/object-record/record-table/record-table-filter-row/components/isRecordTableFilterRowVisibleComponentState';
 import { isRowSelectedComponentFamilyState } from '@/object-record/record-table/record-table-row/states/isRowSelectedComponentFamilyState';
 import { recordTableHoverPositionComponentState } from '@/object-record/record-table/states/recordTableHoverPositionComponentState';
 import { isSomeCellInEditModeComponentSelector } from '@/object-record/record-table/states/selectors/isSomeCellInEditModeComponentSelector';
@@ -164,6 +166,7 @@ export const RecordTableContent = ({
         onMouseLeave={handleMouseLeave}
       >
         <RecordTableHeader />
+        <RecordTableFilterRow />
         {hasRecordGroups ? (
           <RecordTableRecordGroupsBody />
         ) : (
