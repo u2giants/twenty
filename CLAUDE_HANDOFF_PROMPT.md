@@ -1,7 +1,7 @@
 # POP Creations Twenty Fork - Developer Handoff
 
 ## What Is This?
-Custom fork of [Twenty CRM](https://twenty.com) for POP Creations with 8 custom objects, 11 backend logic functions, and 5 React components.
+Custom fork of [Twenty CRM](https://twenty.com) for POP Creations with 8 custom objects, 11 backend logic functions, and 5 React UI components.
 
 ## Where Did We Leave Off?
 **Status:** ~50% complete
@@ -9,8 +9,8 @@ Custom fork of [Twenty CRM](https://twenty.com) for POP Creations with 8 custom 
 ### ✅ COMPLETED
 1. Fork synced with upstream twentyhq/twenty
 2. 8 custom workspace entities created
-3. 11 NestJS logic functions implemented
-4. 5 React UI components created
+3. 11 NestJS logic functions implemented (Phase 3)
+4. 5 React UI components created (Phase 4)
 
 ### ❌ NEXT UP
 **You must run TypeScript validation on a Linux filesystem first!**
@@ -36,20 +36,30 @@ Then fix any TypeScript errors and move on to **Phase 5: Views & Navigation**.
 
 | Type | Location |
 |------|----------|
-| Backend logic | `packages/twenty-server/src/modules/pop-creations/` |
-| Frontend UI | `packages/twenty-front/src/modules/pop-creations/components/` |
-| Documentation | `PHASE0_STATUS.md` |
+| Backend (NestJS) | `packages/twenty-server/src/modules/pop-creations/` |
+| Frontend (React) | `packages/twenty-front/src/modules/pop-creations/components/` |
+| Documentation | `CLAUDE.md` (comprehensive), `PHASE0_STATUS.md` (quick ref) |
 
-## Key Files to Know
+## Key Files
 
-**Backend (11 functions):**
-- `packages/twenty-server/src/modules/pop-creations/logic-functions/fireflies-ingest/` - Fireflies webhook
-- `packages/twenty-server/src/modules/pop-creations/logic-functions/clickup-sync/` - ClickUp sync
-- `packages/twenty-server/src/modules/pop-creations/logic-functions/email-rerouter/` - Email routing
+### Backend (11 NestJS modules in `logic-functions/`):
+- `fireflies-ingest/` - Fireflies webhook (HTTP POST)
+- `clickup-sync/` - ClickUp daily sync
+- `email-rerouter/` - Email routing engine
+- `outlook-ingest/` - Outlook email ingestion
+- `contact-auto-scope/` - Person scope auto-assignment
+- `program-stage-change/` - Program stage automation
+- `new-program-tasks/` - Auto-create tasks for new programs
+- `lat-stage-follow-up/` - LAT stage follow-up tasks
+- `email-contact-sync/` - Email-contact sync
+- `pre-install/` & `post-install/` - Install hooks
 
-**Frontend (5 components):**
-- `packages/twenty-front/src/modules/pop-creations/components/person-department-picker/`
-- `packages/twenty-front/src/modules/pop-creations/components/monday-morning-dashboard/`
+### Frontend (5 React components):
+- `person-department-picker/` - Links persons to departments
+- `department-dashboard/` - Department view with tabs
+- `program-folio/` - Program detail page
+- `domain-manager/` - Domain management UI
+- `monday-morning-dashboard/` - Weekly overview
 
 ## Environment
 
@@ -67,4 +77,4 @@ Then fix any TypeScript errors and move on to **Phase 5: Views & Navigation**.
 3. **Phase 7**: Testing
 4. **Phase 8**: Production deployment
 
-See `PHASE0_STATUS.md` for full details.
+See `CLAUDE.md` for comprehensive developer guide with full schema, business context, and known bugs.

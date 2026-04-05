@@ -88,7 +88,7 @@ packages/twenty-server/src/modules/pop-creations/
 │   └── post-install/               # Post-install hook
 ```
 
-### Frontend Code Location
+### Frontend Code Location (SDK)
 ```
 packages/twenty-front/src/modules/pop-creations/components/
 ├── index.ts
@@ -97,6 +97,13 @@ packages/twenty-front/src/modules/pop-creations/components/
 ├── program-folio/                  # Program detail page
 ├── domain-manager/                 # Domain management UI
 └── monday-morning-dashboard/       # Weekly overview
+```
+
+### NestJS Backend (Alternative to SDK)
+```
+packages/twenty-server/src/modules/pop-creations/
+├── pop-creations.module.ts
+├── logic-functions/                 # 11 NestJS modules (Phase 3 implementation)
 ```
 
 ---
