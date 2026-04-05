@@ -260,7 +260,11 @@ Workspace-level config for AI model selection. One record named "Default" contro
 
 ## 5. Logic Functions
 
-All in `src/logic-functions/`. Serverless-style functions bundled to `.mjs` by the Twenty CLI.
+**NOTE:** Two implementations exist:
+1. **SDK version** in `src/logic-functions/` — serverless-style functions bundled to `.mjs` by the Twenty CLI
+2. **NestJS version** in `packages/twenty-server/src/modules/pop-creations/logic-functions/` — full NestJS modules with DI
+
+The NestJS version was implemented for Phase 3. Both may coexist until SDK deployment is stabilized.
 
 ### Email pipeline
 
@@ -445,7 +449,7 @@ Front components require their built `.mjs` to exist in the server's `BuiltFront
 
 The API key lost its role assignment. The workspace stopped loading after Microsoft sign-in.
 
-**Current state (as of 2026-03-31):** Broken. Users can authenticate but see a blank dark screen.
+**Current state (as of 2026-04-01):** RESTORED. Workspace is functional.
 
 **Recovery path:** PostgreSQL schema namespace is `99c80ca1610f48b5bd1f9178201bdcb7`. Need Coolify → PostgreSQL shell access. Options:
 1. Restore from a database backup (check `/var/backups/popcreations`)
