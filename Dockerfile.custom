@@ -1,7 +1,0 @@
-FROM twentycrm/twenty:latest
-
-# Inject the autocomplete/impersonation overlay script into the stock frontend.
-COPY packages/twenty-front/public/autocomplete.js /app/packages/twenty-server/dist/front/autocomplete.js
-
-RUN sed -i 's|</body>|<script src="/autocomplete.js"></script>\n  </body>|' \
-    /app/packages/twenty-server/dist/front/index.html

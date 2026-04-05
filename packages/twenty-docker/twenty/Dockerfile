@@ -113,8 +113,8 @@ COPY --chown=1000 --from=twenty-server-build /app/packages/twenty-front/package.
 # Frontend static build
 COPY --chown=1000 --from=twenty-front-build /app/packages/twenty-front/build /app/packages/twenty-server/dist/front
 
-LABEL org.opencontainers.image.source=https://github.com/twentyhq/twenty
-LABEL org.opencontainers.image.description="Production Twenty image with backend and frontend."
+LABEL org.opencontainers.image.source=https://github.com/u2giants/twenty
+LABEL org.opencontainers.image.description="POP Creations CRM — forked Twenty with custom objects, services, and UI."
 
 RUN mkdir -p /app/.local-storage /app/packages/twenty-server/.local-storage && \
     chown 1000:1000 /app/.local-storage /app/packages/twenty-server/.local-storage
