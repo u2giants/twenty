@@ -320,15 +320,22 @@ Returns `RoutingResult: { companyId, departmentId, programId, routingStatus, rou
 
 ## 6. Front Components
 
-React widgets embedded in record pages. Built with `defineFrontComponent()` from `twenty-sdk`.
+**In the fork:** Components are native React, not SDK `defineFrontComponent()`. They live in `packages/twenty-front/src/modules/pop-creations/` and `packages/twenty-front/src/pages/pop-creations/`.
 
-| Component | File | universalIdentifier |
+| Component | Fork file | Notes |
 |---|---|---|
-| PersonDepartmentPicker | `person-department-picker.tsx` | `d4e5f6a7-b8c9-4d0e-1f2a-3b4c5d6e7f80` |
-| DepartmentDashboard | `department-dashboard.tsx` | `5fae5406-dd4c-4668-a585-5fb114b2399c` |
-| ProgramFolio | `program-folio.tsx` | `e889e47d-2fca-432d-8321-655349e27740` |
-| DomainManager | `domain-manager.tsx` | (see source) |
-| MondayMorningDashboard | `monday-morning-dashboard.tsx` | (see source) |
+| PersonDepartmentPicker | (eliminated) | Twenty's FieldsWidget handles relation fields natively |
+| DepartmentDashboardWidget | `components/DepartmentDashboardWidget.tsx` | Rendered via `WidgetContentRenderer` when `frontComponentName === 'departmentDashboard'` |
+| ProgramFolioWidget | `components/ProgramFolioWidget.tsx` | Rendered when `frontComponentName === 'programFolio'` |
+| DomainManagerPage | `pages/pop-creations/DomainManagerPage.tsx` | Route: `/pop/domains` |
+| MondayMorningDashboardPage | `pages/pop-creations/MondayMorningDashboardPage.tsx` | Route: `/pop/dashboard` |
+
+**SDK universalIdentifiers (legacy reference — no longer used in fork):**
+
+| Component | universalIdentifier |
+|---|---|
+| DepartmentDashboard | `5fae5406-dd4c-4668-a585-5fb114b2399c` |
+| ProgramFolio | `e889e47d-2fca-432d-8321-655349e27740` |
 
 ### PersonDepartmentPicker implementation notes
 
@@ -465,30 +472,40 @@ The API key lost its role assignment. The workspace stopped loading after Micros
 
 ## 11. Pending Work
 
-### RESOLVED: Workspace restored (2026-03-31)
+### RESOLVED: Logic function execution (2026-04-01)
 
-Custom schema was re-created via direct metadata API calls. The workspace loads and is functional. View fields for Company, Department, and Program on EmailMessage were fixed by correcting `applicationId` and `universalIdentifier` in the database.
+The SDK app's `installApplication` bug prevented logic functions from executing. **Resolved by forking Twenty** — all logic is now native NestJS services in `packages/twenty-server/src/modules/pop-creations/`. The fork image includes all services compiled into the main server binary. No more `.mjs` upload issues.
 
-### CRITICAL: Get logic function code executing
+### RESOLVED: Front components (2026-04-01)
 
-Logic function metadata records exist on the server but the compiled `.mjs` code was never uploaded. The entire email routing pipeline, Fireflies ingest, ClickUp sync, and status synchronization are non-functional. Requires either:
-1. Fix `installApplication` for non-empty manifests (upstream Twenty bug)
-2. Find alternative mechanism to upload `.mjs` files to server storage
-3. Run routing logic externally as a standalone cron job outside Twenty
+**Resolved by the fork.** Components are now native React:
+- `DepartmentDashboardWidget.tsx` — Department record page
+- `ProgramFolioWidget.tsx` — Opportunity record page
+- `MondayMorningDashboardPage.tsx` — `/pop/dashboard` route
+- `DomainManagerPage.tsx` — `/pop/domains` route
+
+PersonDepartmentPicker was eliminated — Twenty's native FieldsWidget handles relation fields natively.
+
+### CRITICAL: Execute production cutover
+
+All development phases are committed to `main`. The fork image needs to be built and deployed to replace the current stock Twenty + SDK app installation.
+
+See `migration-reference/CUTOVER_RUNBOOK.md` for the full execution plan. Summary:
+1. Wait for GitHub Actions `build-and-push.yml` to push `ghcr.io/u2giants/twenty:latest`
+2. Take database backup
+3. Run `migration-reference/transfer-ownership.sql` (transfers custom object ownership to Twenty Standard App)
+4. Update Coolify to deploy the fork image
+5. Set environment variables (`OPENROUTER_API_KEY`, `AZURE_*`, `CLICKUP_API_TOKEN`)
+6. Run `workspace:sync-metadata`
+7. Register cron jobs
+8. Verify and monitor
 
 ### Implement row-level security for Emails and Contacts
 
-The intended visibility model (see Section 8) is not enforced. Need to:
+The intended visibility model (see Section 8) is not yet enforced. After cutover:
 - Create row-level permission predicates on `EmailMessage` and `Person` objects
-- Restrict visibility to the workspace member whose mailbox was the ingestion source (`createdBy.workspaceMemberId`)
+- Restrict visibility to the workspace member whose mailbox was the ingestion source
 - Meeting Notes need predicates based on attendee membership and linked Opportunity associations
-
-### Deploy front components and page layouts
-
-Blocked by `installApplication` bug:
-- Register all 5 front components (PersonDepartmentPicker, DepartmentDashboard, ProgramFolio, DomainManager, MondayMorningDashboard)
-- Sync page layouts for Person, Opportunity, Department records
-- Sync navigation menu items and views
 
 ---
 
@@ -604,11 +621,11 @@ The fork (`u2giants/twenty`, forked from `twentyhq/twenty`) replaces the SDK app
 | 1 | Extract UIDs from production DB | COMPLETED 2026-03-31 |
 | 2 | Convert SDK app objects to native metadata | COMPLETED 2026-03-31 |
 | 3 | Convert logic functions to NestJS services | COMPLETED 2026-04-01 |
-| 4 | Convert front components to native React | COMPLETED 2026-04-05 |
-| 5 | AG Grid filters, record panel, computed fields | COMPLETED 2026-04-05 |
-| 6 | Build pipeline and Dockerfile | COMPLETED 2026-04-05 |
-| 7 | Database migration scripts | COMPLETED 2026-04-05 |
-| 8 | Production cutover runbook | COMPLETED 2026-04-05 |
+| 4 | Convert front components to native React | COMPLETED 2026-04-01 |
+| 5 | AG Grid filters, record panel, computed fields | COMPLETED 2026-04-01 |
+| 6 | Build pipeline and Dockerfile | COMPLETED 2026-04-01 |
+| 7 | Database migration scripts | COMPLETED 2026-04-01 |
+| 8 | Production cutover runbook + execution | PENDING — see `migration-reference/CUTOVER_RUNBOOK.md` |
 
 ### Phase 0 — Fork setup (COMPLETED)
 
@@ -730,74 +747,45 @@ modules/pop-creations/
 - `@Command()` from `nest-commander` for cron job registration
 - `buildSystemAuthContext()` + `executeInWorkspaceContext()` for auth context
 
-### Phase 4 — Front components → native React (NOT STARTED)
+### Phase 4 — Front components → native React (COMPLETED 2026-04-01)
 
-Convert 5 SDK front components to native Twenty React components in `packages/twenty-front/src/modules/pop-creations/`.
+Converted 4 of 5 SDK front components to native Twenty React components. PersonDepartmentPicker was eliminated — Twenty's native FieldsWidget handles relation fields natively.
 
-| Component | Target location |
+| Component | Location |
 |---|---|
-| PersonDepartmentPicker | Record detail field component |
-| DepartmentDashboard | Custom record page tab |
-| ProgramFolio | Custom record page tab |
-| DomainManager | Settings page component |
-| MondayMorningDashboard | Custom navigation page |
+| DepartmentDashboardWidget | `packages/twenty-front/src/modules/pop-creations/components/DepartmentDashboardWidget.tsx` |
+| ProgramFolioWidget | `packages/twenty-front/src/modules/pop-creations/components/ProgramFolioWidget.tsx` |
+| MondayMorningDashboardPage | `packages/twenty-front/src/pages/pop-creations/MondayMorningDashboardPage.tsx` |
+| DomainManagerPage | `packages/twenty-front/src/pages/pop-creations/DomainManagerPage.tsx` |
 
-**Approach:** Replace `defineFrontComponent()` + `twenty-sdk` hooks with direct use of Twenty's internal React hooks (`useObjectRecordTable`, `useRecordShowPage`, etc.) and Recoil state.
+**Approach used:** Intercepted the existing `FRONT_COMPONENT` case in `WidgetContentRenderer.tsx` and dispatched to native components by `frontComponentName`. Routes added to `useCreateAppRouter.tsx` and `AppPath.ts`.
 
-### Phase 5 — UI customizations (NOT STARTED)
+### Phase 5 — UI customizations (COMPLETED 2026-04-01)
 
-The features that drove the fork decision:
+1. **AG Grid-style inline filters** — `RecordTableFilterRow.tsx` and `RecordTableFilterCell.tsx` added to `record-table-filter-row/components/`. Rendered after `<RecordTableHeader />` in `RecordTableContent.tsx`. Visibility controlled by `isRecordTableFilterRowVisibleComponentState` atom.
 
-1. **AG Grid-style inline filters** — Add a filter row below every table column header in `RecordTable` component. Each cell gets an input that filters that column. Requires modifying `packages/twenty-front/src/modules/object-record/record-table/`.
+2. **Record detail panel field reordering** — Handled via page layout metadata configuration (no code change needed — Twenty's FieldsWidget already reads field order from layout `position` values). Configure via metadata API or UI layout customization mode post-deployment.
 
-2. **Record detail panel field reordering** — Make Customer Status the top field, Chain Type second, etc. Requires modifying the `RecordDetailFieldSection` component to accept custom field ordering per object.
+3. **Computed fields** — `CompanyFindManyEnrichCountsPostQueryHook` and `CompanyFindOneEnrichCountsPostQueryHook` in `packages/twenty-server/src/modules/pop-creations/query-hooks/company-enrich-counts.post-query.hook.ts`. Injects `contactCount` and `departmentCount` into Company records at query time.
 
-3. **Computed fields** — `Employees` field on Company = count of People with `companyId` matching. New `Departments` count field = count of Departments linked. These need either database views/triggers or frontend-computed display values.
+### Phase 6 — Build pipeline (COMPLETED 2026-04-01)
 
-### Phase 6 — Build pipeline (NOT STARTED)
+- `.github/workflows/build-and-push.yml` — builds from `packages/twenty-docker/twenty/Dockerfile` on push to `main`, pushes to `ghcr.io/u2giants/twenty:latest` and SHA-tagged
+- `packages/twenty-docker/twenty/Dockerfile` — labels updated from `twentyhq` to `u2giants`
+- Build arg: `REACT_APP_SERVER_BASE_URL=https://crm.designflow.app`
 
-- Create `Dockerfile.pop` extending Twenty's base Dockerfile with custom modules
-- Set up GitHub Actions workflow: build → test → push image to GHCR
-- Configure Coolify to pull from `ghcr.io/u2giants/twenty:latest`
-- Remove old SDK app deployment workflow (`deploy-sdk-app.yml`)
+### Phase 7 — Database migration scripts (COMPLETED 2026-04-01)
 
-### Phase 7 — Database migration testing (NOT STARTED)
+- `migration-reference/transfer-ownership.sql` — Transfers 8 custom objectMetadata and all custom fieldMetadata from applicationId `f99617d1-...` (Workspace App) and `b7ad46a7-...` (POP Creations SDK App) to `58dd163b-...` (Twenty Standard App). Wrapped in BEGIN/COMMIT.
+- `migration-reference/MIGRATION_RUNBOOK.md` — Step-by-step instructions with verification queries.
 
-**Critical step.** Before production cutover:
+**The ownership transfer is required** because custom objects/fields in production are owned by the Workspace App. The fork's metadata sync expects Standard App ownership. Without this SQL, `workspace:sync-metadata` will treat custom objects as new and drop/recreate their tables (with data loss).
 
-1. Take a PostgreSQL dump of production (`pg_dump`)
-2. Restore to a test instance
-3. Run the fork's `workspace:sync-metadata` command against the test DB
-4. Verify: no tables dropped, no data lost, all custom fields recognized
-5. Verify: SELECT option IDs match (wrong option IDs = blank fields)
-6. Verify: relation foreign keys intact
+### Phase 8 — Production cutover (PENDING)
 
-**The one-time migration concern:** Currently, custom objects/fields in the production DB are owned by the Workspace App (`applicationId = f99617d1-...`). The fork's metadata sync expects them to be owned by the Twenty Standard App (`applicationId = 58dd163b-...`). Before first sync, need a SQL migration:
+Runbook is written at `migration-reference/CUTOVER_RUNBOOK.md`. Includes executable `curl` commands for Coolify API, `ssh` commands for database backup and PostgreSQL access, container exec commands for `workspace:sync-metadata` and cron job registration, and a rollback procedure.
 
-```sql
--- Transfer ownership of custom entities from Workspace App to Twenty Standard App
-UPDATE core."fieldMetadata"
-SET "applicationId" = '58dd163b-b4d9-4b30-aca8-23b41518741d'
-WHERE "applicationId" = 'f99617d1-aa3d-4009-8211-53a7b747f5f2'
-AND "universalIdentifier" IN (/* list of all custom field UIDs */);
-
-UPDATE core."objectMetadata"
-SET "applicationId" = '58dd163b-b4d9-4b30-aca8-23b41518741d'
-WHERE "applicationId" = 'f99617d1-aa3d-4009-8211-53a7b747f5f2'
-AND "universalIdentifier" IN (/* list of all custom object UIDs */);
-```
-
-The exact list of UIDs is in `migration-reference/CRITICAL_UID_MAP.txt`.
-
-### Phase 8 — Production cutover (NOT STARTED)
-
-1. Schedule maintenance window (evenings/weekends — small team)
-2. Run the applicationId migration SQL (Phase 7)
-3. Deploy the fork image to Coolify
-4. Run `workspace:sync-metadata` to reconcile
-5. Verify all views, fields, and data intact
-6. Monitor for 24 hours
-7. Decommission the old SDK app repo (`u2giants/poc-twenty-app`)
+**Status:** Ready to execute. Waiting on GitHub Actions build to complete, then run the cutover steps.
 
 ### Risk register
 
