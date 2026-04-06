@@ -756,4 +756,28 @@ export const buildWorkspaceMemberStandardFlatFieldMetadatas = ({
     twentyStandardApplicationId,
     now,
   }),
+  mailboxEmails: createStandardRelationFieldFlatMetadata({
+    objectName,
+    workspaceId,
+    context: {
+      type: FieldMetadataType.RELATION,
+      morphId: null,
+      fieldName: 'mailboxEmails',
+      label: i18nLabel(msg`Mailbox Emails`),
+      description: i18nLabel(
+        msg`Emails ingested from this member's mailbox`,
+      ),
+      icon: 'IconMailbox',
+      isNullable: true,
+      targetObjectName: 'emailMessage',
+      targetFieldName: 'mailboxOwner',
+      settings: {
+        relationType: RelationType.ONE_TO_MANY,
+      },
+    },
+    standardObjectMetadataRelatedEntityIds,
+    dependencyFlatEntityMaps,
+    twentyStandardApplicationId,
+    now,
+  }),
 });

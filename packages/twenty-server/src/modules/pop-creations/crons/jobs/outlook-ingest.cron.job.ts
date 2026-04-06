@@ -246,6 +246,7 @@ export class OutlookIngestCronJob {
       departmentId: routingResult.departmentId,
       programId: routingResult.programId,
       detectedSoNumbers,
+      mailboxOwnerId: createdByMemberId ?? null,
       createdBy: createdByMemberId
         ? { source: 'SYSTEM', workspaceMemberId: createdByMemberId }
         : { source: 'SYSTEM' },

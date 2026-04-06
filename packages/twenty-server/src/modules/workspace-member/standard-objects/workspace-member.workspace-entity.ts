@@ -16,6 +16,7 @@ import { type MessageParticipantWorkspaceEntity } from 'src/modules/messaging/co
 import { type OpportunityWorkspaceEntity } from 'src/modules/opportunity/standard-objects/opportunity.workspace-entity';
 import { type TaskWorkspaceEntity } from 'src/modules/task/standard-objects/task.workspace-entity';
 import { type TimelineActivityWorkspaceEntity } from 'src/modules/timeline/standard-objects/timeline-activity.workspace-entity';
+import { type EmailMessageWorkspaceEntity } from 'src/modules/pop-creations/standard-objects/email-message.workspace-entity';
 
 export enum WorkspaceMemberDateFormatEnum {
   SYSTEM = 'SYSTEM',
@@ -92,4 +93,5 @@ export class WorkspaceMemberWorkspaceEntity extends BaseWorkspaceEntity {
   // --- POP Creations custom fields ---
   division: string | null;
   primarySalespersonCompanies: Relation<CompanyWorkspaceEntity[]>;
+  mailboxEmails: Relation<EmailMessageWorkspaceEntity[]>;
 }

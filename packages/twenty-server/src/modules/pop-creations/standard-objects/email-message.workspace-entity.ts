@@ -11,6 +11,7 @@ import { type OpportunityWorkspaceEntity } from 'src/modules/opportunity/standar
 import { type TaskTargetWorkspaceEntity } from 'src/modules/task/standard-objects/task-target.workspace-entity';
 import { type TimelineActivityWorkspaceEntity } from 'src/modules/timeline/standard-objects/timeline-activity.workspace-entity';
 import { type DepartmentWorkspaceEntity } from 'src/modules/pop-creations/standard-objects/department.workspace-entity';
+import { type WorkspaceMemberWorkspaceEntity } from 'src/modules/workspace-member/standard-objects/workspace-member.workspace-entity';
 
 const SUBJECT_FIELD_NAME = 'subject';
 const SENDER_FIELD_NAME = 'sender';
@@ -43,6 +44,8 @@ export class EmailMessageWorkspaceEntity extends BaseWorkspaceEntity {
   companyId: string | null;
   department: EntityRelation<DepartmentWorkspaceEntity> | null;
   departmentId: string | null;
+  mailboxOwner: EntityRelation<WorkspaceMemberWorkspaceEntity> | null;
+  mailboxOwnerId: string | null;
   favorites: EntityRelation<FavoriteWorkspaceEntity[]>;
   attachments: EntityRelation<AttachmentWorkspaceEntity[]>;
   noteTargets: EntityRelation<NoteTargetWorkspaceEntity[]>;
