@@ -63,6 +63,7 @@ export class CompanyWorkspaceEntity {
   timelineActivities: EntityRelation<TimelineActivityWorkspaceEntity[]>;
 
   // --- POP Creations custom fields ---
+  soPatterns: string | null;
   customerStatus: string | null;
   chainType: string | null;
   departments: EntityRelation<DepartmentWorkspaceEntity[]>;

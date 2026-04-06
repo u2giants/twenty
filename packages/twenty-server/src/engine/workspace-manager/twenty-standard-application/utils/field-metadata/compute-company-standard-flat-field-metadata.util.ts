@@ -529,6 +529,22 @@ export const buildCompanyStandardFlatFieldMetadatas = ({
   }),
 
   // --- POP Creations custom fields ---
+  soPatterns: createStandardFieldFlatMetadata({
+    objectName,
+    workspaceId,
+    context: {
+      fieldName: 'soPatterns',
+      type: FieldMetadataType.TEXT,
+      label: i18nLabel(msg`SO/PO Number Patterns`),
+      description: i18nLabel(msg`Newline-separated regex patterns for extracting SO/PO numbers from emails. Blank = use default patterns. Example: PO-\\d{7}`),
+      icon: 'IconHash',
+      isNullable: true,
+    },
+    standardObjectMetadataRelatedEntityIds,
+    dependencyFlatEntityMaps,
+    twentyStandardApplicationId,
+    now,
+  }),
   customerStatus: createStandardFieldFlatMetadata({
     objectName,
     workspaceId,

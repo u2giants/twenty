@@ -30,6 +30,7 @@ export class EmailMessageWorkspaceEntity extends BaseWorkspaceEntity {
   outlookMessageId: string | null;
   routingStatus: string | null;
   routingMethod: string | null;
+  detectedSoNumbers: string | null;
   position: number;
   createdBy: ActorMetadata;
   updatedBy: ActorMetadata;

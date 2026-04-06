@@ -317,6 +317,23 @@ export const buildEmailMessageStandardFlatFieldMetadatas = ({
     now,
   }),
 
+  detectedSoNumbers: createStandardFieldFlatMetadata({
+    objectName,
+    workspaceId,
+    context: {
+      fieldName: 'detectedSoNumbers',
+      type: FieldMetadataType.TEXT,
+      label: i18nLabel(msg`Detected SO/PO Numbers`),
+      description: i18nLabel(msg`Comma-separated list of SO/PO numbers extracted from the email body`),
+      icon: 'IconHash',
+      isNullable: true,
+    },
+    standardObjectMetadataRelatedEntityIds,
+    dependencyFlatEntityMaps,
+    twentyStandardApplicationId,
+    now,
+  }),
+
   // SELECT fields
   routingStatus: createStandardFieldFlatMetadata({
     objectName,

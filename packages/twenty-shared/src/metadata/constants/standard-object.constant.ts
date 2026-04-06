@@ -742,6 +742,9 @@ export const STANDARD_OBJECTS = {
         universalIdentifier: '85c71601-72f9-4b7b-b343-d46100b2c74d',
       },
       // --- POP Creations custom fields on Company ---
+      soPatterns: {
+        universalIdentifier: 'f5a3b2c1-d4e5-4f6a-7b8c-9d0e1f2a3b4c',
+      },
       customerStatus: {
         universalIdentifier: 'd5deada5-8c65-4a04-a5bf-2dd03869d0e4',
       },
@@ -3835,6 +3838,7 @@ export const STANDARD_OBJECTS = {
       outlookMessageId: { universalIdentifier: '848a0c80-5fcb-4652-b793-404f719e9586' },
       routingStatus: { universalIdentifier: 'c18a5764-d901-421d-8907-210e50333a48' },
       routingMethod: { universalIdentifier: '5abe6d5f-d055-421a-8b30-b31c8c2b80ca' },
+      detectedSoNumbers: { universalIdentifier: 'e4f2a1b3-c5d6-4e7f-8a9b-0c1d2e3f4a5b' },
       program: { universalIdentifier: '503aed88-8f5c-487a-9222-c31a46a9a7de' },
       company: { universalIdentifier: 'a2b3c4d5-e6f7-4a8b-9c0d-1e2f3a4b5c6d' },
       department: { universalIdentifier: 'b3c4d5e6-f7a8-4b9c-0d1e-2f3a4b5c6d7e' },

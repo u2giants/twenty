@@ -22,6 +22,7 @@ import { WorkspaceEntity } from 'src/engine/core-modules/workspace/workspace.ent
 import { GlobalWorkspaceOrmManager } from 'src/engine/twenty-orm/global-workspace-datasource/global-workspace-orm.manager';
 import { buildSystemAuthContext } from 'src/engine/twenty-orm/utils/build-system-auth-context.util';
 import { EmailRouterService } from 'src/modules/pop-creations/services/email-router.service';
+import { SoExtractorService } from 'src/modules/pop-creations/services/so-extractor.service';
 import { type EmailMessageWorkspaceEntity } from 'src/modules/pop-creations/standard-objects/email-message.workspace-entity';
 import { type WorkspaceMemberWorkspaceEntity } from 'src/modules/workspace-member/standard-objects/workspace-member.workspace-entity';
 
@@ -61,6 +62,7 @@ export class OutlookIngestCronJob {
     private readonly globalWorkspaceOrmManager: GlobalWorkspaceOrmManager,
     private readonly exceptionHandlerService: ExceptionHandlerService,
     private readonly emailRouterService: EmailRouterService,
+    private readonly soExtractorService: SoExtractorService,
   ) {}
 
   @Process(OutlookIngestCronJob.name)
@@ -224,6 +226,12 @@ export class OutlookIngestCronJob {
       .filter(Boolean)
       .join(', ');
 
+    // Extract SO/PO numbers from the body (full body preferred, preview as fallback)
+    const bodyForExtraction =
+      graphEmail.body?.content || graphEmail.bodyPreview || '';
+    const detectedSoNumbers =
+      this.soExtractorService.extractAsString(bodyForExtraction);
+
     // Create EmailMessage record
     await emailMessageRepo.save({
       subject: graphEmail.subject ?? '(no subject)',
@@ -237,6 +245,7 @@ export class OutlookIngestCronJob {
       companyId: routingResult.companyId,
       departmentId: routingResult.departmentId,
       programId: routingResult.programId,
+      detectedSoNumbers,
       createdBy: createdByMemberId
         ? { source: 'SYSTEM', workspaceMemberId: createdByMemberId }
         : { source: 'SYSTEM' },

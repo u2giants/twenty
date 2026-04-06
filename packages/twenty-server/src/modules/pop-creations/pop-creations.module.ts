@@ -5,6 +5,7 @@ import { WorkspaceEntity } from 'src/engine/core-modules/workspace/workspace.ent
 import { GlobalWorkspaceDataSourceModule } from 'src/engine/twenty-orm/global-workspace-datasource/global-workspace-datasource.module';
 
 import { EmailRouterService } from 'src/modules/pop-creations/services/email-router.service';
+import { SoExtractorService } from 'src/modules/pop-creations/services/so-extractor.service';
 import { FirefliesWebhookController } from 'src/modules/pop-creations/controllers/fireflies-webhook.controller';
 import { PopCreationsRecordListener } from 'src/modules/pop-creations/listeners/pop-creations-record.listener';
 
@@ -35,6 +36,7 @@ import {
   providers: [
     // Services
     EmailRouterService,
+    SoExtractorService,
 
     // Listeners
     PopCreationsRecordListener,
@@ -48,10 +50,6 @@ import {
     EmailRerouterCronJob,
     ClickUpSyncCronJob,
     EmailContactSyncCronJob,
-
-    // Query hooks
-    CompanyFindManyEnrichCountsPostQueryHook,
-    CompanyFindOneEnrichCountsPostQueryHook,
 
     // Cron commands
     OutlookIngestCronCommand,
