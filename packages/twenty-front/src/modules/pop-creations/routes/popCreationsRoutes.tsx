@@ -17,7 +17,9 @@ const PopDomains = lazy(() =>
 );
 
 /**
- * POP Creations route definitions.
+ * POP Creations route elements (not a component — must be JSX elements
+ * because React Router's createRoutesFromElements only accepts <Route>
+ * and <Fragment> elements, not custom components).
  *
  * To add a new page:
  *   1. Add the lazy import above.
@@ -25,7 +27,7 @@ const PopDomains = lazy(() =>
  *   3. Add the path to popPaths.ts.
  *   4. Done — useCreateAppRouter.tsx (core) never needs to change again.
  */
-export const PopCreationsRoutes = () => (
+export const popCreationsRouteElements = (
   <>
     <Route
       path={popPaths.dashboard}

@@ -265,13 +265,13 @@ if (PopWidget) return <PopWidget />;
 
 ### `packages/twenty-front/src/modules/app/hooks/useCreateAppRouter.tsx`
 
-**Change:** Added one import + one JSX element replacing two individual route definitions.
+**Change:** Added one import + one JSX interpolation for route elements.
 ```typescript
 // Added import:
-import { PopCreationsRoutes } from '@/pop-creations/routes/popCreationsRoutes';
+import { popCreationsRouteElements } from '@/pop-creations/routes/popCreationsRoutes';
 
-// In route tree: replaced two <Route> elements with:
-<PopCreationsRoutes />
+// In route tree (as JSX interpolation, NOT as a component — see Idiosyncratic Decisions):
+{popCreationsRouteElements}
 ```
 **Future additions:** Edit `popCreationsRoutes.tsx` and `popPaths.ts` only — this file is frozen.
 

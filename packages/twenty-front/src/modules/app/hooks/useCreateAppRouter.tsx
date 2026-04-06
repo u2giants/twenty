@@ -5,7 +5,7 @@ import { VerifyLoginTokenEffect } from '@/auth/components/VerifyLoginTokenEffect
 
 import { VerifyEmailEffect } from '@/auth/components/VerifyEmailEffect';
 import indexAppPath from '@/navigation/utils/indexAppPath';
-import { PopCreationsRoutes } from '@/pop-creations/routes/popCreationsRoutes';
+import { popCreationsRouteElements } from '@/pop-creations/routes/popCreationsRoutes';
 import { BlankLayout } from '@/ui/layout/page/components/BlankLayout';
 import { DefaultLayout } from '@/ui/layout/page/components/DefaultLayout';
 import { AppPath } from 'twenty-shared/types';
@@ -206,7 +206,7 @@ export const useCreateAppRouter = (
           />
           <Route path={indexAppPath.getIndexAppPath()} element={<></>} />
           {/* POP Creations pages — to add a page, edit pop-creations/routes/popCreationsRoutes.tsx */}
-          <PopCreationsRoutes />
+          {popCreationsRouteElements}
           <Route
             path={AppPath.RecordIndexPage}
             element={
