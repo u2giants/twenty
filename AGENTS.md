@@ -485,6 +485,124 @@ All backend automation lives in `packages/twenty-server/src/modules/pop-creation
 
 ---
 
+## 11a. Email Routing — Full Business Logic
+
+This section documents all routing rules so future sessions don't have to reverse-engineer the code.
+
+### Routing statuses (EmailMessage.routingStatus field)
+
+| Status | Meaning |
+|---|---|
+| `ROUTED` | Company + Department + Opportunity all assigned. Fully processed. |
+| `COMPANY_DEPT` | Company and Department assigned, but no matching Opportunity found yet. |
+| `COMPANY_ONLY` | Company assigned, but no Department or Opportunity. |
+| `CUSTOMER_EMAIL_NO_COMPANY` | A known customer email address is on the email, but it couldn't be matched to a Company record. This is unusual and worth reviewing manually. |
+| `UNROUTED` | No company assigned. Domain didn't match any known customer. Needs manual review or wait for rerouter. |
+| `SKIPPED` | Deliberately ignored (matches an IgnoreRule pattern or flagged manually). |
+
+The rerouter cron (every 6 hours) re-processes UNROUTED, COMPANY_ONLY, and COMPANY_DEPT emails. It only upgrades status — never downgrades.
+
+### Step 1: Domain → Company matching
+
+The router extracts every email address from the email (from, to, cc, bcc). For each domain:
+- Strip the domain from the email address
+- Look up Companies whose `domainName.primaryLinkUrl` matches
+- **Only match ACTIVE_CUSTOMER or POTENTIAL_CUSTOMER companies** — ignore OTHER, PAST_CUSTOMER, etc.
+
+**Multi-party rule (critical):** An email is routed to customer X only if:
+- At least one customer domain is present, AND
+- No OTHER customer domain is also present (two different customers on the same email = ambiguous, do not assign to either)
+- Vendor domains (companies with `customerStatus = OTHER`) do NOT block routing — they are ignored in this check
+
+**Result:** Sets `companyId` on the EmailMessage.
+
+### Step 2: Department narrowing
+
+Once a Company is assigned, look up all Person records associated with that Company who appear on the email. Check their `department` relations.
+- If all identified contacts belong to the SAME department → assign that department
+- If contacts span multiple departments → treat as companywide, do not assign a department
+- If all contacts are in non-departmental roles (logistics, compliance, general) → treat as neutral, look at the departmental contacts only for assignment
+
+**Result:** Sets `departmentId` on the EmailMessage.
+
+### Step 3: SO/PO number extraction
+
+Extract Sales Order (SO) and Purchase Order (PO) numbers from the email body using regex patterns. Match against `Opportunity.soNumber` / `Opportunity.poNumber` fields.
+
+If a match is found, assign that Opportunity regardless of domain or department.
+
+**Result:** Sets `opportunityId` on the EmailMessage (overrides steps 1-2 if match found).
+
+### Step 4: Fuzzy name matching
+
+Tokenize the email subject and body. Look for mentions of known Opportunity names or Department names. Use token overlap scoring to find the best match above a confidence threshold.
+
+**Result:** Sets `opportunityId` if confidence is high enough.
+
+### Step 5: AI matching (fallback)
+
+If steps 1-4 didn't find an Opportunity, call OpenRouter with the email content + a list of active Opportunities for the matched Company. The AI returns the most likely Opportunity or "none."
+
+Model selection: read at runtime from the `AiModelConfig` workspace record (field: `model`).
+
+**Result:** Sets `opportunityId` if AI is confident.
+
+### Fine Line Technologies — special case
+
+**Domain:** `finelinetech.com`  
+**Company status:** `OTHER` (vendor — serves multiple retail customers, not a POP customer)  
+
+Fine Line Technologies emails almost never have a customer email address in the headers. The only routing signals are:
+- Company/retailer name mentioned in the email body (fuzzy match against customer company names)
+- SO numbers in the body that match an existing Opportunity
+
+**Do not** route Fine Line emails by domain — the domain is a vendor, not a customer. The system correctly skips them at Step 1 (OTHER status excluded). They will remain UNROUTED unless Step 3 (SO match) or Step 4 (body fuzzy match) succeeds.
+
+### Known customer domains (as of 2026-04-06)
+
+| Company | Domain | Status |
+|---|---|---|
+| Dollar General | dollargeneralcorp.com, dollargeneral.com | ACTIVE_CUSTOMER |
+| Five Below | fivebelow.com | ACTIVE_CUSTOMER |
+| Dollar Tree | dollartree.com | ACTIVE_CUSTOMER |
+| Walmart | walmart.com | ACTIVE_CUSTOMER |
+| Hobby Lobby | hobbylobby.com | ACTIVE_CUSTOMER |
+| Burlington Stores | burlington.com | ACTIVE_CUSTOMER |
+| Ross Stores | ros.com | ACTIVE_CUSTOMER |
+| Forman Mills | formanmills.com | POTENTIAL_CUSTOMER |
+| BoxLunch | boxlunch.com | POTENTIAL_CUSTOMER |
+| Ollie's Bargain Outlet | ollies.us | POTENTIAL_CUSTOMER |
+| Spirit Halloween | spirithalloween.com | POTENTIAL_CUSTOMER |
+| Spencer Gifts | spencergifts.com | POTENTIAL_CUSTOMER |
+| Hot Topic | hottopic.com | POTENTIAL_CUSTOMER |
+| Fine Line Technologies | finelinetech.com | OTHER (vendor) |
+
+**Important about ros.com:** This is Ross Stores' corporate email domain, NOT a generic domain. Do not mistake it for something unrelated. The company is "Ross Stores" and the domain is `ros.com`.
+
+**Burlington merge note:** `burlingtonstores.com` was merged into `burlington.com` — only `burlington.com` exists as the canonical domain.
+
+**Walmart merge note:** `wal-mart.com` was merged into `walmart.com` — only `walmart.com` is canonical.
+
+### M365 Email Sync — status as of 2026-04-06
+
+Email ingestion uses Twenty's built-in Microsoft Graph sync (BullMQ worker). Two connected accounts:
+- **albert@popcre.com** — last synced March 29, no emails newer than March 26. Needs monitoring.
+- **adweck@popcre.com** — was stuck in `ONGOING` sync state (never completed first sync). Reset to `ACTIVE` + worker restarted on 2026-04-06. Needs monitoring to confirm.
+
+If email sync appears stuck: check `messageChannel.syncStatus` via the API. If `ONGOING` with `syncedAt=null`, reset to `ACTIVE, MESSAGE_LIST_FETCH_PENDING`.
+
+**OAuth expiry alerting (pending):** A cron job needs to be created that checks `connectedAccount.authFailedAt` for all accounts and alerts (via email or in-CRM notification) when M365 OAuth tokens have expired.
+
+### API rate limits
+
+The Twenty GraphQL API rate limit was `100 mutations/60s` by default. This has been overridden via Coolify environment variables:
+- `API_RATE_LIMITING_LONG_LIMIT=100000` (was 100)
+- `API_RATE_LIMITING_SHORT_LIMIT=10000` (was 100)
+
+This is our own server. There is no need to batch or throttle API calls.
+
+---
+
 ## 12. Data Visibility Model
 
 **Intended model (partially enforced — see Section 16):**
@@ -574,6 +692,21 @@ Authorization: Bearer $OPENROUTER_API_KEY
 Model IDs are prefixed: `openai/gpt-5.4`, `google/gemini-3.1-pro-preview`, `anthropic/claude-sonnet-4-6`.
 Model selection is read at runtime from the `AiModelConfig` workspace record.
 
+### Apollo Client import — CRITICAL for frontend builds
+
+In Twenty's Rollup build, `@apollo/client` only exports `gql` and types. React hooks (`useQuery`, `useMutation`, `useApolloClient`, etc.) must come from `@apollo/client/react`.
+
+```typescript
+// CORRECT
+import { gql } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client/react';
+
+// WRONG — causes "X is not exported by core/index.js" at build time
+import { useQuery, gql } from '@apollo/client';
+```
+
+This is especially easy to get wrong when writing new pop-creations pages since external docs show the unified import.
+
 ### Direct API access
 
 ```bash
@@ -590,6 +723,18 @@ curl -X POST https://crm.designflow.app/metadata \
   -d '{"query":"{ objects { edges { node { nameSingular } } } }"}'
 ```
 
+### Coolify deployment
+
+- **Panel:** http://178.156.180.212:8000/
+- **API token:** in GitHub Secrets as `COOLIFY_API_TOKEN`; also in Claude's memory at `/home/ai/.claude/projects/-worksp-twenty/memory/reference_coolify.md`
+- **Server UUID:** `rd261bt0wy7ifjrkoe1tkl92` (main app)
+- **Worker UUID:** `pkhhmt4r7n0xt25jmmlkkfi8` (background worker)
+- **PostgreSQL UUID:** `g5j115bwrn8125ev6ap1tjrv`
+- **Target image:** `ghcr.io/u2giants/twenty:latest`
+- **Current running image** (pre-cutover): `ghcr.io/u2giants/twenty-deploy/twenty-custom:main`
+
+Coolify is a consumer of pre-built images. It never builds from source. GitHub Actions builds and pushes to GHCR; Coolify just pulls `:latest` and restarts.
+
 ---
 
 ## 16. Pending Work
@@ -598,11 +743,30 @@ curl -X POST https://crm.designflow.app/metadata \
 
 All development phases (0-8) are committed to `main`. Deployment is pending.
 See `migration-reference/CUTOVER_RUNBOOK.md`. Requires:
-- GitHub Actions build to succeed (image pushed to `ghcr.io/u2giants/twenty:latest`)
-- Coolify API access to update both server and worker apps
+- ✅ GitHub Actions build fix (Apollo import fix pushed 2026-04-06 — build now in progress)
+- Coolify API: update both server (`rd261bt0wy7ifjrkoe1tkl92`) and worker (`pkhhmt4r7n0xt25jmmlkkfi8`) to pull `ghcr.io/u2giants/twenty:latest`
 - Database ownership transfer SQL (`migration-reference/transfer-ownership.sql`)
 - Environment variables: `OPENROUTER_API_KEY`, `AZURE_TENANT_ID`, `AZURE_CLIENT_ID`,
   `AZURE_CLIENT_SECRET`, `OUTLOOK_MAILBOX`, `CLICKUP_API_TOKEN`
+
+### M365 OAuth expiry alerting
+
+Build a cron job (e.g. `oauth-health-check.cron.job.ts`) that:
+- Queries all `connectedAccount` records
+- Checks `authFailedAt` field — if non-null and recent, the token has expired
+- Sends an alert (email to admin, or creates a high-priority Task record in Twenty) when any account token has expired
+
+Both albert@popcre.com and adweck@popcre.com are connected. More accounts may be added in future.
+
+### SO number extraction / routing inbox
+
+Extract Sales Order numbers (pattern: `SO-XXXXXX` or `SO #XXXXXX` or similar) from ALL email bodies during ingestion. Store extracted SO numbers on the EmailMessage record. Create a custom view ("SO Inbox") showing emails with detected SOs that aren't yet linked to an Opportunity. This allows manual or semi-automatic association of Fine Line Technologies emails and other vendor emails to their correct Programs.
+
+Requires: new field `detectedSoNumbers` (array of strings) on EmailMessage, plus indexing in the ingest job and a frontend view.
+
+### Fine Line Technologies body-based routing
+
+Once the fork is deployed and SO extraction is in place, add Step 3a to the routing pipeline: for emails where `finelinetech.com` is a sender, search the body for customer company name mentions and SO numbers, then route accordingly.
 
 ### Row-level security for Emails and Contacts
 
@@ -610,3 +774,11 @@ After cutover, implement permission predicates:
 - `EmailMessage`: restrict to workspace member whose mailbox ingested them (`createdBy`)
 - `Person`: same restriction for contacts created during email ingest
 - `MeetingNote`: visible to attendees + users linked to associated Opportunity
+
+### Verify M365 email sync is working
+
+After the worker restart on 2026-04-06, confirm:
+- adweck@popcre.com begins receiving new emails (sync was stuck ONGOING since initial setup)
+- albert@popcre.com resumes (last sync was March 29, no emails since March 26)
+
+If sync is still stuck after 24 hours, check BullMQ queue status via Coolify logs.
