@@ -50,6 +50,8 @@ RUN yarn workspaces focus --production twenty-emails twenty-shared twenty-sdk tw
 FROM common-deps AS twenty-front-build
 
 ARG REACT_APP_SERVER_BASE_URL
+ARG REACT_APP_BUILD_HASH
+ARG REACT_APP_BUILD_DATE
 
 COPY ./packages/twenty-front /app/packages/twenty-front
 COPY ./packages/twenty-front-component-renderer /app/packages/twenty-front-component-renderer

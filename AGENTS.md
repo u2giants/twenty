@@ -33,37 +33,124 @@ Read this file before writing any code. For Claude Code-specific instructions, s
 
 ## 1. Business Context
 
-**POP Creations** is a small wholesale consumer goods company. They design and source seasonal
-and everyday products (home decor, holiday items, outdoor goods) and sell to major retail chains:
-Dollar General, Five Below, Dollar Tree, Walmart, Hobby Lobby.
+**POP Creations** is a small wholesale consumer goods company. They design, source, and sell
+seasonal and everyday products (home decor, holiday items, outdoor goods) to major retail chains.
+Their buyers are at Dollar General, Five Below, Dollar Tree, Walmart, Hobby Lobby, Burlington,
+Ross Stores, and a growing list of potential customers.
+
+The CRM exists to track every buyer relationship, every product program, and every piece of
+communication — from initial pitch to delivery confirmation.
 
 ### Vocabulary map
 
 | CRM term | Business meaning |
 |---|---|
-| Opportunity | Program — a specific SKU or product line for a retailer/season |
-| Company | Retailer / customer |
-| Person | Buyer contact at a retailer |
-| Department | Buying department within a retailer (e.g. "Dollar General — Seasonal") |
-| EmailMessage | Ingested Outlook email |
-| MeetingNote | Fireflies transcript / meeting record |
-| LicensorApprovalThread | Licensing submission and approval workflow |
-| Factory | Manufacturing partner |
+| Opportunity | Program — a specific SKU or product line pitched to a specific retailer for a specific season |
+| Company | Retailer or vendor |
+| Person | A buyer, manager, or contact at a retailer |
+| Department | A buying department within a retailer (e.g. "Dollar General — Seasonal", "Walmart — Home") |
+| EmailMessage | An ingested Outlook email from a POP staff mailbox |
+| MeetingNote | A Fireflies AI transcript or manually created meeting record |
+| LicensorApprovalThread | A licensing approval workflow — required when a product uses licensed artwork (Disney, etc.) |
+| Factory | A manufacturing partner who produces POP's products |
+| AiModelConfig | The workspace's AI model selection (single record named "Default") |
 
-### How the business works
+### The retail buying cycle — how programs work
 
-**Programs** (Opportunities) travel through a lifecycle from initiation → design → buyer review →
-pricing → production → delivery. Departments scope programs, contacts, and emails. Companies are
-retailers; credit/customer status cascades to their Persons.
+A **Program** (Opportunity) typically follows this lifecycle:
 
-**Emails** arrive via Outlook into a shared mailbox. The pipeline ingests them via Microsoft Graph,
-attempts to route each to the right Company/Department/Program, and surfaces unrouted ones in an
-Inbox view for manual review.
+1. **Initiation** — POP identifies a product idea for a retailer/season. An Opportunity is created.
+2. **Design** — POP's design team creates samples. Files are shared with the buyer.
+3. **Buyer review** — The buyer reviews samples. Meetings happen (tracked as MeetingNotes). Emails fly.
+4. **Pricing** — POP submits costs; the buyer negotiates. Eventually a price is agreed.
+5. **Purchase Order issued** — The retailer issues a PO (Purchase Order). This has a PO number.
+   - The PO number is the retailer's identifier for this order
+   - POP's internal tracking uses a Sales Order (SO) number
+6. **Production** — Factory manufactures the product. Factory is linked to the Opportunity.
+7. **Delivery** — Product ships to the retailer's DC by the `hardDeliveryDate`. This is a hard deadline — missing it means chargebacks or order cancellation.
+8. **Closed / Shipped** — Program is complete.
 
-**Meeting notes** are auto-imported from Fireflies AI. The webhook creates `MeetingNote` records
-and links `@popcre.com` staff via `MeetingNoteAttendee`.
+### Departments — how they work at retailers
 
-**ClickUp** is the production task management tool. Program status is synced into `clickupStatus`.
+Large retailers (Walmart, Dollar General, etc.) organize their buying into departments. A department
+is a buying team focused on a specific product category:
+- "Dollar General — Seasonal" buys Halloween, Christmas, Easter merchandise
+- "Dollar General — Home" buys home decor year-round
+- "Walmart — Patio" buys outdoor/patio products
+
+Each department has its own buyers (People in the CRM). POP's salespeople manage relationships at
+the department level, not just the company level. When an email comes in, it belongs to a specific
+department based on which buyers are on it.
+
+### What "customer status" means on a Company
+
+| Status | Meaning |
+|---|---|
+| `ACTIVE_CUSTOMER` | Currently doing business — POP has active or recent programs with them |
+| `POTENTIAL_CUSTOMER` | In conversation or prospecting — no confirmed orders yet |
+| `PAST_CUSTOMER` | Had programs before, not active now |
+| `OTHER` | Vendor, supplier, freight company, or other non-retailer relationship |
+
+**This status drives email routing.** Only ACTIVE_CUSTOMER and POTENTIAL_CUSTOMER companies are
+candidates for automatic routing. An email from a vendor (OTHER) does not get routed to a customer.
+
+### Emails — the core workflow
+
+POP's primary communication channel is email. All buyer communication happens in Outlook.
+The CRM ingests emails from connected Outlook accounts and routes them to the right Program.
+
+When an email comes in from a buyer at Walmart:
+1. The system recognizes the `@walmart.com` domain
+2. Assigns the email to the Walmart Company
+3. Looks at which specific buyers are on the email to determine the Department
+4. Looks for SO/PO numbers or program name mentions to determine the Opportunity
+
+Emails that can't be automatically routed go to an "Unrouted" inbox for manual review.
+
+### Sales Order (SO) numbers and Purchase Order (PO) numbers
+
+These are the critical identifiers that link an email to a specific Program.
+
+- **PO number** — issued by the retailer when they place an order. The buyer mentions it in emails.
+- **SO number** — POP's internal tracking number for the same order.
+
+Each retailer has their own format for PO numbers. These appear in email subjects and bodies and
+are the most reliable way to connect a vendor email (like Fine Line Technologies) to the right Program.
+
+### Licensors — when a product uses IP
+
+Some products use licensed artwork (e.g. a Disney character on a decoration). These require
+**licensor approval** before production can begin. Each approval is tracked as a
+`LicensorApprovalThread` with its own stage and due date. Missing a licensor deadline can
+block production and miss the delivery date.
+
+### Fine Line Technologies — special vendor
+
+Fine Line Technologies (finelinetech.com) is a **tagging/ticketing vendor** that serves many of
+POP's retail customers. They produce the price tags, hang tags, and barcodes that go on products.
+
+They communicate directly with POP about tag specifications for each order. Their emails almost
+never include a customer email address — they are purely vendor-to-POP communications. The only
+way to link their emails to the right Program is:
+- The customer company name mentioned in the body
+- The SO/PO number mentioned in the body
+
+**Fine Line emails will never be auto-routed by domain.** They require SO/PO matching or body
+text matching to connect to a Program.
+
+### Salespersons and territories
+
+POP has multiple salespeople, each responsible for different accounts. The `primarySalesperson`
+field on Company determines who owns an account. In meetings and program tracking, the relevant
+salesperson is a key attribute.
+
+### ClickUp — task management
+
+ClickUp is POP's external task management tool. Program (Opportunity) status is synced from
+ClickUp into the CRM via the `clickupStatus` field. The `clickup-sync` cron runs daily at 7am
+to pull the latest status.
+
+---
 
 ---
 
@@ -199,6 +286,19 @@ import { RecordTableFilterRow } from '@/object-record/record-table/record-table-
 ```
 **Status:** This is unavoidable for the inline filter feature. The filter row manages its own
 visibility via Jotai state (`isRecordTableFilterRowVisibleComponentState`).
+
+### `packages/twenty-front/src/modules/ui/layout/page/components/DefaultLayout.tsx`
+
+**Change:** Added one import + one JSX element (admin version banner at very top of every page).
+```typescript
+// Added import:
+import { AdminVersionBanner } from '@/pop-creations/components/AdminVersionBanner';
+
+// In JSX, first child inside AppErrorBoundary:
+<AdminVersionBanner />   ← added (renders nothing for non-admins)
+<InformationBannerIsImpersonating />
+```
+**Future changes:** Do not add more banners here. Use the pop-creations widget/route system instead.
 
 ### `packages/twenty-shared/src/types/AppPath.ts`
 
