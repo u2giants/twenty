@@ -9977,6 +9977,11 @@ msgstr "Inga raderade {objectLabelSingular} hittades"
 msgid "No deleted records matching the filter criteria were found."
 msgstr "Inga raderade poster som matchar filterkriterierna hittades."
 
+#. js-lingui-id: co4U3l
+#: src/modules/pop-creations/components/person-department-picker/components/PersonDepartmentPicker.tsx
+msgid "No department"
+msgstr ""
+
 #. js-lingui-id: RRRePs
 #: src/pages/settings/applications/SettingsAvailableApplicationDetails.tsx
 msgid "No description available for this application"
@@ -11819,6 +11824,7 @@ msgstr "Omdirigerings-URI"
 
 #. js-lingui-id: lCF0wC
 #: src/pages/settings/security/event-logs/SettingsEventLogs.tsx
+#: src/modules/pop-creations/components/domain-manager/components/DomainManager.tsx
 msgid "Refresh"
 msgstr "Uppdatera"
 
@@ -13255,6 +13261,7 @@ msgstr "Konfigurerar din databas..."
 #: src/modules/settings/roles/role-permissions/permission-flags/components/SettingsRolePermissionsSettingsSection.tsx
 #: src/modules/settings/roles/role/components/SettingsRole.tsx
 #: src/modules/settings/accounts/components/SettingsAccountsSettingsSection.tsx
+#: src/modules/pop-creations/components/domain-manager/components/DomainManager.tsx
 #: src/modules/object-record/record-merge/hooks/useMergeRecordsContainerTabs.ts
 #: src/modules/navigation/components/NavigationDrawerOtherSection.tsx
 #: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
