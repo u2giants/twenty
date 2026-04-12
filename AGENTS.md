@@ -300,6 +300,27 @@ import { AdminVersionBanner } from '@/pop-creations/components/AdminVersionBanne
 ```
 **Future changes:** Do not add more banners here. Use the pop-creations widget/route system instead.
 
+### `packages/twenty-front/src/modules/object-record/hooks/useHandleFindManyRecordsError.ts`
+
+**Change:** Added `isSchemaMismatchError()` helper + early-return guard before the toast call.
+```typescript
+// Added helper (checks GraphQL error extension codes, not message text):
+const isSchemaMismatchError = (error: ErrorLike): boolean => { ... };
+
+// Added guard inside handleFindManyRecordsError, before enqueueErrorSnackBar:
+if (isSchemaMismatchError(error)) {
+  handleError?.(error as Error);
+  return;   // suppress toast — schema mismatch is a pre-cutover condition, not a user error
+}
+```
+**Why this was necessary:** After the fork image was deployed, the workspace sync added new custom
+fields (e.g. `soPatterns` on Company) to the metadata. The frontend queries include those fields,
+but the production DB columns don't exist yet (cutover migration pending). This caused 3
+`FIELD_NOT_FOUND` GraphQL errors on every login, each showing an "An error occurred." toast.
+**Remove this change after the production cutover migration runs** — at that point the DB will
+have all columns and the errors will stop occurring naturally.
+**Future changes:** Do not add more suppression logic here. Fix the root cause (run the cutover).
+
 ### `packages/twenty-shared/src/types/AppPath.ts`
 
 **Change:** None. AppPath.ts is 100% stock. Our routes use `popPaths.ts` in our own module.
@@ -455,6 +476,7 @@ The ONLY files that may have conflicts are those listed in Section 4:
 - `WidgetContentRenderer.tsx` — check the FRONT_COMPONENT case
 - `useCreateAppRouter.tsx` — check for `<PopCreationsRoutes />` placement
 - `RecordTableContent.tsx` — check for `<RecordTableFilterRow />` placement
+- `useHandleFindManyRecordsError.ts` — check for `isSchemaMismatchError` guard (remove after cutover)
 
 AppPath.ts is 100% stock and will not conflict.
 
@@ -649,8 +671,8 @@ Model selection: read at runtime from the `AiModelConfig` workspace record (fiel
 
 ### Fine Line Technologies — special case
 
-**Domain:** `finelinetech.com`  
-**Company status:** `OTHER` (vendor — serves multiple retail customers, not a POP customer)  
+**Domain:** `finelinetech.com`
+**Company status:** `OTHER` (vendor — serves multiple retail customers, not a POP customer)
 
 Fine Line Technologies emails almost never have a customer email address in the headers. The only routing signals are:
 - Company/retailer name mentioned in the email body (fuzzy match against customer company names)
