@@ -234,7 +234,7 @@ export const NavigationMenuItemFolderDnd = ({
         (!isOpen && selectedNavigationMenuItemIndex >= 0) ||
         (isWorkspace && isSelectedInEditMode && !isOpen)
       }
-      onClick={handleHeaderClick}
+      onClick={folderLink ? undefined : handleHeaderClick}
       rightOptions={headerRightOptions}
       className="navigation-drawer-item"
       isRightOptionsDropdownOpen={
