@@ -4,19 +4,20 @@ permissions:
   contents: read
 
 on:
-  push:
-    branches:
-      - main
+  workflow_run:
+    workflows: ['Build and Push Docker Image']
+    branches: [main]
+    types: [completed]
 
 jobs:
   deploy-main:
-    timeout-minutes: 3
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    timeout-minutes: 5
     runs-on: ubuntu-latest
     steps:
-      - name: Repository Dispatch
-        uses: peter-evans/repository-dispatch@v2
-        with:
-          token: ${{ secrets.TWENTY_INFRA_TOKEN }}
-          repository: twentyhq/twenty-infra
-          event-type: auto-deploy-main
-          client-payload: '{"github": ${{ toJson(github) }}}' # Passes the entire github context to the downstream workflow
+      - name: Trigger Coolify deployment
+        run: |
+          curl -s -X POST \
+            "${{ secrets.COOLIFY_BASE_URL }}/api/v1/deploy?uuid=${{ secrets.COOLIFY_SERVER_UUID }}&force=false" \
+            -H "Authorization: Bearer ${{ secrets.COOLIFY_API_TOKEN }}" \
+            -H "Content-Type: application/json"
