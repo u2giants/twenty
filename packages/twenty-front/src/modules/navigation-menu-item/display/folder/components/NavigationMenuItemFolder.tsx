@@ -88,6 +88,7 @@ export const NavigationMenuItemFolder = ({
         isDragging={isDragging}
         onNavigationMenuItemClick={onNavigationMenuItemClick}
         orphanIndex={orphanIndex}
+        viewId={item.viewId}
       />
     </Suspense>
   );

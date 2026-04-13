@@ -88,6 +88,7 @@ type NavigationMenuItemFolderDndProps = {
   isDragging: boolean;
   onNavigationMenuItemClick?: (params: NavigationMenuItemClickParams) => void;
   orphanIndex?: number;
+  viewId?: string | null;
 };
 
 export const NavigationMenuItemFolderDnd = ({
@@ -102,6 +103,7 @@ export const NavigationMenuItemFolderDnd = ({
   isDragging: isDraggingProp,
   onNavigationMenuItemClick,
   orphanIndex,
+  viewId,
 }: NavigationMenuItemFolderDndProps) => {
   const { t } = useLingui();
   const { theme } = useContext(ThemeContext);
@@ -116,8 +118,8 @@ export const NavigationMenuItemFolderDnd = ({
     ? NavigationSections.FAVORITES
     : NavigationSections.WORKSPACE;
 
-  const { isOpen, handleToggle, selectedNavigationMenuItemIndex } =
-    useNavigationMenuItemFolderOpenState({ folderId, navigationMenuItems });
+  const { isOpen, folderLink, handleToggle, selectedNavigationMenuItemIndex } =
+    useNavigationMenuItemFolderOpenState({ folderId, navigationMenuItems, viewId });
 
   const { isDragging: isContextDragging } = useContext(
     NavigationMenuItemDragContext,
@@ -227,6 +229,7 @@ export const NavigationMenuItemFolderDnd = ({
       label={folderName}
       Icon={FolderIcon}
       iconColor={iconColor}
+      to={folderLink || undefined}
       active={
         (!isOpen && selectedNavigationMenuItemIndex >= 0) ||
         (isWorkspace && isSelectedInEditMode && !isOpen)

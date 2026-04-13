@@ -1,9 +1,12 @@
+import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { NavigationMenuItemType } from 'twenty-shared/types';
 import { isDefined } from 'twenty-shared/utils';
 import { useIsMobile } from 'twenty-ui/utilities';
 import { isNonEmptyString } from '@sniptt/guards';
 import { type NavigationMenuItem } from '~/generated-metadata/graphql';
+
+import { getViewNavigationMenuItemComputedLink } from '@/navigation-menu-item/display/view/utils/getViewNavigationMenuItemComputedLink';
 
 import { openNavigationMenuItemFolderIdsState } from '@/navigation-menu-item/common/states/openNavigationMenuItemFolderIdsState';
 import { getNavigationMenuItemComputedLink } from '@/navigation-menu-item/display/utils/getNavigationMenuItemComputedLink';
@@ -18,11 +21,13 @@ import { viewsSelector } from '@/views/states/selectors/viewsSelector';
 type UseNavigationMenuItemFolderOpenStateParams = {
   folderId: string;
   navigationMenuItems: NavigationMenuItem[];
+  viewId?: string | null;
 };
 
 export const useNavigationMenuItemFolderOpenState = ({
   folderId,
   navigationMenuItems,
+  viewId,
 }: UseNavigationMenuItemFolderOpenStateParams) => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -40,6 +45,25 @@ export const useNavigationMenuItemFolderOpenState = ({
 
   const isOpen = openNavigationMenuItemFolderIds.includes(folderId);
 
+  // Folders with their own view (e.g. Email) start expanded by default
+  useEffect(() => {
+    if (isDefined(viewId) && isNonEmptyString(viewId)) {
+      setOpenNavigationMenuItemFolderIds((current) =>
+        current.includes(folderId) ? current : [...current, folderId],
+      );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [folderId, viewId]);
+
+  const folderLink =
+    isDefined(viewId) && isNonEmptyString(viewId)
+      ? getViewNavigationMenuItemComputedLink(
+          { viewId },
+          objectMetadataItems,
+          views,
+        )
+      : undefined;
+
   const handleToggle = () => {
     if (isMobile) {
       setCurrentNavigationMenuItemFolderId((prev) =>
@@ -53,7 +77,8 @@ export const useNavigationMenuItemFolderOpenState = ({
       );
     }
 
-    if (!isOpen) {
+    // Only auto-navigate to first child when folder doesn't have its own view link
+    if (!isOpen && !isDefined(viewId)) {
       const firstNonLinkItem = navigationMenuItems.find((item) => {
         if (item.type === NavigationMenuItemType.LINK) {
           return false;
@@ -96,6 +121,7 @@ export const useNavigationMenuItemFolderOpenState = ({
 
   return {
     isOpen,
+    folderLink,
     handleToggle,
     selectedNavigationMenuItemIndex,
   };
