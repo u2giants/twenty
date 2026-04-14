@@ -250,13 +250,14 @@ export class EmailContactSyncCronJob {
       return existing.id;
     }
 
-    // Create new company
+    // Create new company — UNASSIGNED until a user classifies it
     const newCompany = await companyRepo.save({
       name: this.domainToCompanyName(domain),
       domainName: {
         primaryLinkUrl: domainUrl,
         primaryLinkLabel: domain,
       },
+      customerStatus: 'UNASSIGNED',
       position: 0,
     });
 
