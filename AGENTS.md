@@ -572,9 +572,15 @@ workspaces list and discard the new Twenty packages we don't need.
 
 All backend automation lives in `packages/twenty-server/src/modules/pop-creations/`.
 
+### Vocabulary: Exclusive Attribution
+
+**Exclusive attribution** is the rule: if exactly one candidate matches a signal and no other candidates compete, attribute the object to that candidate. The implementing check is called a **sole-candidate check**.
+
+This pattern recurs across routing contexts (email domain → company, body text scan, meeting attendees → department). Name it as such in code and comments whenever the logic is "if only one X matches and nothing else does, assign to X."
+
 ### Email pipeline
 
-- **`email-router.service.ts`** — Five-step routing cascade: domain→company, department narrowing, SO/PO regex, fuzzy token match, AI call
+- **`email-router.service.ts`** — Routing cascade: Step 1 domain→company, Step 1b thread-scan (exclusive attribution), Step 2 department narrowing, Step 3 SO/PO regex, Step 4 fuzzy token match, Step 5 AI call
 - **`outlook-ingest.cron.job.ts`** — Every 15 min, polls Microsoft Graph, deduplicates by `outlookMessageId`
 - **`email-rerouter.cron.job.ts`** — Every 6 hours, re-routes UNROUTED and partial emails
 - **`email-contact-sync.cron.job.ts`** — Daily 2am, syncs email addresses to Person records
