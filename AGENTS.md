@@ -747,6 +747,70 @@ Row-level security predicates are not yet implemented. Current state: all roles 
 
 ## 13. Known Bugs and Hard Limits
 
+### BLANK PAGE: Invalid RFC 4122 UUIDs in viewFilter / viewFilterGroup records
+
+**Symptom:** The app loads but every page is blank — grey top bar and sidebar appear, content area is empty.
+
+**Root cause:** Twenty's app layer validates every UUID it reads from the database against RFC 4122.
+The 4th group of a UUID (the "variant" field) **must start with `8`, `9`, `a`, or `b`**.
+If any `viewFilter` or `viewFilterGroup` record has a UUID where the 4th group starts with
+`c`, `d`, `e`, or `f` (e.g. `22222222-e1a1-4b00-c001-000000000001`), the server throws
+`Error: Invalid UUID: '...'` on every request and the frontend receives nothing.
+
+**How to diagnose:**
+```bash
+docker logs <server-container> 2>&1 | grep "Invalid UUID"
+```
+
+**How to fix:** Two steps — fix the DB rows, then flush the Redis cache:
+```bash
+# Step 1: Delete offending rows and re-insert with valid UUIDs
+docker cp /tmp/fix-invalid-uuids.js twenty-worker:/tmp/fix-invalid-uuids.js
+docker exec twenty-worker sh -c 'NODE_PATH=/app/node_modules node /tmp/fix-invalid-uuids.js'
+
+# Step 2: Flush the stale Redis workspace cache (server caches on startup)
+REDIS_PASS="<from REDIS_URL env var>"
+docker exec jht51gt0biykivnama17crlt redis-cli -a $REDIS_PASS --no-auth-warning \
+  DEL \
+  "engine:workspace:flat-maps:view-filter-group:99c80ca1-610f-48b5-bd1f-9178201bdcb7:data" \
+  "engine:workspace:flat-maps:view-filter-group:99c80ca1-610f-48b5-bd1f-9178201bdcb7:hash" \
+  "engine:workspace:flat-maps:view-filter:99c80ca1-610f-48b5-bd1f-9178201bdcb7:data" \
+  "engine:workspace:flat-maps:view-filter:99c80ca1-610f-48b5-bd1f-9178201bdcb7:hash" \
+  "engine:workspace:flat-maps:view:99c80ca1-610f-48b5-bd1f-9178201bdcb7:data" \
+  "engine:workspace:flat-maps:view:99c80ca1-610f-48b5-bd1f-9178201bdcb7:hash" \
+  "engine:workspace:metadata:workspace-metadata-version:99c80ca1-610f-48b5-bd1f-9178201bdcb7"
+```
+
+**Why two steps?** Twenty loads view metadata into Redis at startup. Fixing the DB rows alone doesn't help — the server keeps serving the cached (invalid) data until the cache keys are evicted or deleted.
+
+**Prevention — three layers:**
+
+**1. Always use `gen_random_uuid()` for inserts where exact ID doesn't matter.**
+This is the safest default and eliminates the problem entirely.
+
+**2. If your script needs hand-crafted UUIDs** (e.g. for idempotent re-runs), call the validator
+at the top of the script before any DB writes:
+```javascript
+const { validateUUIDs } = require('/tmp/validate-uuids'); // or repo path ops/validate-uuids.js
+const MY_IDS = { foo: '22222222-e1a1-4b00-8001-000000000001' };
+validateUUIDs(MY_IDS); // exits immediately if any ID fails RFC 4122
+```
+The 4th UUID group must start with `8`, `9`, `a`, or `b`:
+```
+GOOD: 22222222-e1a1-4b00-8001-000000000001
+BAD:  22222222-e1a1-4b00-d001-000000000001  ← causes blank page
+```
+
+**3. After any setup script that touches views/nav, run the health check:**
+```bash
+docker cp ops/db-health-check.js twenty-worker:/tmp/db-health-check.js
+docker exec twenty-worker sh -c 'NODE_PATH=/app/node_modules node /tmp/db-health-check.js'
+```
+This script: (a) scans all view-related tables for invalid UUIDs, and (b) always flushes the
+Redis view cache so the server re-reads fresh data from the DB. Safe to run at any time.
+
+---
+
 ### `installApplication` fails for non-empty manifests (SDK-era bug, now irrelevant)
 
 This was the bug that drove the fork decision. In the fork, all customizations are compiled
@@ -769,6 +833,24 @@ See Section 12 and Section 16.
 ---
 
 ## 14. Critical Incident Log
+
+### 2026-04-14: Blank page caused by invalid UUID variant in viewFilter/viewFilterGroup
+
+A setup script for the Meeting Notes sub-views (Unrouted/Company/Dept./Opport.) inserted
+`viewFilter` and `viewFilterGroup` records with hand-crafted UUIDs using `d001` and `c001`
+as the 4th UUID group. RFC 4122 requires this group to start with `8`, `9`, `a`, or `b`.
+Twenty validates every UUID it reads and throws `Error: Invalid UUID` on each request,
+causing the frontend to receive empty responses and render a blank page.
+
+**Recovery:** Deleted the 7 viewFilter and 2 viewFilterGroup records and re-inserted them
+with valid UUIDs (`9001-...` and `8001-...` prefixes) via a one-off script run in the
+worker container.
+
+**Rule going forward:** See Section 13 — "BLANK PAGE: Invalid RFC 4122 UUIDs". Never use
+`c`, `d`, `e`, or `f` as the first character of the 4th UUID group. Use `gen_random_uuid()`
+when the exact UUID value doesn't matter.
+
+---
 
 ### 2026-03-31: Workspace destroyed by incorrect installApplication call
 
