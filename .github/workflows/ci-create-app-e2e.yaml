@@ -1,11 +1,7 @@
 name: CI Create App E2E
 
 on:
-  push:
-    branches:
-      - main
-
-  pull_request:
+  workflow_dispatch: # Manual trigger only — this tests SDK scaffolding which we don't use or publish
 
 permissions:
   contents: read
