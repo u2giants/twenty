@@ -205,12 +205,14 @@ export class OutlookIngestCronJob {
       return;
     }
 
-    // Route the email
+    // Route the email — pass full body so the router can scan quoted thread
+    // headers for customer addresses even when the top-level email only has
+    // internal addresses (e.g. a reply from adweck@ to a customer thread)
     const routingResult = await this.emailRouterService.routeEmail(
       workspaceId,
       {
         subject: graphEmail.subject ?? '',
-        bodyText: graphEmail.bodyPreview ?? '',
+        bodyText: graphEmail.body?.content || graphEmail.bodyPreview || '',
         emailAddresses: allAddresses,
       },
     );

@@ -146,6 +146,14 @@ function normalizeSubject(subject: string): string {
   return subject.replace(/^(RE:|FW:|Fwd:)\s*/gi, '').trim();
 }
 
+/** Extract every email address that appears anywhere in a string (e.g. quoted thread body). */
+function extractAddressesFromText(text: string): string[] {
+  const matches = text.match(
+    /[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}/g,
+  );
+  return [...new Set((matches ?? []).map((a) => a.toLowerCase()))];
+}
+
 function resolveModel(stored: string): string {
   return MODEL_VALUE_MAP[stored] ?? stored;
 }
@@ -254,6 +262,53 @@ export class EmailRouterService {
               (companies[0] as any).customerStatus ?? null;
             break;
           }
+        }
+
+        // ── Step 1b: Thread-scan fallback ─────────────────────────────
+        // If direct headers found no company, parse ALL email addresses from
+        // the body text (which contains quoted From:/To:/CC: lines from prior
+        // emails in the thread). Route to a company only if exactly ONE
+        // customer domain appears — ambiguous threads stay UNROUTED.
+        if (!companyId && opts.bodyText) {
+          const threadAddresses = extractAddressesFromText(opts.bodyText).filter(
+            (a) => !a.endsWith(`@${INTERNAL_DOMAIN}`),
+          );
+          const threadDomains = extractExternalDomains(threadAddresses).filter(
+            (d) => !isNoiseDomain(d),
+          );
+
+          const threadMatches: { id: string; status: string }[] = [];
+
+          for (const domain of threadDomains) {
+            const companies = await companyRepo
+              .createQueryBuilder('company')
+              .where(`company."domainNamePrimaryLinkUrl" ILIKE :domain`, {
+                domain: `%${domain}%`,
+              })
+              .andWhere(`company."customerStatus" IN (:...statuses)`, {
+                statuses: ['ACTIVE_CUSTOMER', 'POTENTIAL_CUSTOMER'],
+              })
+              .limit(2)
+              .getMany();
+
+            for (const c of companies) {
+              if (!threadMatches.some((m) => m.id === c.id)) {
+                threadMatches.push({
+                  id: c.id,
+                  status: (c as any).customerStatus,
+                });
+              }
+            }
+          }
+
+          if (threadMatches.length === 1) {
+            companyId = threadMatches[0].id;
+            companyCustomerStatus = threadMatches[0].status;
+            this.logger.debug(
+              `Thread-scan routed "${opts.subject}" → company ${companyId}`,
+            );
+          }
+          // 0 or 2+ matches → leave companyId null, continue to UNROUTED
         }
 
         // Sender noise check
