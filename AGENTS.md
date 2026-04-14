@@ -884,6 +884,28 @@ person(id: $id) { ... }
 Every object, field, view, and component has a `universalIdentifier` UUID. Once synced to any
 environment, these must never change. The full UID map is in `migration-reference/CRITICAL_UID_MAP.txt`.
 
+### GitHub Actions runner types — free vs. paid
+
+GitHub offers two classes of hosted runners:
+
+| Runner label | Plan required | Notes |
+|---|---|---|
+| `ubuntu-latest` | Free | Standard 2-core runner; fine for most CI jobs |
+| `ubuntu-latest-4-cores` | **Team / Enterprise (paid)** | Larger runner; sits in queue forever on free plan |
+| `ubuntu-latest-8-cores` | **Team / Enterprise (paid)** | Same — never starts on free plan |
+
+**If a CI workflow stays `pending` indefinitely**, check its `runs-on:` label. Any `*-N-cores` label requires a paid plan. Fix: change it to `ubuntu-latest`.
+
+Also watch for the concurrency group trap: this repo's CI workflows use `cancel-in-progress: false` on the `main` branch. If a run gets stuck queued (e.g. waiting for a paid runner that never comes), it will block every subsequent run for that workflow until it's manually cancelled:
+```bash
+# Find and cancel stuck queued runs
+gh api "repos/u2giants/twenty/actions/workflows/<WORKFLOW_ID>/runs?status=queued" \
+  --jq '.workflow_runs[] | {id, status, created_at}'
+gh api -X POST repos/u2giants/twenty/actions/runs/<RUN_ID>/cancel
+```
+
+---
+
 ### Two deployment paths (backend vs. frontend)
 
 After any code change, both must be rebuilt and deployed:
