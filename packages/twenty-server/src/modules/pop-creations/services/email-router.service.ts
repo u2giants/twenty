@@ -89,6 +89,30 @@ const MODEL_VALUE_MAP: Record<string, string> = {
   CLAUDE_HAIKU_4_5: 'anthropic/claude-haiku-4-5',
 };
 
+// ── Shared-domain disambiguation ────────────────────────────────────────────
+// When two customer companies share an email domain (e.g. Ross Stores and
+// DD's Discounts both use @ros.com), the router uses participant display names
+// to decide which company owns the email.
+//
+// Each entry: domain → list of subsidiaries, each with:
+//   keywords          — substrings to look for in participant display names (case-insensitive)
+//   companyNameFragment — substring of the company's name in Twenty (used to pick
+//                         the right row from the ambiguous company list)
+//
+// The parent company (Ross Stores itself) needs no entry — it wins by default
+// when no subsidiary keyword is found.
+const SHARED_DOMAIN_RULES: Array<{
+  domain: string;
+  subsidiaries: Array<{ keywords: string[]; companyNameFragment: string }>;
+}> = [
+  {
+    domain: 'ros.com',
+    subsidiaries: [
+      { keywords: ["DDS", "DD'S", 'NYBO'], companyNameFragment: "DD" },
+    ],
+  },
+];
+
 const STATUS_PRIORITY: Record<string, number> = {
   UNROUTED: 0,
   COMPANY_ONLY: 1,
@@ -174,6 +198,8 @@ export class EmailRouterService {
       subject: string;
       bodyText: string;
       emailAddresses: string[];
+      /** address.toLowerCase() → display name, used for shared-domain disambiguation */
+      displayNames?: Record<string, string>;
       task?: 'emailRoutingModel' | 'firefliesRoutingModel';
     },
   ): Promise<RoutingResult> {
@@ -261,6 +287,84 @@ export class EmailRouterService {
             companyCustomerStatus =
               (companies[0] as any).customerStatus ?? null;
             break;
+          }
+
+          // ── Shared-domain disambiguation ──────────────────────────────
+          // When multiple companies match the same domain (e.g. Ross Stores
+          // and DD's both on @ros.com), use two signals in order:
+          //   1. Person records: if all known contacts for this domain share
+          //      one companyId, use it (works for existing contacts).
+          //   2. Display name keywords: check SHARED_DOMAIN_RULES for
+          //      subsidiary keywords in participant display names.
+          if (companies.length > 1) {
+            const domainAddresses = opts.emailAddresses.filter((a) =>
+              a.toLowerCase().endsWith(`@${domain}`),
+            );
+
+            // Signal 1: Person record lookup
+            const personRepo =
+              await this.globalWorkspaceOrmManager.getRepository<PersonWorkspaceEntity>(
+                workspaceId,
+                'person',
+                { shouldBypassPermissionChecks: true },
+              );
+            const knownPeople = await personRepo
+              .createQueryBuilder('person')
+              .where(`person."emailsPrimaryEmail" IN (:...emails)`, {
+                emails: domainAddresses.map((a) => a.toLowerCase()),
+              })
+              .getMany();
+            const personCompanyIds = [
+              ...new Set(
+                knownPeople
+                  .map((p) => (p as any).companyId)
+                  .filter((id): id is string => Boolean(id)),
+              ),
+            ];
+            if (personCompanyIds.length === 1) {
+              const matched = companies.find((c) => c.id === personCompanyIds[0]);
+              if (matched) {
+                companyId = matched.id;
+                companyCustomerStatus = (matched as any).customerStatus ?? null;
+                this.logger.debug(
+                  `Shared-domain "${domain}" resolved via Person records → company ${companyId}`,
+                );
+                break;
+              }
+            }
+
+            // Signal 2: Display name keyword matching
+            const sharedRule = SHARED_DOMAIN_RULES.find(
+              (r) => r.domain === domain,
+            );
+            if (sharedRule && opts.displayNames) {
+              const domainDisplayNames = domainAddresses
+                .map((a) => opts.displayNames![a.toLowerCase()] ?? '')
+                .filter(Boolean)
+                .map((n) => n.toUpperCase());
+
+              for (const subsidiary of sharedRule.subsidiaries) {
+                const keywordHit = subsidiary.keywords.some((kw) =>
+                  domainDisplayNames.some((dn) => dn.includes(kw.toUpperCase())),
+                );
+                if (keywordHit) {
+                  const fragment = subsidiary.companyNameFragment.toLowerCase();
+                  const matched = companies.filter((c) =>
+                    ((c as any).name ?? '').toLowerCase().includes(fragment),
+                  );
+                  if (matched.length === 1) {
+                    companyId = matched[0].id;
+                    companyCustomerStatus =
+                      (matched[0] as any).customerStatus ?? null;
+                    this.logger.debug(
+                      `Shared-domain "${domain}" resolved via display-name keyword "${subsidiary.keywords[0]}" → company ${companyId}`,
+                    );
+                    break;
+                  }
+                }
+              }
+              if (companyId) break;
+            }
           }
         }
 

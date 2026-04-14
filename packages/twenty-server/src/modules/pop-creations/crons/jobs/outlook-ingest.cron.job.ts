@@ -44,9 +44,9 @@ type GraphEmail = {
   receivedDateTime: string;
   bodyPreview: string;
   body: { content: string };
-  from: { emailAddress: { address: string } };
-  toRecipients: { emailAddress: { address: string } }[];
-  ccRecipients: { emailAddress: { address: string } }[];
+  from: { emailAddress: { address: string; name: string } };
+  toRecipients: { emailAddress: { address: string; name: string } }[];
+  ccRecipients: { emailAddress: { address: string; name: string } }[];
   isRead: boolean;
 };
 
@@ -207,13 +207,16 @@ export class OutlookIngestCronJob {
 
     // Route the email — pass full body so the router can scan quoted thread
     // headers for customer addresses even when the top-level email only has
-    // internal addresses (e.g. a reply from adweck@ to a customer thread)
+    // internal addresses (e.g. a reply from adweck@ to a customer thread).
+    // Display names are passed so the router can disambiguate companies that
+    // share a domain (e.g. Ross Stores vs DD's, both on @ros.com).
     const routingResult = await this.emailRouterService.routeEmail(
       workspaceId,
       {
         subject: graphEmail.subject ?? '',
         bodyText: graphEmail.body?.content || graphEmail.bodyPreview || '',
         emailAddresses: allAddresses,
+        displayNames: this.buildDisplayNameMap(graphEmail),
       },
     );
 
@@ -258,6 +261,20 @@ export class OutlookIngestCronJob {
     this.logger.debug(
       `Ingested email "${graphEmail.subject}" → ${routingResult.routingStatus}`,
     );
+  }
+
+  /** Build a map of address.toLowerCase() → display name for all participants. */
+  private buildDisplayNameMap(graphEmail: GraphEmail): Record<string, string> {
+    const map: Record<string, string> = {};
+    const add = (ea: { address: string; name: string } | undefined) => {
+      if (ea?.address && ea.name) {
+        map[ea.address.toLowerCase()] = ea.name;
+      }
+    };
+    add(graphEmail.from?.emailAddress);
+    for (const r of graphEmail.toRecipients ?? []) add(r.emailAddress);
+    for (const r of graphEmail.ccRecipients ?? []) add(r.emailAddress);
+    return map;
   }
 
   private extractAllAddresses(graphEmail: GraphEmail): string[] {
