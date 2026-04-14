@@ -27,10 +27,22 @@ type WebhookInput = {
   workspaceId?: string;
 };
 
+const INTERNAL_DOMAIN = 'popcre.com';
+
 type MatchedParticipant = {
   personId: string | null;
   email: string;
   name: string;
+};
+
+type MatchResult = {
+  matched: MatchedParticipant[];
+  people: PersonWorkspaceEntity[];
+};
+
+type AttributionResult = {
+  companyId: string | null;
+  departmentId: string | null;
 };
 
 @Injectable()
@@ -201,13 +213,14 @@ export class FirefliesIngestService {
       }
 
       // 2. Match participants to contacts (Person by email)
-      const matchedParticipants = await this.matchParticipantsToContacts(
-        workspaceId,
-        meetingData.participants,
-      );
+      const { matched: matchedParticipants, people: matchedPeople } =
+        await this.matchParticipantsToContacts(workspaceId, meetingData.participants);
+
+      // 2b. Exclusive attribution: derive company + department from attendees
+      const attribution = this.deriveAttribution(matchedPeople);
 
       // 3. Create meeting note
-      const noteId = await this.createMeetingNote(workspaceId, meetingData);
+      const noteId = await this.createMeetingNote(workspaceId, meetingData, attribution);
 
       if (noteId) {
         noteIds.push(noteId);
@@ -261,20 +274,20 @@ export class FirefliesIngestService {
   private async matchParticipantsToContacts(
     workspaceId: string,
     participants: FirefliesParticipant[],
-  ): Promise<MatchedParticipant[]> {
+  ): Promise<MatchResult> {
+    const emptyResult = (people: PersonWorkspaceEntity[] = []): MatchResult => ({
+      matched: participants.map((p) => ({ personId: null, email: p.email, name: p.name })),
+      people,
+    });
+
     if (participants.length === 0) {
-      return [];
+      return { matched: [], people: [] };
     }
 
-    const matchedParticipants: MatchedParticipant[] = [];
     const emails = participants.map((p) => p.email).filter(isDefined);
 
     if (emails.length === 0) {
-      return participants.map((p) => ({
-        personId: null,
-        email: p.email,
-        name: p.name,
-      }));
+      return emptyResult();
     }
 
     try {
@@ -301,6 +314,7 @@ export class FirefliesIngestService {
       }
 
       // Match each participant
+      const matchedParticipants: MatchedParticipant[] = [];
       for (const participant of participants) {
         const email = participant.email?.toLowerCase();
         const person = email ? peopleByEmail.get(email) : undefined;
@@ -311,22 +325,57 @@ export class FirefliesIngestService {
           name: participant.name,
         });
       }
+
+      return { matched: matchedParticipants, people };
     } catch (error) {
       this.logger.error(`Error matching participants: ${error}`);
-      // Return unmatched participants on error
-      return participants.map((p) => ({
-        personId: null,
-        email: p.email,
-        name: p.name,
-      }));
+      return emptyResult();
+    }
+  }
+
+  /**
+   * Exclusive attribution: given matched Person records from meeting attendees,
+   * derive companyId and departmentId using sole-candidate checks.
+   *
+   * - External participants only (skip @popcre.com)
+   * - Company: if all external attendees resolve to exactly one customer company → assign
+   * - Department: if exactly one DEPARTMENT-scoped attendee exists among those → assign
+   *   (central-office people with scope !== 'DEPARTMENT' are excluded)
+   */
+  private deriveAttribution(matchedPeople: PersonWorkspaceEntity[]): AttributionResult {
+    const externalPeople = matchedPeople.filter(
+      (p) => !p.emails?.primaryEmail?.toLowerCase().endsWith(`@${INTERNAL_DOMAIN}`),
+    );
+
+    // Sole-candidate check on company
+    const companyIds = [
+      ...new Set(
+        externalPeople
+          .map((p) => (p as any).companyId)
+          .filter((id): id is string => Boolean(id)),
+      ),
+    ];
+    const companyId = companyIds.length === 1 ? companyIds[0] : null;
+
+    // Sole-candidate check on department (DEPARTMENT-scoped people only)
+    let departmentId: string | null = null;
+    if (companyId) {
+      const deptPeople = externalPeople.filter(
+        (p) => (p as any).scope === 'DEPARTMENT' && (p as any).departmentId,
+      );
+      const deptIds = [
+        ...new Set(deptPeople.map((p) => (p as any).departmentId as string)),
+      ];
+      departmentId = deptIds.length === 1 ? deptIds[0] : null;
     }
 
-    return matchedParticipants;
+    return { companyId, departmentId };
   }
 
   private async createMeetingNote(
     workspaceId: string,
     meetingData: FirefliesMeetingData,
+    attribution: AttributionResult,
   ): Promise<string | null> {
     try {
       const repository =
@@ -349,6 +398,8 @@ export class FirefliesIngestService {
         actionItems: meetingData.summary?.action_items?.join('\n') ?? null,
         source: 'fireflies',
         firefliesTranscriptId: meetingData.id,
+        companyId: attribution.companyId ?? undefined,
+        departmentId: attribution.departmentId ?? undefined,
       } as DeepPartial<MeetingNoteWorkspaceEntity>);
 
       this.logger.log(`Created meeting note: ${savedNote.id}`);

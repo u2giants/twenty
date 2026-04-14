@@ -332,6 +332,10 @@ export class EmailRouterService {
         }
 
         // ── Step 2: Department narrowing ───────────────────────────────
+        // Exclusive attribution: if exactly one DEPARTMENT-scoped person
+        // appears across all addresses (direct headers + thread body scan),
+        // attribute to that department.  Central-office people (no scope or
+        // scope !== 'DEPARTMENT') are deliberately excluded.
         let departmentId: string | null = null;
 
         if (companyId) {
@@ -342,12 +346,19 @@ export class EmailRouterService {
               { shouldBypassPermissionChecks: true },
             );
 
-          const emailAddressFilter = opts.emailAddresses
-            .filter(
-              (a) =>
-                !a.toLowerCase().endsWith(`@${INTERNAL_DOMAIN}`),
-            )
-            .map((a) => a.toLowerCase());
+          // Combine direct header addresses with any addresses found in the
+          // quoted thread body (same technique as Step 1b thread-scan).
+          const bodyTextAddresses = opts.bodyText
+            ? extractAddressesFromText(opts.bodyText)
+            : [];
+
+          const emailAddressFilter = [
+            ...new Set(
+              [...opts.emailAddresses, ...bodyTextAddresses]
+                .map((a) => a.toLowerCase())
+                .filter((a) => !a.endsWith(`@${INTERNAL_DOMAIN}`)),
+            ),
+          ];
 
           if (emailAddressFilter.length > 0) {
             const people = await personRepo
