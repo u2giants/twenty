@@ -8,6 +8,8 @@ import { useAtomComponentStateValue } from '@/ui/utilities/state/jotai/hooks/use
 // Fields to surface first in the filter dialog, keyed by object nameSingular.
 const PRIORITY_FILTER_FIELD_LABELS: Record<string, string[]> = {
   person: ['Company Customer Status', 'Department'],
+  meetingNote: ['Company', 'Department'],
+  emailMessage: ['Company', 'Department'],
 };
 
 const makePrioritySort =
