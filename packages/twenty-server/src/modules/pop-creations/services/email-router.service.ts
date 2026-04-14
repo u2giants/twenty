@@ -95,20 +95,21 @@ const MODEL_VALUE_MAP: Record<string, string> = {
 // to decide which company owns the email.
 //
 // Each entry: domain → list of subsidiaries, each with:
-//   keywords          — substrings to look for in participant display names (case-insensitive)
-//   companyNameFragment — substring of the company's name in Twenty (used to pick
-//                         the right row from the ambiguous company list)
+//   keywords             — substrings to look for in participant display names (case-insensitive)
+//   companyNameFragments — one or more substrings that must appear in the company's
+//                          name in Twenty (ANY match wins; used to pick the right row
+//                          from the ambiguous company list; prefer specific fragments)
 //
 // The parent company (Ross Stores itself) needs no entry — it wins by default
 // when no subsidiary keyword is found.
 const SHARED_DOMAIN_RULES: Array<{
   domain: string;
-  subsidiaries: Array<{ keywords: string[]; companyNameFragment: string }>;
+  subsidiaries: Array<{ keywords: string[]; companyNameFragments: string[] }>;
 }> = [
   {
     domain: 'ros.com',
     subsidiaries: [
-      { keywords: ["DDS", "DD'S", 'NYBO'], companyNameFragment: "DD" },
+      { keywords: ["DDS", "DD'S", 'NYBO'], companyNameFragments: ["DD's", "DDs"] },
     ],
   },
 ];
@@ -348,10 +349,12 @@ export class EmailRouterService {
                   domainDisplayNames.some((dn) => dn.includes(kw.toUpperCase())),
                 );
                 if (keywordHit) {
-                  const fragment = subsidiary.companyNameFragment.toLowerCase();
-                  const matched = companies.filter((c) =>
-                    ((c as any).name ?? '').toLowerCase().includes(fragment),
-                  );
+                  const matched = companies.filter((c) => {
+                    const name = ((c as any).name ?? '').toLowerCase();
+                    return subsidiary.companyNameFragments.some((f) =>
+                      name.includes(f.toLowerCase()),
+                    );
+                  });
                   if (matched.length === 1) {
                     companyId = matched[0].id;
                     companyCustomerStatus =
