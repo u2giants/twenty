@@ -8,6 +8,8 @@ name: twenty
 services:
   server:
     image: ghcr.io/u2giants/twenty:latest
+    networks:
+      - coolify
     volumes:
       - server-local-data:/app/packages/twenty-server/.local-storage
     environment:
@@ -51,6 +53,8 @@ services:
   worker:
     image: ghcr.io/u2giants/twenty:latest
     command: ["node", "dist/queue-worker/queue-worker"]
+    networks:
+      - coolify
     volumes:
       - server-local-data:/app/packages/twenty-server/.local-storage
     environment:
@@ -90,6 +94,10 @@ services:
       server:
         condition: service_healthy
     restart: always
+
+networks:
+  coolify:
+    external: true
 
 volumes:
   server-local-data:
