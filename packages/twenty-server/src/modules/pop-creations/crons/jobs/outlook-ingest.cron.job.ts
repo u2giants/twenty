@@ -32,7 +32,7 @@ export const OUTLOOK_INGEST_CRON_PATTERN = '*/15 * * * *';
 
 const GRAPH_BASE = 'https://graph.microsoft.com/v1.0';
 const LOGIN_BASE = 'https://login.microsoftonline.com';
-const LOOKBACK_MINUTES = 20;
+const LOOKBACK_MINUTES = 5760; // temporarily 4 days to backfill Apr 13-16 gap; revert to 20 after one run
 const PAGE_SIZE = 50;
 const INTERNAL_DOMAIN = 'popcre.com';
 
