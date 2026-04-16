@@ -958,14 +958,33 @@ curl -X POST https://crm.designflow.app/metadata \
 ### Coolify deployment
 
 - **Panel:** http://178.156.180.212:8000/
-- **API token:** in GitHub Secrets as `COOLIFY_API_TOKEN`; also in Claude's memory at `/home/ai/.claude/projects/-worksp-twenty/memory/reference_coolify.md`
-- **Server UUID:** `rd261bt0wy7ifjrkoe1tkl92` (main app)
-- **Worker UUID:** `pkhhmt4r7n0xt25jmmlkkfi8` (background worker)
+- **API token:** in GitHub Secrets as `COOLIFY_API_TOKEN`
+- **App UUID:** `rd261bt0wy7ifjrkoe1tkl92` (GitHub Secret: `COOLIFY_SERVER_UUID`)
 - **PostgreSQL UUID:** `g5j115bwrn8125ev6ap1tjrv`
 - **Target image:** `ghcr.io/u2giants/twenty:latest`
-- **Current running image** (pre-cutover): `ghcr.io/u2giants/twenty-deploy/twenty-custom:main`
 
-Coolify is a consumer of pre-built images. It never builds from source. GitHub Actions builds and pushes to GHCR; Coolify just pulls `:latest` and restarts.
+Coolify is in `dockercompose` mode. The authoritative definition of what runs is
+`docker-compose.yaml` at the repo root — `server` and `worker` services, both using
+`ghcr.io/u2giants/twenty:latest`. Database and Redis are separate Coolify services.
+
+**Normal deploy path:** push to `main` → `build-and-push.yml` builds image → `cd-deploy-main.yaml` triggers Coolify → Coolify pulls `:latest` and restarts both services.
+
+**How compose content reaches Coolify:** Coolify stores a copy of `docker-compose.yaml`
+in its `docker_compose_raw` field (the Coolify PATCH API cannot update this field, so it is
+synced via the `post_deployment_command` which runs on the VPS after every deploy). This
+means structural changes to `docker-compose.yaml` take effect on the **second** deploy
+after they are pushed. For urgent changes, run this command on the VPS to sync immediately:
+
+```bash
+docker exec coolify-db psql -U coolify -d coolify -c "
+UPDATE applications
+SET docker_compose_raw = \$raw\$$(curl -sf https://raw.githubusercontent.com/u2giants/twenty/main/docker-compose.yaml)\$raw\$
+WHERE uuid = 'rd261bt0wy7ifjrkoe1tkl92'"
+```
+
+**post_deployment_command** (set in Coolify, not in the repo — this is the one exception):
+Removes the legacy `twenty-worker` container (idempotent) and re-syncs `docker_compose_raw`
+from GitHub for the next deploy. No other server-side state exists.
 
 ---
 

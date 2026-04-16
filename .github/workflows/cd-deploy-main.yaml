@@ -9,6 +9,17 @@ on:
     branches: [main]
     types: [completed]
 
+# Deployment path: push to main → build-and-push.yml → this workflow → Coolify
+#
+# Coolify is in dockercompose mode. It deploys docker-compose.yaml (server + worker)
+# pulling ghcr.io/u2giants/twenty:latest on each run.
+#
+# docker-compose.yaml in the repo is the authoritative definition. Coolify stores a
+# copy in docker_compose_raw. The post_deployment_command on the Coolify app
+# re-syncs that copy from GitHub after each deploy, so the next deploy always gets
+# the latest version of the file. There is therefore a one-deploy lag for
+# structural compose changes, which is acceptable given how rarely the file changes.
+
 jobs:
   deploy-main:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
