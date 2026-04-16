@@ -14,18 +14,18 @@ services:
       traefik.enable: "true"
       traefik.http.middlewares.gzip.compress: "true"
       traefik.http.middlewares.redirect-to-https.redirectscheme.scheme: https
-      traefik.http.routers.http-0-${COOLIFY_RESOURCE_UUID}.entryPoints: http
-      traefik.http.routers.http-0-${COOLIFY_RESOURCE_UUID}.middlewares: redirect-to-https
-      traefik.http.routers.http-0-${COOLIFY_RESOURCE_UUID}.rule: "Host(`${COOLIFY_FQDN}`) && PathPrefix(`/`)"
-      traefik.http.routers.http-0-${COOLIFY_RESOURCE_UUID}.service: http-0-${COOLIFY_RESOURCE_UUID}
-      traefik.http.routers.https-0-${COOLIFY_RESOURCE_UUID}.entryPoints: https
-      traefik.http.routers.https-0-${COOLIFY_RESOURCE_UUID}.middlewares: gzip
-      traefik.http.routers.https-0-${COOLIFY_RESOURCE_UUID}.rule: "Host(`${COOLIFY_FQDN}`) && PathPrefix(`/`)"
-      traefik.http.routers.https-0-${COOLIFY_RESOURCE_UUID}.service: https-0-${COOLIFY_RESOURCE_UUID}
-      traefik.http.routers.https-0-${COOLIFY_RESOURCE_UUID}.tls: "true"
-      traefik.http.routers.https-0-${COOLIFY_RESOURCE_UUID}.tls.certresolver: letsencrypt
-      traefik.http.services.http-0-${COOLIFY_RESOURCE_UUID}.loadbalancer.server.port: "3000"
-      traefik.http.services.https-0-${COOLIFY_RESOURCE_UUID}.loadbalancer.server.port: "3000"
+      traefik.http.routers.http-0-rd261bt0wy7ifjrkoe1tkl92.entryPoints: http
+      traefik.http.routers.http-0-rd261bt0wy7ifjrkoe1tkl92.middlewares: redirect-to-https
+      traefik.http.routers.http-0-rd261bt0wy7ifjrkoe1tkl92.rule: "Host(`crm.designflow.app`) && PathPrefix(`/`)"
+      traefik.http.routers.http-0-rd261bt0wy7ifjrkoe1tkl92.service: http-0-rd261bt0wy7ifjrkoe1tkl92
+      traefik.http.routers.https-0-rd261bt0wy7ifjrkoe1tkl92.entryPoints: https
+      traefik.http.routers.https-0-rd261bt0wy7ifjrkoe1tkl92.middlewares: gzip
+      traefik.http.routers.https-0-rd261bt0wy7ifjrkoe1tkl92.rule: "Host(`crm.designflow.app`) && PathPrefix(`/`)"
+      traefik.http.routers.https-0-rd261bt0wy7ifjrkoe1tkl92.service: https-0-rd261bt0wy7ifjrkoe1tkl92
+      traefik.http.routers.https-0-rd261bt0wy7ifjrkoe1tkl92.tls: "true"
+      traefik.http.routers.https-0-rd261bt0wy7ifjrkoe1tkl92.tls.certresolver: letsencrypt
+      traefik.http.services.http-0-rd261bt0wy7ifjrkoe1tkl92.loadbalancer.server.port: "3000"
+      traefik.http.services.https-0-rd261bt0wy7ifjrkoe1tkl92.loadbalancer.server.port: "3000"
     volumes:
       - server-local-data:/app/packages/twenty-server/.local-storage
     environment:
