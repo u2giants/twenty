@@ -18,7 +18,7 @@ export const fetchAllThreadMessagesOperationSignatureFactory: RecordGqlOperation
     },
     orderBy: [
       {
-        receivedAt: 'AscNullsLast',
+        receivedAt: 'DescNullsLast',
       },
     ],
     limit: QUERY_MAX_RECORDS,
