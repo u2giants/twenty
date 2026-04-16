@@ -277,7 +277,6 @@ export class EmailRouterService {
                 statuses: [
                   'ACTIVE_CUSTOMER',
                   'POTENTIAL_CUSTOMER',
-                  'UNASSIGNED',
                 ],
               },
             )
@@ -394,7 +393,7 @@ export class EmailRouterService {
                 domain: `%${domain}%`,
               })
               .andWhere(`company."customerStatus" IN (:...statuses)`, {
-                statuses: ['ACTIVE_CUSTOMER', 'POTENTIAL_CUSTOMER', 'UNASSIGNED'],
+                statuses: ['ACTIVE_CUSTOMER', 'POTENTIAL_CUSTOMER'],
               })
               .limit(2)
               .getMany();
