@@ -48,7 +48,7 @@ export const DEFAULT_PERSON_RECORD_PAGE_LAYOUT: PageLayout = {
           configuration: {
             __typename: 'FieldsConfiguration',
             configurationType: WidgetConfigurationType.FIELDS,
-            viewId: null,
+            viewId: '55555555-e1a1-4b00-f001-000000000001',
           },
           isOverridden: false,
           createdAt: new Date().toISOString(),
