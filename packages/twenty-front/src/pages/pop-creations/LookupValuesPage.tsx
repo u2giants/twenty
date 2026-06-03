@@ -75,77 +75,77 @@ type EditState = {
 // Styled components
 // ---------------------------------------------------------------------------
 
-const Page = styled.div`
+const StyledPage = styled.div`
   display: flex;
   flex-direction: column;
   gap: ${themeCssVariables.spacing[6]};
-  padding: ${themeCssVariables.spacing[8]};
-  max-width: 960px;
   margin: 0 auto;
+  max-width: 960px;
+  padding: ${themeCssVariables.spacing[8]};
 `;
 
-const Title = styled.h1`
+const StyledTitle = styled.h1`
   color: ${themeCssVariables.font.color.primary};
   font-size: ${themeCssVariables.font.size.xl};
   font-weight: ${themeCssVariables.font.weight.semiBold};
   margin: 0 0 ${themeCssVariables.spacing[1]};
 `;
 
-const Subtitle = styled.p`
+const StyledSubtitle = styled.p`
   color: ${themeCssVariables.font.color.secondary};
   font-size: ${themeCssVariables.font.size.sm};
   margin: 0;
 `;
 
-const Section = styled.div`
+const StyledSection = styled.div`
+  background: ${themeCssVariables.background.primary};
   border: 1px solid ${themeCssVariables.border.color.medium};
   border-radius: ${themeCssVariables.border.radius.md};
   overflow: hidden;
-  background: ${themeCssVariables.background.primary};
 `;
 
-const SectionHead = styled.div`
-  display: flex;
-  justify-content: space-between;
+const StyledSectionHead = styled.div`
   align-items: center;
-  padding: ${themeCssVariables.spacing[3]} ${themeCssVariables.spacing[4]};
   background: ${themeCssVariables.background.secondary};
   border-bottom: 1px solid ${themeCssVariables.border.color.medium};
+  display: flex;
+  justify-content: space-between;
+  padding: ${themeCssVariables.spacing[3]} ${themeCssVariables.spacing[4]};
 `;
 
-const SectionTitle = styled.h3`
-  margin: 0;
+const StyledSectionTitle = styled.h3`
+  color: ${themeCssVariables.font.color.primary};
   font-size: ${themeCssVariables.font.size.sm};
   font-weight: ${themeCssVariables.font.weight.semiBold};
-  color: ${themeCssVariables.font.color.primary};
+  margin: 0;
 `;
 
-const Table = styled.table`
-  width: 100%;
+const StyledTable = styled.table`
   border-collapse: collapse;
+  width: 100%;
 `;
 
-const Th = styled.th`
-  text-align: left;
-  padding: ${themeCssVariables.spacing[2]} ${themeCssVariables.spacing[4]};
+const StyledTh = styled.th`
+  border-bottom: 1px solid ${themeCssVariables.border.color.light};
+  color: ${themeCssVariables.font.color.secondary};
   font-size: ${themeCssVariables.font.size.xs};
   font-weight: ${themeCssVariables.font.weight.semiBold};
-  color: ${themeCssVariables.font.color.secondary};
-  border-bottom: 1px solid ${themeCssVariables.border.color.light};
+  padding: ${themeCssVariables.spacing[2]} ${themeCssVariables.spacing[4]};
+  text-align: left;
 `;
 
-const Td = styled.td`
-  padding: ${themeCssVariables.spacing[2]} ${themeCssVariables.spacing[4]};
-  font-size: ${themeCssVariables.font.size.sm};
-  color: ${themeCssVariables.font.color.primary};
+const StyledTd = styled.td`
   border-bottom: 1px solid ${themeCssVariables.border.color.light};
+  color: ${themeCssVariables.font.color.primary};
+  font-size: ${themeCssVariables.font.size.sm};
+  padding: ${themeCssVariables.spacing[2]} ${themeCssVariables.spacing[4]};
   vertical-align: middle;
   &:last-child {
     border-bottom: none;
   }
 `;
 
-const Tr = styled.tr`
+const StyledTr = styled.tr`
   &:last-child td {
     border-bottom: none;
   }
@@ -154,76 +154,76 @@ const Tr = styled.tr`
   }
 `;
 
-const Btn = styled.button<{ $danger?: boolean }>`
-  padding: ${themeCssVariables.spacing[1]} ${themeCssVariables.spacing[2]};
-  border-radius: ${themeCssVariables.border.radius.sm};
-  font-size: ${themeCssVariables.font.size.xs};
-  font-weight: ${themeCssVariables.font.weight.medium};
-  cursor: pointer;
-  border: 1px solid ${themeCssVariables.border.color.medium};
+const StyledBtn = styled.button<{ $danger?: boolean }>`
   background: ${({ $danger }) =>
     $danger
       ? themeCssVariables.color.red
       : themeCssVariables.background.secondary};
+  border: 1px solid ${themeCssVariables.border.color.medium};
+  border-radius: ${themeCssVariables.border.radius.sm};
   color: ${({ $danger }) =>
-    $danger ? '#fff' : themeCssVariables.font.color.primary};
+    $danger ? themeCssVariables.font.color.inverted : themeCssVariables.font.color.primary};
+  cursor: pointer;
+  font-size: ${themeCssVariables.font.size.xs};
+  font-weight: ${themeCssVariables.font.weight.medium};
+  padding: ${themeCssVariables.spacing[1]} ${themeCssVariables.spacing[2]};
   &:hover {
     opacity: 0.8;
   }
   &:disabled {
-    opacity: 0.5;
     cursor: not-allowed;
+    opacity: 0.5;
   }
 `;
 
-const Input = styled.input`
-  padding: ${themeCssVariables.spacing[1]} ${themeCssVariables.spacing[2]};
+const StyledInput = styled.input`
+  background: ${themeCssVariables.background.primary};
   border: 1px solid ${themeCssVariables.border.color.medium};
   border-radius: ${themeCssVariables.border.radius.sm};
-  background: ${themeCssVariables.background.primary};
+  box-sizing: border-box;
   color: ${themeCssVariables.font.color.primary};
   font-size: ${themeCssVariables.font.size.sm};
+  padding: ${themeCssVariables.spacing[1]} ${themeCssVariables.spacing[2]};
   width: 100%;
-  box-sizing: border-box;
   &:focus {
     border-color: ${themeCssVariables.color.blue};
     outline: none;
   }
 `;
 
-const Select = styled.select`
-  padding: ${themeCssVariables.spacing[1]} ${themeCssVariables.spacing[2]};
+const StyledSelect = styled.select`
+  background: ${themeCssVariables.background.primary};
   border: 1px solid ${themeCssVariables.border.color.medium};
   border-radius: ${themeCssVariables.border.radius.sm};
-  background: ${themeCssVariables.background.primary};
   color: ${themeCssVariables.font.color.primary};
-  font-size: ${themeCssVariables.font.size.sm};
   cursor: pointer;
+  font-size: ${themeCssVariables.font.size.sm};
+  padding: ${themeCssVariables.spacing[1]} ${themeCssVariables.spacing[2]};
 `;
 
-const ActionsCell = styled.div`
+const StyledActionsCell = styled.div`
   display: flex;
   gap: ${themeCssVariables.spacing[2]};
 `;
 
-const EmptyMsg = styled.td`
-  padding: ${themeCssVariables.spacing[4]};
-  text-align: center;
+const StyledEmptyMsg = styled.td`
   color: ${themeCssVariables.font.color.tertiary};
   font-size: ${themeCssVariables.font.size.sm};
   font-style: italic;
+  padding: ${themeCssVariables.spacing[4]};
+  text-align: center;
 `;
 
-const Toast = styled.div<{ $error?: boolean }>`
-  position: fixed;
-  bottom: ${themeCssVariables.spacing[6]};
-  right: ${themeCssVariables.spacing[6]};
-  padding: ${themeCssVariables.spacing[3]} ${themeCssVariables.spacing[5]};
-  border-radius: ${themeCssVariables.border.radius.md};
+const StyledToast = styled.div<{ $error?: boolean }>`
   background: ${({ $error }) =>
-    $error ? themeCssVariables.color.red : '#16a34a'};
-  color: #fff;
+    $error ? themeCssVariables.color.red : themeCssVariables.color.green};
+  border-radius: ${themeCssVariables.border.radius.md};
+  bottom: ${themeCssVariables.spacing[6]};
+  color: ${themeCssVariables.font.color.inverted};
   font-size: ${themeCssVariables.font.size.sm};
+  padding: ${themeCssVariables.spacing[3]} ${themeCssVariables.spacing[5]};
+  position: fixed;
+  right: ${themeCssVariables.spacing[6]};
   z-index: 9999;
 `;
 
@@ -364,13 +364,13 @@ export const LookupValuesPage = () => {
   };
 
   return (
-    <Page>
+    <StyledPage>
       <div>
-        <Title>Field Dropdown Options</Title>
-        <Subtitle>
+        <StyledTitle>Field Dropdown Options</StyledTitle>
+        <StyledSubtitle>
           Edit the SELECT options for configurable fields. Changes take effect
           immediately.
-        </Subtitle>
+        </StyledSubtitle>
       </div>
 
       {fields.map((entry) => {
@@ -382,42 +382,42 @@ export const LookupValuesPage = () => {
           edit.optionId === null;
 
         return (
-          <Section key={`${entry.objectName}-${entry.fieldName}`}>
-            <SectionHead>
-              <SectionTitle>
+          <StyledSection key={`${entry.objectName}-${entry.fieldName}`}>
+            <StyledSectionHead>
+              <StyledSectionTitle>
                 {entry.objectName} → {entry.fieldName}
-              </SectionTitle>
-              <Btn
+              </StyledSectionTitle>
+              <StyledBtn
                 onClick={() => startAdd(entry)}
                 disabled={
                   saving || edit?.fieldMetadataId === entry.fieldMetadataId
                 }
               >
                 + Add
-              </Btn>
-            </SectionHead>
+              </StyledBtn>
+            </StyledSectionHead>
 
-            <Table>
+            <StyledTable>
               <thead>
                 <tr>
-                  <Th>Label</Th>
-                  <Th>Value</Th>
-                  <Th>Color</Th>
-                  <Th>Position</Th>
-                  <Th>Actions</Th>
+                  <StyledTh>Label</StyledTh>
+                  <StyledTh>Value</StyledTh>
+                  <StyledTh>Color</StyledTh>
+                  <StyledTh>Position</StyledTh>
+                  <StyledTh>Actions</StyledTh>
                 </tr>
               </thead>
               <tbody>
                 {entry.options.length === 0 && !isAdding && (
                   <tr>
-                    <EmptyMsg colSpan={5}>No options yet.</EmptyMsg>
+                    <StyledEmptyMsg colSpan={5}>No options yet.</StyledEmptyMsg>
                   </tr>
                 )}
                 {entry.options.map((opt) =>
                   isEditing(opt) && edit ? (
-                    <Tr key={opt.id}>
-                      <Td>
-                        <Input
+                    <StyledTr key={opt.id}>
+                      <StyledTd>
+                        <StyledInput
                           value={edit.label}
                           onChange={(e) =>
                             setEdit({
@@ -428,17 +428,17 @@ export const LookupValuesPage = () => {
                           }
                           autoFocus
                         />
-                      </Td>
-                      <Td>
-                        <Input
+                      </StyledTd>
+                      <StyledTd>
+                        <StyledInput
                           value={edit.value}
                           onChange={(e) =>
                             setEdit({ ...edit, value: e.target.value })
                           }
                         />
-                      </Td>
-                      <Td>
-                        <Select
+                      </StyledTd>
+                      <StyledTd>
+                        <StyledSelect
                           value={edit.color}
                           onChange={(e) =>
                             setEdit({
@@ -452,10 +452,10 @@ export const LookupValuesPage = () => {
                               {c}
                             </option>
                           ))}
-                        </Select>
-                      </Td>
-                      <Td>
-                        <Input
+                        </StyledSelect>
+                      </StyledTd>
+                      <StyledTd>
+                        <StyledInput
                           type="number"
                           value={edit.position}
                           onChange={(e) =>
@@ -466,53 +466,53 @@ export const LookupValuesPage = () => {
                           }
                           style={{ width: 60 }}
                         />
-                      </Td>
-                      <Td>
-                        <ActionsCell>
-                          <Btn
+                      </StyledTd>
+                      <StyledTd>
+                        <StyledActionsCell>
+                          <StyledBtn
                             onClick={() => commitEdit(entry)}
                             disabled={
                               saving || !edit.label.trim() || !edit.value.trim()
                             }
                           >
                             Save
-                          </Btn>
-                          <Btn onClick={() => setEdit(null)}>Cancel</Btn>
-                        </ActionsCell>
-                      </Td>
-                    </Tr>
+                          </StyledBtn>
+                          <StyledBtn onClick={() => setEdit(null)}>Cancel</StyledBtn>
+                        </StyledActionsCell>
+                      </StyledTd>
+                    </StyledTr>
                   ) : (
-                    <Tr key={opt.id}>
-                      <Td>{opt.label}</Td>
-                      <Td style={{ fontFamily: 'monospace', fontSize: 12 }}>
+                    <StyledTr key={opt.id}>
+                      <StyledTd>{opt.label}</StyledTd>
+                      <StyledTd style={{ fontFamily: 'monospace', fontSize: 12 }}>
                         {opt.value}
-                      </Td>
-                      <Td>{opt.color}</Td>
-                      <Td>{opt.position}</Td>
-                      <Td>
-                        <ActionsCell>
-                          <Btn
+                      </StyledTd>
+                      <StyledTd>{opt.color}</StyledTd>
+                      <StyledTd>{opt.position}</StyledTd>
+                      <StyledTd>
+                        <StyledActionsCell>
+                          <StyledBtn
                             onClick={() => startEdit(entry, opt)}
                             disabled={saving || !!edit}
                           >
                             Edit
-                          </Btn>
-                          <Btn
+                          </StyledBtn>
+                          <StyledBtn
                             $danger
                             onClick={() => deleteOption(entry, opt.id)}
                             disabled={saving || !!edit}
                           >
                             Del
-                          </Btn>
-                        </ActionsCell>
-                      </Td>
-                    </Tr>
+                          </StyledBtn>
+                        </StyledActionsCell>
+                      </StyledTd>
+                    </StyledTr>
                   ),
                 )}
-                {isAdding && edit && (
-                  <Tr>
-                    <Td>
-                      <Input
+                {isAdding && edit !== null && (
+                  <StyledTr>
+                    <StyledTd>
+                      <StyledInput
                         value={edit.label}
                         onChange={(e) =>
                           setEdit({
@@ -524,18 +524,18 @@ export const LookupValuesPage = () => {
                         placeholder="Label"
                         autoFocus
                       />
-                    </Td>
-                    <Td>
-                      <Input
+                    </StyledTd>
+                    <StyledTd>
+                      <StyledInput
                         value={edit.value}
                         onChange={(e) =>
                           setEdit({ ...edit, value: e.target.value })
                         }
                         placeholder="VALUE"
                       />
-                    </Td>
-                    <Td>
-                      <Select
+                    </StyledTd>
+                    <StyledTd>
+                      <StyledSelect
                         value={edit.color}
                         onChange={(e) =>
                           setEdit({
@@ -549,10 +549,10 @@ export const LookupValuesPage = () => {
                             {c}
                           </option>
                         ))}
-                      </Select>
-                    </Td>
-                    <Td>
-                      <Input
+                      </StyledSelect>
+                    </StyledTd>
+                    <StyledTd>
+                      <StyledInput
                         type="number"
                         value={edit.position}
                         onChange={(e) =>
@@ -560,29 +560,29 @@ export const LookupValuesPage = () => {
                         }
                         style={{ width: 60 }}
                       />
-                    </Td>
-                    <Td>
-                      <ActionsCell>
-                        <Btn
+                    </StyledTd>
+                    <StyledTd>
+                      <StyledActionsCell>
+                        <StyledBtn
                           onClick={() => commitEdit(entry)}
                           disabled={
                             saving || !edit.label.trim() || !edit.value.trim()
                           }
                         >
                           Save
-                        </Btn>
-                        <Btn onClick={() => setEdit(null)}>Cancel</Btn>
-                      </ActionsCell>
-                    </Td>
-                  </Tr>
+                        </StyledBtn>
+                        <StyledBtn onClick={() => setEdit(null)}>Cancel</StyledBtn>
+                      </StyledActionsCell>
+                    </StyledTd>
+                  </StyledTr>
                 )}
               </tbody>
-            </Table>
-          </Section>
+            </StyledTable>
+          </StyledSection>
         );
       })}
 
-      {toast && <Toast $error={toast.error}>{toast.msg}</Toast>}
-    </Page>
+      {toast && <StyledToast $error={toast.error}>{toast.msg}</StyledToast>}
+    </StyledPage>
   );
 };

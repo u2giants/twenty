@@ -18,8 +18,8 @@ const StyledFilterCell = styled.div`
 
 const StyledFilterInput = styled.input`
   background: var(--background-primary);
-  border-radius: 4px;
   border: 1px solid var(--border-color-medium);
+  border-radius: 4px;
   color: var(--font-color-primary);
   font-family: inherit;
   font-size: 12px;
@@ -39,8 +39,8 @@ const StyledFilterInput = styled.input`
 
 const StyledFilterSelect = styled.select`
   background: var(--background-primary);
-  border-radius: 4px;
   border: 1px solid var(--border-color-medium);
+  border-radius: 4px;
   color: var(--font-color-primary);
   font-family: inherit;
   font-size: 12px;

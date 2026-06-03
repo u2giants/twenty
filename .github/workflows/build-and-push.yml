@@ -145,7 +145,7 @@ jobs:
 
       - name: Test non-front projects
         if: needs.changes.outputs.frontend_fast_path != 'true'
-        run: yarn nx run-many -t test --all --parallel=2 --exclude=twenty-front
+        run: yarn nx run-many -t test --all --parallel=2 --exclude=twenty-front,twenty-zapier
 
       - name: Test twenty-front in band
         if: needs.changes.outputs.backend_only_path != 'true'

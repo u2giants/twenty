@@ -23,9 +23,7 @@ import { type DepartmentWorkspaceEntity } from 'src/modules/pop-creations/standa
   key: `company.findMany`,
   type: WorkspaceQueryHookType.POST_HOOK,
 })
-export class CompanyFindManyEnrichCountsPostQueryHook
-  implements WorkspacePostQueryHookInstance
-{
+export class CompanyFindManyEnrichCountsPostQueryHook implements WorkspacePostQueryHookInstance {
   constructor(
     private readonly globalWorkspaceOrmManager: GlobalWorkspaceOrmManager,
   ) {}
@@ -96,9 +94,7 @@ export class CompanyFindManyEnrichCountsPostQueryHook
   key: `company.findOne`,
   type: WorkspaceQueryHookType.POST_HOOK,
 })
-export class CompanyFindOneEnrichCountsPostQueryHook
-  implements WorkspacePostQueryHookInstance
-{
+export class CompanyFindOneEnrichCountsPostQueryHook implements WorkspacePostQueryHookInstance {
   constructor(
     private readonly globalWorkspaceOrmManager: GlobalWorkspaceOrmManager,
   ) {}

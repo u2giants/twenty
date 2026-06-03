@@ -25,36 +25,36 @@ const StyledFilterRowContainer = styled.div`
 const StyledFilterRowDragCell = styled.div`
   background-color: ${themeCssVariables.background.tertiary};
   border-bottom: 1px solid ${themeCssVariables.border.color.light};
-  min-height: ${RECORD_TABLE_ROW_HEIGHT}px;
   max-height: ${RECORD_TABLE_ROW_HEIGHT}px;
-  min-width: ${RECORD_TABLE_COLUMN_DRAG_AND_DROP_WIDTH}px;
   max-width: ${RECORD_TABLE_COLUMN_DRAG_AND_DROP_WIDTH}px;
+  min-height: ${RECORD_TABLE_ROW_HEIGHT}px;
+  min-width: ${RECORD_TABLE_COLUMN_DRAG_AND_DROP_WIDTH}px;
   width: ${RECORD_TABLE_COLUMN_DRAG_AND_DROP_WIDTH}px;
 `;
 
 const StyledFilterRowCheckboxCell = styled.div`
   background-color: ${themeCssVariables.background.tertiary};
   border-bottom: 1px solid ${themeCssVariables.border.color.light};
-  min-height: ${RECORD_TABLE_ROW_HEIGHT}px;
   max-height: ${RECORD_TABLE_ROW_HEIGHT}px;
+  min-height: ${RECORD_TABLE_ROW_HEIGHT}px;
   min-width: ${RECORD_TABLE_COLUMN_CHECKBOX_WIDTH}px;
 `;
 
 const StyledFilterRowFieldCell = styled.div`
+  align-items: center;
   background-color: ${themeCssVariables.background.tertiary};
   border-bottom: 1px solid ${themeCssVariables.border.color.light};
-  min-height: ${RECORD_TABLE_ROW_HEIGHT}px;
-  max-height: ${RECORD_TABLE_ROW_HEIGHT}px;
   display: flex;
-  align-items: center;
+  max-height: ${RECORD_TABLE_ROW_HEIGHT}px;
+  min-height: ${RECORD_TABLE_ROW_HEIGHT}px;
 `;
 
 const StyledFilterRowEmptyCell = styled.div`
   background-color: ${themeCssVariables.background.tertiary};
   border-bottom: 1px solid ${themeCssVariables.border.color.light};
-  min-height: ${RECORD_TABLE_ROW_HEIGHT}px;
-  max-height: ${RECORD_TABLE_ROW_HEIGHT}px;
   flex: 1;
+  max-height: ${RECORD_TABLE_ROW_HEIGHT}px;
+  min-height: ${RECORD_TABLE_ROW_HEIGHT}px;
   min-width: 0;
 `;
 
@@ -62,7 +62,7 @@ export const RecordTableFilterRow = () => {
   const { visibleRecordFields } = useRecordTableContextOrThrow();
   const { labelIdentifierFieldMetadataItem } = useRecordIndexContextOrThrow();
 
-  const isFilterRowVisible = useAtomComponentStateValue(
+  const isRecordTableFilterRowVisible = useAtomComponentStateValue(
     isRecordTableFilterRowVisibleComponentState,
   );
 
