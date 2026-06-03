@@ -46,6 +46,7 @@ const DEPARTMENT_DASHBOARD_QUERY = gql`
   }
 `;
 
+/* oxlint-disable twenty/no-hardcoded-colors */
 const STAGE_COLORS: Record<string, { bg: string; text: string }> = {
   DIRECTIVE_RECEIVED: { bg: '#dbeafe', text: '#1d4ed8' },
   DESIGN_IN_PROGRESS: { bg: '#ede9fe', text: '#7c3aed' },
@@ -53,8 +54,10 @@ const STAGE_COLORS: Record<string, { bg: string; text: string }> = {
   PRICING_AND_SAMPLING: { bg: '#fef3c7', text: '#b45309' },
   IN_PRODUCTION: { bg: '#d1fae5', text: '#047857' },
   SHIPPED: { bg: '#e0f2fe', text: '#0369a1' },
+  // oxlint-disable-next-line twenty/no-hardcoded-colors
   CLOSED: { bg: '#f3f4f6', text: '#4b5563' },
 };
+/* oxlint-enable twenty/no-hardcoded-colors */
 
 const StyledContainer = styled.div`
   display: flex;
@@ -72,35 +75,35 @@ const StyledSection = styled.section`
 `;
 
 const StyledSectionTitle = styled.h3`
+  border-bottom: 1px solid ${themeCssVariables.border.color.light};
+  color: ${themeCssVariables.font.color.primary};
   font-size: ${themeCssVariables.font.size.md};
   font-weight: ${themeCssVariables.font.weight.semiBold};
-  color: ${themeCssVariables.font.color.primary};
   margin: 0;
   padding-bottom: ${themeCssVariables.spacing[2]};
-  border-bottom: 1px solid ${themeCssVariables.border.color.light};
 `;
 
 const StyledContactRow = styled.div`
-  display: flex;
   align-items: center;
+  display: flex;
   gap: ${themeCssVariables.spacing[2]};
   padding: ${themeCssVariables.spacing[2]} 0;
 `;
 
 const StyledContactName = styled.span`
-  font-size: ${themeCssVariables.font.size.sm};
   color: ${themeCssVariables.font.color.primary};
+  font-size: ${themeCssVariables.font.size.sm};
 `;
 
 const StyledBadge = styled.span`
+  background: ${themeCssVariables.background.transparent.light};
+  border-radius: ${themeCssVariables.border.radius.sm};
+  color: ${themeCssVariables.font.color.secondary};
   font-size: ${themeCssVariables.font.size.xxs};
   font-weight: ${themeCssVariables.font.weight.medium};
-  padding: ${themeCssVariables.spacing[0.5]} ${themeCssVariables.spacing[2]};
-  border-radius: ${themeCssVariables.border.radius.sm};
-  background: ${themeCssVariables.background.transparent.light};
-  color: ${themeCssVariables.font.color.secondary};
-  text-transform: uppercase;
   letter-spacing: 0.5px;
+  padding: ${themeCssVariables.spacing[0.5]} ${themeCssVariables.spacing[2]};
+  text-transform: uppercase;
 `;
 
 const StyledStageGroup = styled.div`
@@ -111,25 +114,25 @@ const StyledStageGroup = styled.div`
 `;
 
 const StyledStageLabel = styled.div`
+  color: ${themeCssVariables.font.color.secondary};
   font-size: ${themeCssVariables.font.size.xs};
   font-weight: ${themeCssVariables.font.weight.semiBold};
-  color: ${themeCssVariables.font.color.secondary};
-  text-transform: uppercase;
   letter-spacing: 0.5px;
   margin-bottom: ${themeCssVariables.spacing[1]};
+  text-transform: uppercase;
 `;
 
 const StyledChip = styled.span<{ bgColor: string; textColor: string }>`
-  display: inline-flex;
   align-items: center;
+  background: ${(props) => props.bgColor};
+  border-radius: ${themeCssVariables.border.radius.sm};
+  color: ${(props) => props.textColor};
+  display: inline-flex;
   font-size: ${themeCssVariables.font.size.xs};
   font-weight: ${themeCssVariables.font.weight.medium};
-  padding: ${themeCssVariables.spacing[1]} ${themeCssVariables.spacing[2]};
-  border-radius: ${themeCssVariables.border.radius.sm};
-  background: ${(props) => props.bgColor};
-  color: ${(props) => props.textColor};
-  margin-right: ${themeCssVariables.spacing[1]};
   margin-bottom: ${themeCssVariables.spacing[1]};
+  margin-right: ${themeCssVariables.spacing[1]};
+  padding: ${themeCssVariables.spacing[1]} ${themeCssVariables.spacing[2]};
 `;
 
 const StyledChipRow = styled.div`
@@ -138,11 +141,11 @@ const StyledChipRow = styled.div`
 `;
 
 const StyledMeetingRow = styled.div`
+  border-bottom: 1px solid ${themeCssVariables.border.color.light};
   display: flex;
   flex-direction: column;
   gap: ${themeCssVariables.spacing[0.5]};
   padding: ${themeCssVariables.spacing[2]} 0;
-  border-bottom: 1px solid ${themeCssVariables.border.color.light};
 
   &:last-child {
     border-bottom: none;
@@ -150,28 +153,28 @@ const StyledMeetingRow = styled.div`
 `;
 
 const StyledMeetingTitle = styled.span`
-  font-size: ${themeCssVariables.font.size.sm};
   color: ${themeCssVariables.font.color.primary};
+  font-size: ${themeCssVariables.font.size.sm};
   font-weight: ${themeCssVariables.font.weight.medium};
 `;
 
 const StyledMeetingMeta = styled.span`
-  font-size: ${themeCssVariables.font.size.xs};
   color: ${themeCssVariables.font.color.tertiary};
+  font-size: ${themeCssVariables.font.size.xs};
 `;
 
 const StyledLoading = styled.div`
-  display: flex;
   align-items: center;
+  color: ${themeCssVariables.font.color.tertiary};
+  display: flex;
+  font-size: ${themeCssVariables.font.size.sm};
   justify-content: center;
   padding: ${themeCssVariables.spacing[10]};
-  color: ${themeCssVariables.font.color.tertiary};
-  font-size: ${themeCssVariables.font.size.sm};
 `;
 
 const StyledEmpty = styled.div`
-  font-size: ${themeCssVariables.font.size.sm};
   color: ${themeCssVariables.font.color.tertiary};
+  font-size: ${themeCssVariables.font.size.sm};
   padding: ${themeCssVariables.spacing[2]} 0;
 `;
 
@@ -264,7 +267,7 @@ export const DepartmentDashboardWidget = () => {
   const programsByStage = programs.reduce<Record<string, ProgramNode[]>>(
     (acc, program) => {
       const stage = program.stage || 'UNKNOWN';
-      if (!acc[stage]) acc[stage] = [];
+      if (acc[stage] === undefined) acc[stage] = [];
       acc[stage].push(program);
       return acc;
     },
@@ -282,7 +285,9 @@ export const DepartmentDashboardWidget = () => {
     'CLOSED',
   ];
 
-  const orderedStages = stageOrder.filter((s) => programsByStage[s]);
+  const orderedStages = stageOrder.filter(
+    (s) => programsByStage[s] !== undefined,
+  );
   const extraStages = Object.keys(programsByStage).filter(
     (s) => !stageOrder.includes(s),
   );
@@ -318,10 +323,9 @@ export const DepartmentDashboardWidget = () => {
           <StyledEmpty>No programs linked to this department</StyledEmpty>
         ) : (
           allStages.map((stage) => {
-            const colors = STAGE_COLORS[stage] || {
-              bg: '#f3f4f6',
-              text: '#4b5563',
-            };
+            // oxlint-disable-next-line twenty/no-hardcoded-colors
+            const defaultColors = { bg: '#f3f4f6', text: '#4b5563' };
+            const colors = STAGE_COLORS[stage] ?? defaultColors;
             return (
               <StyledStageGroup key={stage}>
                 <StyledStageLabel>{formatStageLabel(stage)}</StyledStageLabel>

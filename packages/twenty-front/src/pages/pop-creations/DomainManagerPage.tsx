@@ -77,14 +77,14 @@ type DomainEntry = {
 };
 
 const StyledPageContainer = styled.div`
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   gap: ${themeCssVariables.spacing[6]};
-  padding: ${themeCssVariables.spacing[8]};
-  max-width: 1100px;
   margin: 0 auto;
+  max-width: 1100px;
+  padding: ${themeCssVariables.spacing[8]};
   width: 100%;
-  box-sizing: border-box;
 `;
 
 const StyledPageTitle = styled.h1`
@@ -101,20 +101,20 @@ const StyledDescription = styled.p`
 `;
 
 const StyledSearchContainer = styled.div`
+  align-items: center;
   display: flex;
   gap: ${themeCssVariables.spacing[3]};
-  align-items: center;
 `;
 
 const StyledSearchInput = styled.input`
-  flex: 1;
-  padding: ${themeCssVariables.spacing[2]} ${themeCssVariables.spacing[3]};
+  background-color: ${themeCssVariables.background.primary};
   border: 1px solid ${themeCssVariables.border.color.medium};
   border-radius: ${themeCssVariables.border.radius.sm};
-  background-color: ${themeCssVariables.background.primary};
   color: ${themeCssVariables.font.color.primary};
+  flex: 1;
   font-size: ${themeCssVariables.font.size.sm};
   outline: none;
+  padding: ${themeCssVariables.spacing[2]} ${themeCssVariables.spacing[3]};
 
   &::placeholder {
     color: ${themeCssVariables.font.color.tertiary};
@@ -126,14 +126,14 @@ const StyledSearchInput = styled.input`
 `;
 
 const StyledFilterSelect = styled.select`
-  padding: ${themeCssVariables.spacing[2]} ${themeCssVariables.spacing[3]};
+  background-color: ${themeCssVariables.background.primary};
   border: 1px solid ${themeCssVariables.border.color.medium};
   border-radius: ${themeCssVariables.border.radius.sm};
-  background-color: ${themeCssVariables.background.primary};
   color: ${themeCssVariables.font.color.primary};
+  cursor: pointer;
   font-size: ${themeCssVariables.font.size.sm};
   outline: none;
-  cursor: pointer;
+  padding: ${themeCssVariables.spacing[2]} ${themeCssVariables.spacing[3]};
 
   &:focus {
     border-color: ${themeCssVariables.color.blue};
@@ -141,12 +141,12 @@ const StyledFilterSelect = styled.select`
 `;
 
 const StyledTable = styled.table`
-  width: 100%;
-  border-collapse: collapse;
   background-color: ${themeCssVariables.background.primary};
   border: 1px solid ${themeCssVariables.border.color.medium};
+  border-collapse: collapse;
   border-radius: ${themeCssVariables.border.radius.md};
   overflow: hidden;
+  width: 100%;
 `;
 
 const StyledTableHeader = styled.thead`
@@ -154,20 +154,20 @@ const StyledTableHeader = styled.thead`
 `;
 
 const StyledTh = styled.th`
-  text-align: left;
-  padding: ${themeCssVariables.spacing[3]} ${themeCssVariables.spacing[4]};
+  border-bottom: 1px solid ${themeCssVariables.border.color.medium};
+  color: ${themeCssVariables.font.color.secondary};
   font-size: ${themeCssVariables.font.size.sm};
   font-weight: ${themeCssVariables.font.weight.semiBold};
-  color: ${themeCssVariables.font.color.secondary};
-  border-bottom: 1px solid ${themeCssVariables.border.color.medium};
+  padding: ${themeCssVariables.spacing[3]} ${themeCssVariables.spacing[4]};
+  text-align: left;
   white-space: nowrap;
 `;
 
 const StyledTd = styled.td`
-  padding: ${themeCssVariables.spacing[2]} ${themeCssVariables.spacing[4]};
-  font-size: ${themeCssVariables.font.size.sm};
-  color: ${themeCssVariables.font.color.primary};
   border-bottom: 1px solid ${themeCssVariables.border.color.light};
+  color: ${themeCssVariables.font.color.primary};
+  font-size: ${themeCssVariables.font.size.sm};
+  padding: ${themeCssVariables.spacing[2]} ${themeCssVariables.spacing[4]};
   vertical-align: middle;
 `;
 
@@ -182,11 +182,6 @@ const StyledTr = styled.tr`
 `;
 
 const StyledStatusBadge = styled.span<{ status: string | null }>`
-  display: inline-block;
-  padding: 2px 8px;
-  border-radius: ${themeCssVariables.border.radius.pill};
-  font-size: ${themeCssVariables.font.size.xs};
-  font-weight: ${themeCssVariables.font.weight.medium};
   background-color: ${({ status }) => {
     switch (status) {
       case 'ACTIVE_CUSTOMER':
@@ -197,6 +192,7 @@ const StyledStatusBadge = styled.span<{ status: string | null }>`
         return themeCssVariables.background.tertiary;
     }
   }};
+  border-radius: ${themeCssVariables.border.radius.pill};
   color: ${({ status }) => {
     switch (status) {
       case 'ACTIVE_CUSTOMER':
@@ -206,17 +202,21 @@ const StyledStatusBadge = styled.span<{ status: string | null }>`
         return themeCssVariables.font.color.tertiary;
     }
   }};
+  display: inline-block;
+  font-size: ${themeCssVariables.font.size.xs};
+  font-weight: ${themeCssVariables.font.weight.medium};
+  padding: 2px 8px;
 `;
 
 const StyledCompanySelect = styled.select`
-  padding: ${themeCssVariables.spacing[1]} ${themeCssVariables.spacing[2]};
+  background-color: ${themeCssVariables.background.primary};
   border: 1px solid ${themeCssVariables.border.color.medium};
   border-radius: ${themeCssVariables.border.radius.sm};
-  background-color: ${themeCssVariables.background.primary};
   color: ${themeCssVariables.font.color.primary};
-  font-size: ${themeCssVariables.font.size.xs};
   cursor: pointer;
+  font-size: ${themeCssVariables.font.size.xs};
   max-width: 200px;
+  padding: ${themeCssVariables.spacing[1]} ${themeCssVariables.spacing[2]};
 
   &:focus {
     border-color: ${themeCssVariables.color.blue};
@@ -225,21 +225,21 @@ const StyledCompanySelect = styled.select`
 `;
 
 const StyledLoadingContainer = styled.div`
-  display: flex;
   align-items: center;
+  color: ${themeCssVariables.font.color.tertiary};
+  display: flex;
+  font-size: ${themeCssVariables.font.size.md};
   justify-content: center;
   padding: ${themeCssVariables.spacing[10]};
-  color: ${themeCssVariables.font.color.tertiary};
-  font-size: ${themeCssVariables.font.size.md};
 `;
 
 const StyledErrorContainer = styled.div`
-  display: flex;
   align-items: center;
+  color: ${themeCssVariables.font.color.danger};
+  display: flex;
+  font-size: ${themeCssVariables.font.size.md};
   justify-content: center;
   padding: ${themeCssVariables.spacing[10]};
-  color: ${themeCssVariables.font.color.danger};
-  font-size: ${themeCssVariables.font.size.md};
 `;
 
 const StyledEmptyState = styled.div`
@@ -250,21 +250,21 @@ const StyledEmptyState = styled.div`
 `;
 
 const StyledSummary = styled.div`
-  display: flex;
-  gap: ${themeCssVariables.spacing[6]};
-  font-size: ${themeCssVariables.font.size.sm};
   color: ${themeCssVariables.font.color.secondary};
+  display: flex;
+  font-size: ${themeCssVariables.font.size.sm};
+  gap: ${themeCssVariables.spacing[6]};
 `;
 
 const StyledSummaryItem = styled.span`
+  align-items: center;
   display: flex;
   gap: ${themeCssVariables.spacing[1]};
-  align-items: center;
 `;
 
 const StyledSummaryCount = styled.span`
-  font-weight: ${themeCssVariables.font.weight.semiBold};
   color: ${themeCssVariables.font.color.primary};
+  font-weight: ${themeCssVariables.font.weight.semiBold};
 `;
 
 const extractDomain = (email: string | null): string | null => {

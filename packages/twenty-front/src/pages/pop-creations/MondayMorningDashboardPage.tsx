@@ -160,14 +160,16 @@ const PROGRAM_STAGE_LABELS: Record<string, string> = {
   IN_PRODUCTION: 'In Production',
 };
 
+/* oxlint-disable twenty/no-hardcoded-colors */
 const PROGRAM_STAGE_COLORS: Record<string, string> = {
-  DIRECTIVE_RECEIVED: '#3b82f6', // blue
-  DESIGN_IN_PROGRESS: '#a855f7', // purple
-  BUYER_REVIEW: '#14b8a6', // teal
-  PRICING_AND_SAMPLING: '#eab308', // yellow
-  AWAITING_SALES_ORDER: '#f97316', // orange
-  IN_PRODUCTION: '#22c55e', // green
+  DIRECTIVE_RECEIVED: '#3b82f6',
+  DESIGN_IN_PROGRESS: '#a855f7',
+  BUYER_REVIEW: '#14b8a6',
+  PRICING_AND_SAMPLING: '#eab308',
+  AWAITING_SALES_ORDER: '#f97316',
+  IN_PRODUCTION: '#22c55e',
 };
+/* oxlint-enable twenty/no-hardcoded-colors */
 
 const LAT_STAGE_LABELS: Record<string, string> = {
   CONCEPT_SUBMIT: 'Concept Submit',
@@ -177,6 +179,27 @@ const LAT_STAGE_LABELS: Record<string, string> = {
   CONCEPT_APPROVED: 'Concept Approved',
   PPS_SUBMIT: 'PPS Submit',
 };
+
+// ---------------------------------------------------------------------------
+// Status colors — semantic overdue/warning/fireflies indicators
+// ---------------------------------------------------------------------------
+
+// oxlint-disable-next-line twenty/no-hardcoded-colors
+const STATUS_RED = '#ef4444';
+// oxlint-disable-next-line twenty/no-hardcoded-colors
+const STATUS_ORANGE = '#f97316';
+// oxlint-disable-next-line twenty/no-hardcoded-colors
+const STATUS_INDIGO = '#6366f1';
+// oxlint-disable-next-line twenty/no-hardcoded-colors
+const STATUS_RED_BG_CARD = 'rgba(239,68,68,0.07)';
+// oxlint-disable-next-line twenty/no-hardcoded-colors
+const STATUS_RED_BORDER_CARD = 'rgba(239,68,68,0.35)';
+// oxlint-disable-next-line twenty/no-hardcoded-colors
+const STATUS_RED_BG_TAG = 'rgba(239,68,68,0.1)';
+// oxlint-disable-next-line twenty/no-hardcoded-colors
+const STATUS_ORANGE_BG_TAG = 'rgba(249,115,22,0.1)';
+// oxlint-disable-next-line twenty/no-hardcoded-colors
+const STATUS_INDIGO_BG_TAG = 'rgba(99,102,241,0.1)';
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -201,25 +224,25 @@ const daysUntil = (d: string | null): number | null => {
 // Styled components
 // ---------------------------------------------------------------------------
 
-const Page = styled.div`
+const StyledPage = styled.div`
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   gap: ${themeCssVariables.spacing[5]};
-  padding: ${themeCssVariables.spacing[8]};
-  max-width: 1280px;
   margin: 0 auto;
+  max-width: 1280px;
+  padding: ${themeCssVariables.spacing[8]};
   width: 100%;
-  box-sizing: border-box;
 `;
 
-const PageTitle = styled.h1`
+const StyledPageTitle = styled.h1`
   color: ${themeCssVariables.font.color.primary};
   font-size: ${themeCssVariables.font.size.xl};
   font-weight: ${themeCssVariables.font.weight.semiBold};
   margin: 0 0 ${themeCssVariables.spacing[1]};
 `;
 
-const PageSubtitle = styled.p`
+const StyledPageSubtitle = styled.p`
   color: ${themeCssVariables.font.color.tertiary};
   font-size: ${themeCssVariables.font.size.sm};
   margin: 0;
@@ -227,10 +250,10 @@ const PageSubtitle = styled.p`
 
 // -- Stat cards row --
 
-const StatRow = styled.div`
+const StyledStatRow = styled.div`
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
   gap: ${themeCssVariables.spacing[4]};
+  grid-template-columns: repeat(4, 1fr);
   @media (max-width: 900px) {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -239,38 +262,38 @@ const StatRow = styled.div`
   }
 `;
 
-const StatCard = styled.div<{ urgent?: boolean }>`
+const StyledStatCard = styled.div<{ urgent?: boolean }>`
   background: ${({ urgent }) =>
-    urgent ? 'rgba(239,68,68,0.07)' : themeCssVariables.background.primary};
+    urgent ? STATUS_RED_BG_CARD : themeCssVariables.background.primary};
   border: 1px solid
     ${({ urgent }) =>
-      urgent ? 'rgba(239,68,68,0.35)' : themeCssVariables.border.color.medium};
+      urgent ? STATUS_RED_BORDER_CARD : themeCssVariables.border.color.medium};
   border-radius: ${themeCssVariables.border.radius.md};
-  padding: ${themeCssVariables.spacing[4]};
   display: flex;
   flex-direction: column;
   gap: ${themeCssVariables.spacing[1]};
+  padding: ${themeCssVariables.spacing[4]};
 `;
 
-const StatValue = styled.div<{ urgent?: boolean }>`
+const StyledStatValue = styled.div<{ urgent?: boolean }>`
+  color: ${({ urgent }) =>
+    urgent ? STATUS_RED : themeCssVariables.font.color.primary};
   font-size: 2rem;
   font-weight: ${themeCssVariables.font.weight.semiBold};
-  color: ${({ urgent }) =>
-    urgent ? '#ef4444' : themeCssVariables.font.color.primary};
   line-height: 1;
 `;
 
-const StatLabel = styled.div`
-  font-size: ${themeCssVariables.font.size.sm};
+const StyledStatLabel = styled.div`
   color: ${themeCssVariables.font.color.secondary};
+  font-size: ${themeCssVariables.font.size.sm};
 `;
 
 // -- Two-column layout --
 
-const TwoCol = styled.div`
+const StyledTwoCol = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
   gap: ${themeCssVariables.spacing[4]};
+  grid-template-columns: 1fr 1fr;
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
   }
@@ -278,7 +301,7 @@ const TwoCol = styled.div`
 
 // -- Cards --
 
-const Card = styled.div`
+const StyledCard = styled.div`
   background: ${themeCssVariables.background.primary};
   border: 1px solid ${themeCssVariables.border.color.medium};
   border-radius: ${themeCssVariables.border.radius.md};
@@ -287,141 +310,141 @@ const Card = styled.div`
   overflow: hidden;
 `;
 
-const CardHeader = styled.div`
-  padding: ${themeCssVariables.spacing[3]} ${themeCssVariables.spacing[4]};
+const StyledCardHeader = styled.div`
+  align-items: center;
   border-bottom: 1px solid ${themeCssVariables.border.color.light};
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  padding: ${themeCssVariables.spacing[3]} ${themeCssVariables.spacing[4]};
 `;
 
-const CardTitle = styled.h2`
+const StyledCardTitle = styled.h2`
+  color: ${themeCssVariables.font.color.primary};
   font-size: ${themeCssVariables.font.size.sm};
   font-weight: ${themeCssVariables.font.weight.semiBold};
-  color: ${themeCssVariables.font.color.primary};
+  letter-spacing: 0.04em;
   margin: 0;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
 `;
 
-const CardCount = styled.span`
-  font-size: ${themeCssVariables.font.size.xs};
-  font-weight: ${themeCssVariables.font.weight.medium};
-  color: ${themeCssVariables.font.color.secondary};
+const StyledCardCount = styled.span`
   background: ${themeCssVariables.background.tertiary};
   border-radius: ${themeCssVariables.border.radius.pill};
+  color: ${themeCssVariables.font.color.secondary};
+  font-size: ${themeCssVariables.font.size.xs};
+  font-weight: ${themeCssVariables.font.weight.medium};
   padding: 1px 7px;
 `;
 
-const CardBody = styled.div`
-  padding: ${themeCssVariables.spacing[2]} 0;
+const StyledCardBody = styled.div`
   flex: 1;
+  padding: ${themeCssVariables.spacing[2]} 0;
 `;
 
 // -- Stage pipeline bar --
 
-const PipelineGrid = styled.div`
+const StyledPipelineGrid = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0;
 `;
 
-const StageRow = styled.div`
-  display: flex;
+const StyledStageRow = styled.div`
   align-items: center;
+  border-bottom: 1px solid ${themeCssVariables.border.color.light};
+  display: flex;
   gap: ${themeCssVariables.spacing[3]};
   padding: ${themeCssVariables.spacing[2]} ${themeCssVariables.spacing[4]};
-  border-bottom: 1px solid ${themeCssVariables.border.color.light};
   &:last-child {
     border-bottom: none;
   }
 `;
 
-const StageDot = styled.span<{ color: string }>`
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
+const StyledStageDot = styled.span<{ color: string }>`
   background: ${({ color }) => color};
+  border-radius: 50%;
   flex-shrink: 0;
+  height: 8px;
+  width: 8px;
 `;
 
-const StageName = styled.span`
+const StyledStageName = styled.span`
+  color: ${themeCssVariables.font.color.primary};
   flex: 1;
   font-size: ${themeCssVariables.font.size.sm};
-  color: ${themeCssVariables.font.color.primary};
 `;
 
-const StageBar = styled.div<{ pct: number; color: string }>`
-  width: ${({ pct }) => Math.max(pct, 2)}%;
-  max-width: 40%;
-  height: 6px;
-  border-radius: 3px;
+const StyledStageBar = styled.div<{ pct: number; color: string }>`
   background: ${({ color }) => color};
+  border-radius: 3px;
+  height: 6px;
+  max-width: 40%;
   opacity: 0.7;
   transition: width 0.3s ease;
+  width: ${({ pct }) => Math.max(pct, 2)}%;
 `;
 
-const StageCount = styled.span`
+const StyledStageCount = styled.span`
+  color: ${themeCssVariables.font.color.secondary};
   font-size: ${themeCssVariables.font.size.sm};
   font-weight: ${themeCssVariables.font.weight.semiBold};
-  color: ${themeCssVariables.font.color.secondary};
   min-width: 18px;
   text-align: right;
 `;
 
 // -- List rows --
 
-const ListRow = styled.div`
-  display: flex;
+const StyledListRow = styled.div`
   align-items: baseline;
+  border-bottom: 1px solid ${themeCssVariables.border.color.light};
+  display: flex;
   gap: ${themeCssVariables.spacing[2]};
   padding: ${themeCssVariables.spacing[2]} ${themeCssVariables.spacing[4]};
-  border-bottom: 1px solid ${themeCssVariables.border.color.light};
   &:last-child {
     border-bottom: none;
   }
 `;
 
-const RowMain = styled.span`
+const StyledRowMain = styled.span`
+  color: ${themeCssVariables.font.color.primary};
   flex: 1;
+  font-size: ${themeCssVariables.font.size.sm};
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  font-size: ${themeCssVariables.font.size.sm};
-  color: ${themeCssVariables.font.color.primary};
 `;
 
-const RowSub = styled.span`
-  font-size: ${themeCssVariables.font.size.xs};
+const StyledRowSub = styled.span`
   color: ${themeCssVariables.font.color.tertiary};
   flex-shrink: 0;
+  font-size: ${themeCssVariables.font.size.xs};
 `;
 
-const Tag = styled.span<{ color?: string; bg?: string }>`
-  font-size: ${themeCssVariables.font.size.xs};
-  color: ${({ color }) => color ?? themeCssVariables.font.color.secondary};
+const StyledTag = styled.span<{ color?: string; bg?: string }>`
   background: ${({ bg }) => bg ?? themeCssVariables.background.tertiary};
   border-radius: ${themeCssVariables.border.radius.sm};
-  padding: 1px 5px;
+  color: ${({ color }) => color ?? themeCssVariables.font.color.secondary};
   flex-shrink: 0;
+  font-size: ${themeCssVariables.font.size.xs};
+  padding: 1px 5px;
   white-space: nowrap;
 `;
 
-const EmptyRow = styled.div`
+const StyledEmptyRow = styled.div`
+  color: ${themeCssVariables.font.color.tertiary};
+  font-size: ${themeCssVariables.font.size.sm};
   padding: ${themeCssVariables.spacing[4]};
   text-align: center;
-  font-size: ${themeCssVariables.font.size.sm};
-  color: ${themeCssVariables.font.color.tertiary};
 `;
 
-const LoadingWrap = styled.div`
-  display: flex;
+const StyledLoadingWrap = styled.div`
   align-items: center;
+  color: ${themeCssVariables.font.color.tertiary};
+  display: flex;
+  font-size: ${themeCssVariables.font.size.md};
   justify-content: center;
   padding: ${themeCssVariables.spacing[12]};
-  color: ${themeCssVariables.font.color.tertiary};
-  font-size: ${themeCssVariables.font.size.md};
 `;
 
 // ---------------------------------------------------------------------------
@@ -434,12 +457,14 @@ export const MondayMorningDashboardPage = () => {
   });
 
   if (loading && !data) {
-    return <LoadingWrap>Loading…</LoadingWrap>;
+    return <StyledLoadingWrap>Loading…</StyledLoadingWrap>;
   }
 
   if (error && !data) {
     return (
-      <LoadingWrap style={{ color: 'red' }}>Error: {error.message}</LoadingWrap>
+      <StyledLoadingWrap style={{ color: 'red' }}>
+        Error: {error.message}
+      </StyledLoadingWrap>
     );
   }
 
@@ -459,9 +484,11 @@ export const MondayMorningDashboardPage = () => {
   // Overdue items: programs past delivery date + LATs with due date passed
   const todayStr = today();
   const overduePrograms = programs.filter(
-    (p) => p.hardDeliveryDate && p.hardDeliveryDate < todayStr,
+    (p) => p.hardDeliveryDate != null && p.hardDeliveryDate < todayStr,
   );
-  const overdueLATs = lats.filter((l) => l.dueDate && l.dueDate < todayStr);
+  const overdueLATs = lats.filter(
+    (l) => l.dueDate != null && l.dueDate < todayStr,
+  );
   const overdueCount = overduePrograms.length + overdueLATs.length;
 
   // Tasks due this week
@@ -469,7 +496,7 @@ export const MondayMorningDashboardPage = () => {
     .toISOString()
     .slice(0, 10);
   const tasksDueThisWeek = tasks.filter(
-    (t) => t.dueAt && t.dueAt.slice(0, 10) <= weekEnd,
+    (t) => t.dueAt != null && t.dueAt.slice(0, 10) <= weekEnd,
   );
 
   const nowStr = new Date().toLocaleDateString('en-US', {
@@ -479,130 +506,139 @@ export const MondayMorningDashboardPage = () => {
   });
 
   return (
-    <Page>
+    <StyledPage>
       <div>
-        <PageTitle>Dashboard</PageTitle>
-        <PageSubtitle>{nowStr}</PageSubtitle>
+        <StyledPageTitle>Dashboard</StyledPageTitle>
+        <StyledPageSubtitle>{nowStr}</StyledPageSubtitle>
       </div>
 
       {/* ── Stat cards ── */}
-      <StatRow>
-        <StatCard urgent={unroutedCount > 0}>
-          <StatValue urgent={unroutedCount > 0}>{unroutedCount}</StatValue>
-          <StatLabel>Emails Needing Attention</StatLabel>
-        </StatCard>
-        <StatCard>
-          <StatValue>{programs.length}</StatValue>
-          <StatLabel>Active Programs</StatLabel>
-        </StatCard>
-        <StatCard urgent={overdueCount > 0}>
-          <StatValue urgent={overdueCount > 0}>{overdueCount}</StatValue>
-          <StatLabel>Overdue Items</StatLabel>
-        </StatCard>
-        <StatCard urgent={tasksDueThisWeek.length > 0}>
-          <StatValue urgent={tasksDueThisWeek.length > 5}>
+      <StyledStatRow>
+        <StyledStatCard urgent={unroutedCount > 0}>
+          <StyledStatValue urgent={unroutedCount > 0}>
+            {unroutedCount}
+          </StyledStatValue>
+          <StyledStatLabel>Emails Needing Attention</StyledStatLabel>
+        </StyledStatCard>
+        <StyledStatCard>
+          <StyledStatValue>{programs.length}</StyledStatValue>
+          <StyledStatLabel>Active Programs</StyledStatLabel>
+        </StyledStatCard>
+        <StyledStatCard urgent={overdueCount > 0}>
+          <StyledStatValue urgent={overdueCount > 0}>
+            {overdueCount}
+          </StyledStatValue>
+          <StyledStatLabel>Overdue Items</StyledStatLabel>
+        </StyledStatCard>
+        <StyledStatCard urgent={tasksDueThisWeek.length > 0}>
+          <StyledStatValue urgent={tasksDueThisWeek.length > 5}>
             {tasksDueThisWeek.length}
-          </StatValue>
-          <StatLabel>Tasks Due This Week</StatLabel>
-        </StatCard>
-      </StatRow>
+          </StyledStatValue>
+          <StyledStatLabel>Tasks Due This Week</StyledStatLabel>
+        </StyledStatCard>
+      </StyledStatRow>
 
       {/* ── Pipeline + Overdue ── */}
-      <TwoCol>
+      <StyledTwoCol>
         {/* Programs by stage */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Programs by Stage</CardTitle>
-            <CardCount>{programs.length} active</CardCount>
-          </CardHeader>
-          <CardBody>
+        <StyledCard>
+          <StyledCardHeader>
+            <StyledCardTitle>Programs by Stage</StyledCardTitle>
+            <StyledCardCount>{programs.length} active</StyledCardCount>
+          </StyledCardHeader>
+          <StyledCardBody>
             {programs.length === 0 ? (
-              <EmptyRow>No active programs</EmptyRow>
+              <StyledEmptyRow>No active programs</StyledEmptyRow>
             ) : (
-              <PipelineGrid>
+              <StyledPipelineGrid>
                 {PROGRAM_STAGE_ORDER.map((stage) => {
                   const count = stageCounts[stage] ?? 0;
                   if (count === 0) return null;
                   return (
-                    <StageRow key={stage}>
-                      <StageDot color={PROGRAM_STAGE_COLORS[stage]} />
-                      <StageName>{PROGRAM_STAGE_LABELS[stage]}</StageName>
-                      <StageBar
+                    <StyledStageRow key={stage}>
+                      <StyledStageDot color={PROGRAM_STAGE_COLORS[stage]} />
+                      <StyledStageName>
+                        {PROGRAM_STAGE_LABELS[stage]}
+                      </StyledStageName>
+                      <StyledStageBar
                         pct={(count / maxStageCount) * 100}
                         color={PROGRAM_STAGE_COLORS[stage]}
                       />
-                      <StageCount>{count}</StageCount>
-                    </StageRow>
+                      <StyledStageCount>{count}</StyledStageCount>
+                    </StyledStageRow>
                   );
                 })}
-              </PipelineGrid>
+              </StyledPipelineGrid>
             )}
-          </CardBody>
-        </Card>
+          </StyledCardBody>
+        </StyledCard>
 
         {/* Overdue items */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Overdue Items</CardTitle>
-            <CardCount>{overdueCount}</CardCount>
-          </CardHeader>
-          <CardBody>
+        <StyledCard>
+          <StyledCardHeader>
+            <StyledCardTitle>Overdue Items</StyledCardTitle>
+            <StyledCardCount>{overdueCount}</StyledCardCount>
+          </StyledCardHeader>
+          <StyledCardBody>
             {overdueCount === 0 ? (
-              <EmptyRow>Nothing overdue ✓</EmptyRow>
+              <StyledEmptyRow>Nothing overdue ✓</StyledEmptyRow>
             ) : (
               <>
                 {overduePrograms.map((p) => {
                   const days = daysUntil(p.hardDeliveryDate);
                   return (
-                    <ListRow key={p.id}>
-                      <Tag bg="rgba(239,68,68,0.1)" color="#ef4444">
+                    <StyledListRow key={p.id}>
+                      <StyledTag bg={STATUS_RED_BG_TAG} color={STATUS_RED}>
                         Program
-                      </Tag>
-                      <RowMain>
+                      </StyledTag>
+                      <StyledRowMain>
                         {p.name}
                         {p.company ? ` · ${p.company.name}` : ''}
-                      </RowMain>
-                      <RowSub>
+                      </StyledRowMain>
+                      <StyledRowSub>
                         {days !== null ? `${Math.abs(days)}d overdue` : ''}
-                      </RowSub>
-                    </ListRow>
+                      </StyledRowSub>
+                    </StyledListRow>
                   );
                 })}
                 {overdueLATs.map((l) => {
                   const days = daysUntil(l.dueDate);
                   return (
-                    <ListRow key={l.id}>
-                      <Tag bg="rgba(249,115,22,0.1)" color="#f97316">
+                    <StyledListRow key={l.id}>
+                      <StyledTag
+                        bg={STATUS_ORANGE_BG_TAG}
+                        color={STATUS_ORANGE}
+                      >
                         LAT
-                      </Tag>
-                      <RowMain>
+                      </StyledTag>
+                      <StyledRowMain>
                         {l.propertyName}
                         {l.program ? ` · ${l.program.name}` : ''}
-                      </RowMain>
-                      <RowSub>
+                      </StyledRowMain>
+                      <StyledRowSub>
                         {days !== null ? `${Math.abs(days)}d overdue` : ''}{' '}
                         {LAT_STAGE_LABELS[l.stage] ?? l.stage}
-                      </RowSub>
-                    </ListRow>
+                      </StyledRowSub>
+                    </StyledListRow>
                   );
                 })}
               </>
             )}
-          </CardBody>
-        </Card>
-      </TwoCol>
+          </StyledCardBody>
+        </StyledCard>
+      </StyledTwoCol>
 
       {/* ── Tasks + Meetings ── */}
-      <TwoCol>
+      <StyledTwoCol>
         {/* Open tasks */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Open Tasks</CardTitle>
-            <CardCount>{tasks.length}</CardCount>
-          </CardHeader>
-          <CardBody>
+        <StyledCard>
+          <StyledCardHeader>
+            <StyledCardTitle>Open Tasks</StyledCardTitle>
+            <StyledCardCount>{tasks.length}</StyledCardCount>
+          </StyledCardHeader>
+          <StyledCardBody>
             {tasks.length === 0 ? (
-              <EmptyRow>No open tasks</EmptyRow>
+              <StyledEmptyRow>No open tasks</StyledEmptyRow>
             ) : (
               tasks.map((t) => {
                 const days = daysUntil(t.dueAt);
@@ -612,23 +648,23 @@ export const MondayMorningDashboardPage = () => {
                   ? `${t.assignee.name.firstName} ${t.assignee.name.lastName}`.trim()
                   : 'Unassigned';
                 return (
-                  <ListRow key={t.id}>
-                    <RowMain>{t.title}</RowMain>
-                    <RowSub>{assigneeName}</RowSub>
-                    {t.dueAt && (
-                      <Tag
+                  <StyledListRow key={t.id}>
+                    <StyledRowMain>{t.title}</StyledRowMain>
+                    <StyledRowSub>{assigneeName}</StyledRowSub>
+                    {t.dueAt != null && (
+                      <StyledTag
                         bg={
                           overdue
-                            ? 'rgba(239,68,68,0.1)'
+                            ? STATUS_RED_BG_TAG
                             : soon
-                              ? 'rgba(249,115,22,0.1)'
+                              ? STATUS_ORANGE_BG_TAG
                               : themeCssVariables.background.tertiary
                         }
                         color={
                           overdue
-                            ? '#ef4444'
+                            ? STATUS_RED
                             : soon
-                              ? '#f97316'
+                              ? STATUS_ORANGE
                               : themeCssVariables.font.color.secondary
                         }
                       >
@@ -637,80 +673,83 @@ export const MondayMorningDashboardPage = () => {
                           : days === 0
                             ? 'Today'
                             : formatDate(t.dueAt)}
-                      </Tag>
+                      </StyledTag>
                     )}
-                  </ListRow>
+                  </StyledListRow>
                 );
               })
             )}
-          </CardBody>
-        </Card>
+          </StyledCardBody>
+        </StyledCard>
 
         {/* Recent meeting notes */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Recent Meeting Notes</CardTitle>
-            <CardCount>{meetings.length}</CardCount>
-          </CardHeader>
-          <CardBody>
+        <StyledCard>
+          <StyledCardHeader>
+            <StyledCardTitle>Recent Meeting Notes</StyledCardTitle>
+            <StyledCardCount>{meetings.length}</StyledCardCount>
+          </StyledCardHeader>
+          <StyledCardBody>
             {meetings.length === 0 ? (
-              <EmptyRow>No recent meetings</EmptyRow>
+              <StyledEmptyRow>No recent meetings</StyledEmptyRow>
             ) : (
               meetings.map((m) => {
                 const context = m.department?.name ?? m.company?.name ?? null;
                 return (
-                  <ListRow key={m.id}>
-                    <RowMain>{m.name || '(untitled)'}</RowMain>
-                    {context && <RowSub>{context}</RowSub>}
-                    <Tag>{formatDate(m.date)}</Tag>
+                  <StyledListRow key={m.id}>
+                    <StyledRowMain>{m.name || '(untitled)'}</StyledRowMain>
+                    {context != null && <StyledRowSub>{context}</StyledRowSub>}
+                    <StyledTag>{formatDate(m.date)}</StyledTag>
                     {m.source === 'FIREFLIES_AUTO_IMPORT' && (
-                      <Tag bg="rgba(99,102,241,0.1)" color="#6366f1">
+                      <StyledTag
+                        bg={STATUS_INDIGO_BG_TAG}
+                        color={STATUS_INDIGO}
+                      >
                         FF
-                      </Tag>
+                      </StyledTag>
                     )}
-                  </ListRow>
+                  </StyledListRow>
                 );
               })
             )}
-          </CardBody>
-        </Card>
-      </TwoCol>
+          </StyledCardBody>
+        </StyledCard>
+      </StyledTwoCol>
 
       {/* ── All pending LATs ── */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Pending Licensor Approvals</CardTitle>
-          <CardCount>{lats.length}</CardCount>
-        </CardHeader>
-        <CardBody>
+      <StyledCard>
+        <StyledCardHeader>
+          <StyledCardTitle>Pending Licensor Approvals</StyledCardTitle>
+          <StyledCardCount>{lats.length}</StyledCardCount>
+        </StyledCardHeader>
+        <StyledCardBody>
           {lats.length === 0 ? (
-            <EmptyRow>No pending approvals ✓</EmptyRow>
+            <StyledEmptyRow>No pending approvals ✓</StyledEmptyRow>
           ) : (
             lats.map((l) => {
               const days = daysUntil(l.dueDate);
               const overdue = days !== null && days < 0;
               const soon = days !== null && days >= 0 && days <= 3;
               return (
-                <ListRow key={l.id}>
-                  <RowMain>
+                <StyledListRow key={l.id}>
+                  <StyledRowMain>
                     {l.propertyName}
                     {l.program ? ` · ${l.program.name}` : ''}
-                  </RowMain>
-                  <Tag>{LAT_STAGE_LABELS[l.stage] ?? l.stage}</Tag>
-                  {l.dueDate && (
-                    <Tag
+                  </StyledRowMain>
+                  <StyledTag>{LAT_STAGE_LABELS[l.stage] ?? l.stage}</StyledTag>
+                  {l.dueDate != null && (
+                    <StyledTag
                       bg={
                         overdue
-                          ? 'rgba(239,68,68,0.1)'
+                          ? STATUS_RED_BG_TAG
                           : soon
-                            ? 'rgba(249,115,22,0.1)'
+                            ? STATUS_ORANGE_BG_TAG
                             : themeCssVariables.background.tertiary
                       }
                       color={
                         overdue
-                          ? '#ef4444'
+                          ? STATUS_RED
                           : soon
-                            ? '#f97316'
+                            ? STATUS_ORANGE
                             : themeCssVariables.font.color.secondary
                       }
                     >
@@ -719,14 +758,14 @@ export const MondayMorningDashboardPage = () => {
                         : days === 0
                           ? 'Today'
                           : `Due ${formatDate(l.dueDate)}`}
-                    </Tag>
+                    </StyledTag>
                   )}
-                </ListRow>
+                </StyledListRow>
               );
             })
           )}
-        </CardBody>
-      </Card>
-    </Page>
+        </StyledCardBody>
+      </StyledCard>
+    </StyledPage>
   );
 };

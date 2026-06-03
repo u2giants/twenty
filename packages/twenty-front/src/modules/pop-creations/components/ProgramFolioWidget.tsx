@@ -71,6 +71,7 @@ const PROGRAM_FOLIO_QUERY = gql`
   }
 `;
 
+/* oxlint-disable twenty/no-hardcoded-colors */
 const STAGE_COLORS: Record<string, { bg: string; text: string }> = {
   DIRECTIVE_RECEIVED: { bg: '#dbeafe', text: '#1d4ed8' },
   DESIGN_IN_PROGRESS: { bg: '#ede9fe', text: '#7c3aed' },
@@ -90,6 +91,7 @@ const LAT_STAGE_COLORS: Record<string, { bg: string; text: string }> = {
   PPS_SUBMIT: { bg: '#e0f2fe', text: '#0369a1' },
   PPS_APPROVED: { bg: '#dcfce7', text: '#15803d' },
 };
+/* oxlint-enable twenty/no-hardcoded-colors */
 
 const StyledContainer = styled.div`
   display: flex;
@@ -107,77 +109,77 @@ const StyledSection = styled.section`
 `;
 
 const StyledSectionTitle = styled.h3`
+  border-bottom: 1px solid ${themeCssVariables.border.color.light};
+  color: ${themeCssVariables.font.color.primary};
   font-size: ${themeCssVariables.font.size.md};
   font-weight: ${themeCssVariables.font.weight.semiBold};
-  color: ${themeCssVariables.font.color.primary};
   margin: 0;
   padding-bottom: ${themeCssVariables.spacing[2]};
-  border-bottom: 1px solid ${themeCssVariables.border.color.light};
 `;
 
 const StyledDetailsGrid = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
   gap: ${themeCssVariables.spacing[1]} ${themeCssVariables.spacing[6]};
+  grid-template-columns: 1fr 1fr;
 `;
 
 const StyledDetailRow = styled.div`
+  border-bottom: 1px solid ${themeCssVariables.border.color.light};
   display: flex;
   flex-direction: column;
   gap: ${themeCssVariables.spacing[0.5]};
   padding: ${themeCssVariables.spacing[1.5]} 0;
-  border-bottom: 1px solid ${themeCssVariables.border.color.light};
 `;
 
 const StyledDetailLabel = styled.span`
+  color: ${themeCssVariables.font.color.tertiary};
   font-size: ${themeCssVariables.font.size.xs};
   font-weight: ${themeCssVariables.font.weight.medium};
-  color: ${themeCssVariables.font.color.tertiary};
-  text-transform: uppercase;
   letter-spacing: 0.5px;
+  text-transform: uppercase;
 `;
 
 const StyledDetailValue = styled.span`
-  font-size: ${themeCssVariables.font.size.sm};
   color: ${themeCssVariables.font.color.primary};
+  font-size: ${themeCssVariables.font.size.sm};
 `;
 
 const StyledChip = styled.span<{ bgColor: string; textColor: string }>`
-  display: inline-flex;
   align-items: center;
+  background: ${(props) => props.bgColor};
+  border-radius: ${themeCssVariables.border.radius.sm};
+  color: ${(props) => props.textColor};
+  display: inline-flex;
   font-size: ${themeCssVariables.font.size.xs};
   font-weight: ${themeCssVariables.font.weight.medium};
   padding: ${themeCssVariables.spacing[1]} ${themeCssVariables.spacing[2]};
-  border-radius: ${themeCssVariables.border.radius.sm};
-  background: ${(props) => props.bgColor};
-  color: ${(props) => props.textColor};
 `;
 
 const StyledInfoRow = styled.div`
-  display: flex;
   align-items: center;
+  display: flex;
   gap: ${themeCssVariables.spacing[3]};
   padding: ${themeCssVariables.spacing[2]} 0;
 `;
 
 const StyledInfoLabel = styled.span`
+  color: ${themeCssVariables.font.color.tertiary};
   font-size: ${themeCssVariables.font.size.xs};
   font-weight: ${themeCssVariables.font.weight.medium};
-  color: ${themeCssVariables.font.color.tertiary};
   min-width: 80px;
 `;
 
 const StyledInfoValue = styled.span`
-  font-size: ${themeCssVariables.font.size.sm};
   color: ${themeCssVariables.font.color.primary};
+  font-size: ${themeCssVariables.font.size.sm};
 `;
 
 const StyledLatRow = styled.div`
-  display: flex;
   align-items: center;
+  border-bottom: 1px solid ${themeCssVariables.border.color.light};
+  display: flex;
   justify-content: space-between;
   padding: ${themeCssVariables.spacing[2]} 0;
-  border-bottom: 1px solid ${themeCssVariables.border.color.light};
 
   &:last-child {
     border-bottom: none;
@@ -191,22 +193,22 @@ const StyledLatInfo = styled.div`
 `;
 
 const StyledLatName = styled.span`
-  font-size: ${themeCssVariables.font.size.sm};
   color: ${themeCssVariables.font.color.primary};
+  font-size: ${themeCssVariables.font.size.sm};
   font-weight: ${themeCssVariables.font.weight.medium};
 `;
 
 const StyledLatMeta = styled.span`
-  font-size: ${themeCssVariables.font.size.xs};
   color: ${themeCssVariables.font.color.tertiary};
+  font-size: ${themeCssVariables.font.size.xs};
 `;
 
 const StyledEmailRow = styled.div`
+  border-bottom: 1px solid ${themeCssVariables.border.color.light};
   display: flex;
   flex-direction: column;
   gap: ${themeCssVariables.spacing[0.5]};
   padding: ${themeCssVariables.spacing[2]} 0;
-  border-bottom: 1px solid ${themeCssVariables.border.color.light};
 
   &:last-child {
     border-bottom: none;
@@ -214,22 +216,22 @@ const StyledEmailRow = styled.div`
 `;
 
 const StyledEmailSubject = styled.span`
-  font-size: ${themeCssVariables.font.size.sm};
   color: ${themeCssVariables.font.color.primary};
+  font-size: ${themeCssVariables.font.size.sm};
   font-weight: ${themeCssVariables.font.weight.medium};
 `;
 
 const StyledEmailMeta = styled.span`
-  font-size: ${themeCssVariables.font.size.xs};
   color: ${themeCssVariables.font.color.tertiary};
+  font-size: ${themeCssVariables.font.size.xs};
 `;
 
 const StyledMeetingRow = styled.div`
+  border-bottom: 1px solid ${themeCssVariables.border.color.light};
   display: flex;
   flex-direction: column;
   gap: ${themeCssVariables.spacing[0.5]};
   padding: ${themeCssVariables.spacing[2]} 0;
-  border-bottom: 1px solid ${themeCssVariables.border.color.light};
 
   &:last-child {
     border-bottom: none;
@@ -237,28 +239,28 @@ const StyledMeetingRow = styled.div`
 `;
 
 const StyledMeetingTitle = styled.span`
-  font-size: ${themeCssVariables.font.size.sm};
   color: ${themeCssVariables.font.color.primary};
+  font-size: ${themeCssVariables.font.size.sm};
   font-weight: ${themeCssVariables.font.weight.medium};
 `;
 
 const StyledMeetingMeta = styled.span`
-  font-size: ${themeCssVariables.font.size.xs};
   color: ${themeCssVariables.font.color.tertiary};
+  font-size: ${themeCssVariables.font.size.xs};
 `;
 
 const StyledLoading = styled.div`
-  display: flex;
   align-items: center;
+  color: ${themeCssVariables.font.color.tertiary};
+  display: flex;
+  font-size: ${themeCssVariables.font.size.sm};
   justify-content: center;
   padding: ${themeCssVariables.spacing[10]};
-  color: ${themeCssVariables.font.color.tertiary};
-  font-size: ${themeCssVariables.font.size.sm};
 `;
 
 const StyledEmpty = styled.div`
-  font-size: ${themeCssVariables.font.size.sm};
   color: ${themeCssVariables.font.color.tertiary};
+  font-size: ${themeCssVariables.font.size.sm};
   padding: ${themeCssVariables.spacing[2]} 0;
 `;
 
@@ -382,10 +384,9 @@ export const ProgramFolioWidget = () => {
     return <StyledLoading>Program not found</StyledLoading>;
   }
 
-  const stageColors = STAGE_COLORS[program.stage || ''] || {
-    bg: '#f3f4f6',
-    text: '#4b5563',
-  };
+  // oxlint-disable-next-line twenty/no-hardcoded-colors
+  const stageDefaultColors = { bg: '#f3f4f6', text: '#4b5563' };
+  const stageColors = STAGE_COLORS[program.stage || ''] ?? stageDefaultColors;
 
   const detailFields: DetailField[] = [
     { label: 'Stage', value: formatEnumValue(program.stage) },
@@ -497,10 +498,10 @@ export const ProgramFolioWidget = () => {
             Licensor Approval Threads ({lats.length})
           </StyledSectionTitle>
           {lats.map((lat) => {
-            const latColors = LAT_STAGE_COLORS[lat.stage || ''] || {
-              bg: '#f3f4f6',
-              text: '#4b5563',
-            };
+            // oxlint-disable-next-line twenty/no-hardcoded-colors
+            const latDefaultColors = { bg: '#f3f4f6', text: '#4b5563' };
+            const latColors =
+              LAT_STAGE_COLORS[lat.stage || ''] ?? latDefaultColors;
             return (
               <StyledLatRow key={lat.id}>
                 <StyledLatInfo>

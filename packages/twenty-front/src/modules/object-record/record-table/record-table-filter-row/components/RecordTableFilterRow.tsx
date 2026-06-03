@@ -115,7 +115,7 @@ export const RecordTableFilterRow = () => {
           />
         </StyledFilterRowFieldCell>
       )}
-      {firstNonLabelField && (
+      {firstNonLabelField != null && (
         <StyledFilterRowFieldCell
           className={cx(getRecordTableColumnFieldWidthClassName(1))}
         >
