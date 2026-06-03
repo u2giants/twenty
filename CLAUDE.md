@@ -3,7 +3,7 @@
 Claude Code-specific notes only. **[AGENTS.md](./AGENTS.md) is the primary operating guide — read it
 first** (project summary, custom-code boundary, data model, deployment, quirks, pending work).
 [README.md](./README.md) is the quick orientation. Allowed/disallowed operational actions:
-see AGENTS.md §3 (prime directive) and the security notes below.
+**[AI_OPERATING_RULES.md](./AI_OPERATING_RULES.md)** — read before any deploy or production action.
 
 ## Ignore files
 

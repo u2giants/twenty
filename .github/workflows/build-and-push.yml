@@ -1,0 +1,541 @@
+name: Build and Push Docker Image
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - 'docs/**'
+      - '.github/**/*.md'
+      - 'README.md'
+      - 'AGENTS.md'
+      - 'AI_OPERATING_RULES.md'
+      - 'CLAUDE.md'
+      - 'HANDOFF.md'
+  workflow_dispatch:
+
+concurrency:
+  group: build-and-push-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: u2giants/twenty
+
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      frontend_fast_path: ${{ steps.classify.outputs.frontend_fast_path }}
+      backend_only_path: ${{ steps.classify.outputs.backend_only_path }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Classify change scope
+        id: classify
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "frontend_fast_path=false" >> "$GITHUB_OUTPUT"
+            echo "backend_only_path=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          before="${{ github.event.before }}"
+          if [ -z "$before" ] || [ "$before" = "0000000000000000000000000000000000000000" ]; then
+            echo "frontend_fast_path=false" >> "$GITHUB_OUTPUT"
+            echo "backend_only_path=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          mapfile -t changed_files < <(git diff --name-only "$before" "${{ github.sha }}")
+
+          if [ "${#changed_files[@]}" -eq 0 ]; then
+            echo "frontend_fast_path=false" >> "$GITHUB_OUTPUT"
+            echo "backend_only_path=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          frontend_fast_path=true
+          frontend_match=false
+
+          for path in "${changed_files[@]}"; do
+            case "$path" in
+              packages/twenty-front/*|packages/twenty-front-component-renderer/*)
+                frontend_match=true
+                ;;
+              *)
+                frontend_fast_path=false
+                ;;
+            esac
+          done
+
+          if [ "$frontend_fast_path" = true ] && [ "$frontend_match" = true ]; then
+            echo "frontend_fast_path=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "frontend_fast_path=false" >> "$GITHUB_OUTPUT"
+          fi
+
+          backend_only_path=true
+          backend_match=false
+
+          for path in "${changed_files[@]}"; do
+            case "$path" in
+              packages/twenty-server/*|packages/twenty-emails/*)
+                backend_match=true
+                ;;
+              *)
+                backend_only_path=false
+                ;;
+            esac
+          done
+
+          if [ "$backend_only_path" = true ] && [ "$backend_match" = true ]; then
+            echo "backend_only_path=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "backend_only_path=false" >> "$GITHUB_OUTPUT"
+          fi
+
+  lint:
+    needs: changes
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24.5.0'
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Build shared packages
+        run: yarn nx run-many -t build -p twenty-shared twenty-utils twenty-ui
+
+      - name: Lint full repo
+        if: needs.changes.outputs.frontend_fast_path != 'true'
+        run: yarn nx run-many -t lint --all --parallel=3
+
+      - name: Lint frontend-only targets
+        if: needs.changes.outputs.frontend_fast_path == 'true'
+        run: yarn nx run-many -t lint -p twenty-front twenty-front-component-renderer --parallel=2
+
+  test:
+    needs: changes
+    runs-on: ubuntu-latest
+    env:
+      NODE_OPTIONS: --max-old-space-size=4096
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24.5.0'
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Build shared packages
+        run: yarn nx run-many -t build -p twenty-shared twenty-utils
+
+      - name: Test non-front projects
+        if: needs.changes.outputs.frontend_fast_path != 'true'
+        run: yarn nx run-many -t test --all --parallel=2 --exclude=twenty-front
+
+      - name: Test twenty-front in band
+        if: needs.changes.outputs.backend_only_path != 'true'
+        run: yarn nx run twenty-front:test --runInBand
+
+  build-and-push-frontend:
+    needs:
+      - changes
+      - lint
+      - test
+    if: needs.changes.outputs.frontend_fast_path == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        uses: ./.github/actions/yarn-install
+
+      - name: Restore pre-built frontend
+        id: frontend-cache
+        uses: actions/cache@v4
+        with:
+          path: packages/twenty-front/build
+          key: frontend-build-${{ hashFiles('packages/twenty-front/src/**', 'packages/twenty-front-component-renderer/src/**', 'packages/twenty-ui/src/**', 'packages/twenty-shared/src/**', 'yarn.lock') }}
+          restore-keys: |
+            frontend-build-
+
+      - name: Clear Vite cache
+        if: steps.frontend-cache.outputs.cache-hit != 'true'
+        run: rm -rf node_modules/.vite/packages/twenty-front
+
+      - name: Prebuild frontend artifact
+        if: steps.frontend-cache.outputs.cache-hit != 'true'
+        env:
+          REACT_APP_SERVER_BASE_URL: https://crm.designflow.app
+          REACT_APP_BUILD_HASH: ${{ github.sha }}
+          REACT_APP_BUILD_DATE: ${{ github.event.head_commit.timestamp }}
+        run: npx nx run twenty-front:build:runtime --skip-nx-cache
+
+      # If wyw/Linaria silently fails to process a styled.div`...` call (e.g.
+      # because a module read window/document at top level and crashed the
+      # Node evaluator), the template literal stays in the bundle. In
+      # production @linaria/react has no Proxy, so it crashes at runtime
+      # with TypeError: <fn>.span is not a function — blank page. See AGENTS.md.
+      #
+      # Only scan the main entry chunk: lazy-loaded chunks may legitimately
+      # contain unprocessed styled.tag`...` from third-party packages that
+      # ship styled-components (which keeps a runtime Proxy in production).
+      - name: Verify wyw processed styled template literals in main chunk
+        if: steps.frontend-cache.outputs.cache-hit != 'true'
+        run: |
+          main_chunk=$(grep -oE '/assets/index-[A-Za-z0-9_-]+\.js' packages/twenty-front/build/index.html | head -1 | sed 's|^/||')
+          if [ -z "$main_chunk" ]; then
+            echo "::error::Could not locate main entry chunk in build/index.html"
+            exit 1
+          fi
+          chunk_path="packages/twenty-front/build/$main_chunk"
+          if grep -qE '\.(div|span|img|button|input|p|a|h[1-6]|ul|ol|li|label|section|article|header|footer|nav|main|aside|form|select|option|textarea|table|thead|tbody|tr|td|th|pre|code)`' "$chunk_path"; then
+            echo "::error::Unprocessed styled template literal found in main chunk $main_chunk"
+            echo "::error::wyw/Linaria failed silently. Likely a module read window/document/location at top level — see AGENTS.md."
+            exit 1
+          fi
+          echo "wyw OK: main chunk $main_chunk has no unprocessed styled template literals."
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=raw,value=latest,enable={{is_default_branch}}
+            type=raw,value=main,enable={{is_default_branch}}
+            type=sha,prefix=sha-
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: packages/twenty-docker/twenty/Dockerfile
+          target: twenty
+          push: true
+          cache-from: type=gha,scope=twenty-docker
+          cache-to: type=gha,mode=max,scope=twenty-docker
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          build-args: |
+            REACT_APP_SERVER_BASE_URL=https://crm.designflow.app
+            APP_VERSION=2.8.3
+            REACT_APP_BUILD_HASH=${{ github.sha }}
+            REACT_APP_BUILD_DATE=${{ github.event.head_commit.timestamp || github.event.repository.updated_at }}
+            TWENTY_DOCKER_ALLOW_FRONTEND_BUILD=false
+
+  build-and-push-full:
+    needs:
+      - changes
+      - lint
+      - test
+    if: needs.changes.outputs.frontend_fast_path != 'true'
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+      redis:
+        image: redis
+        ports:
+          - 6379:6379
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        uses: ./.github/actions/yarn-install
+
+      - name: Build shared dependencies
+        run: npx nx build twenty-shared
+
+      - name: Write server env
+        run: npx nx reset:env twenty-server
+
+      - name: Build backend
+        run: npx nx build twenty-server
+
+      - name: Run rerouter regression test
+        run: |
+          npx nx run twenty-server:jest -- --runInBand \
+            src/modules/pop-creations/crons/jobs/email-rerouter.cron.job.spec.ts
+
+      - name: Initialize databases
+        run: |
+          PGPASSWORD=postgres psql -h localhost -p 5432 -U postgres -d postgres -c 'CREATE DATABASE "default";'
+          PGPASSWORD=postgres psql -h localhost -p 5432 -U postgres -d postgres -c 'CREATE DATABASE "test";'
+          yarn --cwd packages/twenty-server database:init:prod
+
+      - name: Smoke test worker boot
+        run: |
+          timeout 30s npx nx run twenty-server:worker || exit_code=$?
+          if [ "${exit_code:-0}" -eq 124 ]; then
+            exit 0
+          fi
+          exit "${exit_code:-0}"
+
+      - name: Smoke test server boot
+        run: |
+          npx nx start:ci twenty-server > /tmp/twenty-server.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill $SERVER_PID 2>/dev/null || true' EXIT
+
+          for i in {1..30}; do
+            if curl -fsS http://localhost:3000/healthz > /dev/null; then
+              exit 0
+            fi
+            sleep 2
+          done
+
+          cat /tmp/twenty-server.log
+          exit 1
+
+      - name: Restore pre-built frontend
+        id: frontend-cache
+        uses: actions/cache@v4
+        with:
+          path: packages/twenty-front/build
+          key: frontend-build-${{ hashFiles('packages/twenty-front/src/**', 'packages/twenty-front-component-renderer/src/**', 'packages/twenty-ui/src/**', 'packages/twenty-shared/src/**', 'yarn.lock') }}
+          restore-keys: |
+            frontend-build-
+
+      - name: Clear Vite cache
+        if: steps.frontend-cache.outputs.cache-hit != 'true'
+        run: rm -rf node_modules/.vite/packages/twenty-front
+
+      - name: Prebuild frontend artifact
+        if: steps.frontend-cache.outputs.cache-hit != 'true'
+        env:
+          REACT_APP_SERVER_BASE_URL: https://crm.designflow.app
+          REACT_APP_BUILD_HASH: ${{ github.sha }}
+          REACT_APP_BUILD_DATE: ${{ github.event.head_commit.timestamp }}
+        run: npx nx run twenty-front:build:runtime --skip-nx-cache
+
+      # If wyw/Linaria silently fails to process a styled.div`...` call (e.g.
+      # because a module read window/document at top level and crashed the
+      # Node evaluator), the template literal stays in the bundle. In
+      # production @linaria/react has no Proxy, so it crashes at runtime
+      # with TypeError: <fn>.span is not a function — blank page. See AGENTS.md.
+      #
+      # Only scan the main entry chunk: lazy-loaded chunks may legitimately
+      # contain unprocessed styled.tag`...` from third-party packages that
+      # ship styled-components (which keeps a runtime Proxy in production).
+      - name: Verify wyw processed styled template literals in main chunk
+        if: steps.frontend-cache.outputs.cache-hit != 'true'
+        run: |
+          main_chunk=$(grep -oE '/assets/index-[A-Za-z0-9_-]+\.js' packages/twenty-front/build/index.html | head -1 | sed 's|^/||')
+          if [ -z "$main_chunk" ]; then
+            echo "::error::Could not locate main entry chunk in build/index.html"
+            exit 1
+          fi
+          chunk_path="packages/twenty-front/build/$main_chunk"
+          if grep -qE '\.(div|span|img|button|input|p|a|h[1-6]|ul|ol|li|label|section|article|header|footer|nav|main|aside|form|select|option|textarea|table|thead|tbody|tr|td|th|pre|code)`' "$chunk_path"; then
+            echo "::error::Unprocessed styled template literal found in main chunk $main_chunk"
+            echo "::error::wyw/Linaria failed silently. Likely a module read window/document/location at top level — see AGENTS.md."
+            exit 1
+          fi
+          echo "wyw OK: main chunk $main_chunk has no unprocessed styled template literals."
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=raw,value=latest,enable={{is_default_branch}}
+            type=raw,value=main,enable={{is_default_branch}}
+            type=sha,prefix=sha-
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: packages/twenty-docker/twenty/Dockerfile
+          target: twenty
+          push: true
+          cache-from: type=gha,scope=twenty-docker
+          cache-to: type=gha,mode=max,scope=twenty-docker
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          build-args: |
+            REACT_APP_SERVER_BASE_URL=https://crm.designflow.app
+            APP_VERSION=2.8.3
+            REACT_APP_BUILD_HASH=${{ github.sha }}
+            REACT_APP_BUILD_DATE=${{ github.event.head_commit.timestamp || github.event.repository.updated_at }}
+            TWENTY_DOCKER_ALLOW_FRONTEND_BUILD=false
+
+  deploy:
+    needs:
+      - build-and-push-frontend
+      - build-and-push-full
+    if: |
+      always() &&
+      needs.build-and-push-frontend.result != 'failure' &&
+      needs.build-and-push-full.result != 'failure' &&
+      (
+        needs.build-and-push-frontend.result == 'success' ||
+        needs.build-and-push-full.result == 'success'
+      )
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger first Coolify deployment
+        env:
+          COOLIFY_BASE_URL: ${{ secrets.COOLIFY_BASE_URL }}
+          COOLIFY_API_TOKEN: ${{ secrets.COOLIFY_API_TOKEN }}
+          COOLIFY_SERVER_UUID: ${{ secrets.COOLIFY_SERVER_UUID }}
+        run: |
+          curl -s -X POST \
+            "${COOLIFY_BASE_URL}/api/v1/deploy?uuid=${COOLIFY_SERVER_UUID}&force=true" \
+            -H "Authorization: Bearer ${COOLIFY_API_TOKEN}" \
+            -H "Content-Type: application/json"
+
+      - name: Wait for CRM to be healthy
+        run: |
+          for i in {1..60}; do
+            if curl -fsS https://crm.designflow.app/healthz; then
+              echo "CRM is healthy!"
+              exit 0
+            fi
+            echo "Waiting for CRM... ($i/60)"
+            sleep 5
+          done
+          echo "CRM did not become healthy within 5 minutes" >&2
+          exit 1
+
+      - name: Trigger second Coolify deployment
+        env:
+          COOLIFY_BASE_URL: ${{ secrets.COOLIFY_BASE_URL }}
+          COOLIFY_API_TOKEN: ${{ secrets.COOLIFY_API_TOKEN }}
+          COOLIFY_SERVER_UUID: ${{ secrets.COOLIFY_SERVER_UUID }}
+        run: |
+          curl -s -X POST \
+            "${COOLIFY_BASE_URL}/api/v1/deploy?uuid=${COOLIFY_SERVER_UUID}&force=true" \
+            -H "Authorization: Bearer ${COOLIFY_API_TOKEN}" \
+            -H "Content-Type: application/json"
+
+  notify-success:
+    needs: [deploy]
+    if: success()
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              labels: 'ci-broken',
+            });
+            for (const issue of issues) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number,
+                body: `✅ Fixed by ${context.sha.slice(0,8)} — [run](${context.payload.repository.html_url}/actions/runs/${context.runId})`,
+              });
+              await github.rest.issues.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number,
+                state: 'closed',
+              });
+            }
+
+  notify-failure:
+    needs: [lint, test, build-and-push-frontend, build-and-push-full, deploy]
+    if: failure()
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const failedJobs = ['lint','test','build-and-push-frontend','build-and-push-full','deploy']
+              .filter(j => context.payload?.workflow_run?.conclusion === 'failure'
+                        || '${{ needs.lint.result }}' === 'failure' && j === 'lint'
+                        || '${{ needs.test.result }}' === 'failure' && j === 'test'
+                        || '${{ needs.build-and-push-frontend.result }}' === 'failure' && j === 'build-and-push-frontend'
+                        || '${{ needs.build-and-push-full.result }}' === 'failure' && j === 'build-and-push-full'
+                        || '${{ needs.deploy.result }}' === 'failure' && j === 'deploy')
+              .join(', ') || 'unknown';
+            const runUrl = `${context.payload.repository.html_url}/actions/runs/${context.runId}`;
+            const body = `Commit \`${context.sha.slice(0,8)}\` failed at: **${failedJobs}**\n[View run](${runUrl})`;
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              labels: 'ci-broken',
+            });
+            if (issues.length === 0) {
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: '🔴 CI broken on main — production is not updating',
+                body,
+                labels: ['ci-broken'],
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issues[0].number,
+                body,
+              });
+            }

@@ -313,34 +313,31 @@ Full list: [docs/configuration.md](./docs/configuration.md). Values live in Cool
 
 ## 12. Deployment
 
-**Current state:** manual build + push + Coolify API trigger. No CI pipeline is wired to this
-branch yet (the old `build-and-push.yml` is on `origin/main`/v1.20 and dispatches to Twenty's own
-infra — it does not apply here).
+**Normal path — push to `main`, CI does everything:**
 
-**Deploy steps:**
-```bash
-# From /worksp/twenty/refork
-docker build -f packages/twenty-docker/twenty/Dockerfile --target twenty \
-  -t ghcr.io/u2giants/twenty:latest .
-docker push ghcr.io/u2giants/twenty:latest
-
-# Trigger Coolify redeploy
-curl -s -X POST "http://localhost:8000/api/v1/deploy?uuid=rd261bt0wy7ifjrkoe1tkl92&force=true" \
-  -H "Authorization: Bearer <COOLIFY_TOKEN>"
+```
+push to main
+  → GitHub Actions (.github/workflows/build-and-push.yml)
+      lint → test → build Docker image → push to GHCR → trigger Coolify API
+  → Coolify pulls ghcr.io/u2giants/twenty:latest → updates server + worker
+  → VPS runs the containers (runtime host only)
 ```
 
-**Coolify reads from `origin/main`** to get the `docker-compose.yaml`, then pulls `ghcr.io/u2giants/twenty:latest`.
-The compose's `pull_policy: always` ensures the newly-pushed image is used every deploy.
+GitHub Secrets already in place: `COOLIFY_BASE_URL`, `COOLIFY_API_TOKEN`, `COOLIFY_SERVER_UUID`.
 
-**Rollback:** push the rollback tag (`rollback-v120-20260603` exists in GHCR) as `latest` and
-redeploy via Coolify API. Do not run docker commands on the production VPS to re-tag.
+**Do not build Docker images manually on the VPS** — those artifacts are untraceable, bypass all
+verification gates, and violate the CI/CD rules in `AI_OPERATING_RULES.md`.
 
-**Verify deploy:**
+**Verify deploy (from server logs after Coolify finishes):**
 ```bash
 docker logs $(docker ps -qf name=server-rd261bt0wy7ifjrkoe1tkl92) 2>&1 | \
   grep "Cron job registration completed"
-# Expect: 27 successful, 0 failed, 1 skipped (OutlookIngest, EmailRerouter, ClickUpSync, EmailContactSync included)
+# Expect: 27 successful, 0 failed, 1 skipped
 ```
+
+**Rollback:** redeploy a previous immutable image tag through Coolify — do not `docker tag` on the VPS.
+The pre-cutover backup image is tagged `rollback-v120-20260603` in GHCR.
+See [docs/deployment.md](./docs/deployment.md) for the full rollback procedure.
 
 **SSH:** allowed for inspection and emergency log collection only. Never the deploy path. Never
 edit source files on the server — changes won't survive the next image deploy.

@@ -20,27 +20,30 @@ it. Because the compose uses `pull_policy: always`, every Coolify deploy pulls t
 
 ---
 
-## Normal deploy (manual)
+## Normal deploy — push to `main`
 
-There is no CI pipeline yet. All deploys are manual from the VPS.
+**Push a commit to `main`. GitHub Actions handles everything else.**
 
-```bash
-# 1. Build image from the refork source
-cd /worksp/twenty/refork
-docker build -f packages/twenty-docker/twenty/Dockerfile --target twenty \
-  -t ghcr.io/u2giants/twenty:latest .
-
-# 2. Push to GHCR (requires docker login — done once per session)
-docker push ghcr.io/u2giants/twenty:latest
-
-# 3. Trigger Coolify redeploy
-TOKEN=$(cat /tmp/coolify_token.txt)
-curl -s -X POST "http://localhost:8000/api/v1/deploy?uuid=rd261bt0wy7ifjrkoe1tkl92&force=true" \
-  -H "Authorization: Bearer $TOKEN"
+```
+push to main
+  → .github/workflows/build-and-push.yml
+      lint → test → build Docker image → push to GHCR → trigger Coolify API
+  → Coolify pulls ghcr.io/u2giants/twenty:latest
+  → server + worker containers updated
 ```
 
-The Coolify token is stored at `/tmp/coolify_token.txt` (chmod 600). It does not survive reboots —
-if it is missing, ask for a new token.
+Required GitHub Secrets (already configured):
+
+| Secret | Purpose |
+|---|---|
+| `COOLIFY_BASE_URL` | Coolify API base URL |
+| `COOLIFY_API_TOKEN` | Coolify personal access token |
+| `COOLIFY_SERVER_UUID` | App UUID (`rd261bt0wy7ifjrkoe1tkl92`) |
+
+The workflow also publishes an immutable `sha-<commit-sha>` tag alongside `latest` and `main`
+for auditability and rollback.
+
+**Do not build Docker images manually on the VPS** — see `AI_OPERATING_RULES.md`.
 
 ---
 

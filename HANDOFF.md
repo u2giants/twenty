@@ -5,57 +5,25 @@ Delete this file when all items are resolved.
 
 ---
 
-## 1. Force-push `v28-refork` to `origin/main`
+## 1. Get `v28-refork` onto `origin/main`
 
-**Status:** waiting for user authorization
+**Status:** waiting for branch protection to be disabled in GitHub repo settings
 
-**What it does:**
-```bash
-git push origin v28-refork:main --force
-```
+**Blocked by:** GitHub repo rule — "Cannot force-push to this branch" and "Cannot create ref due to creations being restricted"
+
+**What needs to happen:**
+1. Go to github.com/u2giants/twenty → Settings → Rules → disable/delete the ruleset blocking force-push and branch creation
+2. Run: `git push origin v28-refork:main --force`
+3. Re-enable branch protection if desired (but allow the `build-and-push.yml` workflow to push to GHCR)
 
 **Why it's needed:**
-- Coolify reads `docker-compose.yaml` from `origin/main`. The compose file exists on `origin/main`
-  (v1.20 era) but not on `v28-refork`. Once `v28-refork` is `main`, the branch and the deployed
-  image are aligned.
-- The CI pipeline (item 2 below) can only trigger on pushes to `main`.
-- The GitHub repo will correctly reflect the production codebase.
+- The GitHub repo currently shows v1.20 codebase on `main`. The production image is v2.8.3 but the repo doesn't reflect it.
+- Once `main` is updated, the CI workflow (already committed at `.github/workflows/build-and-push.yml`) will trigger automatically on every future push.
 
-**What it destroys:**
-- `origin/main` currently holds the v1.20 codebase. After the force-push it will be gone from `main`
-  (it will still exist on the `v28-refork` branch's pre-push history, and v1.20 tags exist).
-- The old `build-and-push.yml` CI workflow (wired to Twenty's infra) will be replaced.
+**What it replaces on `origin/main`:**
+- The v1.20 codebase and its old `build-and-push.yml` (which dispatched to Twenty's own infra)
 
-**Pre-flight checklist (complete before authorizing):**
-- [ ] Confirm `crm.designflow.app` is stable on the current v2.8 image
-- [ ] Confirm nightly backup ran successfully in the last 24 hours
-- [ ] Confirm no open PRs on `origin/main` that need preserving
-- [ ] Have the Coolify token ready at `/tmp/coolify_token.txt` (chmod 600)
-
-**Authorization required:** explicit "do it" from the user in this session.
-
----
-
-## 2. Wire CI/CD pipeline for `v28-refork`
-
-**Status:** blocked on item 1 (force-push to main)
-
-**What it does:**
-After the force-push, adapt the GitHub Actions workflow so that a push to `main` automatically:
-1. Builds the Docker image from `packages/twenty-docker/twenty/Dockerfile`
-2. Pushes it to `ghcr.io/u2giants/twenty:latest`
-3. Triggers a Coolify redeploy via `http://localhost:8000/api/v1/deploy?uuid=rd261bt0wy7ifjrkoe1tkl92&force=true`
-
-**Template:** `/worksp/twenty/fork/.github/workflows/build-and-push.yml`
-
-**Secrets needed in GitHub repo settings:**
-- `GHCR_TOKEN` (or use `GITHUB_TOKEN` with `packages: write` permission)
-- `COOLIFY_TOKEN` (the Coolify personal access token)
-
-**Note:** The Coolify API is accessible at `http://localhost:8000` only from the VPS itself. The
-GitHub Actions runner cannot reach it directly. Options:
-- Add a self-hosted runner on the VPS
-- Use an SSH action step to trigger the Coolify API via SSH
+**CI workflow is already committed and ready** — `.github/workflows/build-and-push.yml` and required GitHub Secrets (`COOLIFY_BASE_URL`, `COOLIFY_API_TOKEN`, `COOLIFY_SERVER_UUID`) are already in place. The workflow will activate the moment this branch becomes `main`.
 
 ---
 
