@@ -8,9 +8,11 @@ import { fieldMetadataItemUsedInDropdownComponentSelector } from '@/object-recor
 import { objectFilterDropdownSearchInputComponentState } from '@/object-record/object-filter-dropdown/states/objectFilterDropdownSearchInputComponentState';
 import { selectedOperandInDropdownComponentState } from '@/object-record/object-filter-dropdown/states/selectedOperandInDropdownComponentState';
 import { currentRecordFiltersComponentState } from '@/object-record/record-filter/states/currentRecordFiltersComponentState';
+import { useRecordIndexContextOrThrow } from '@/object-record/record-index/contexts/RecordIndexContext';
 import { MultipleSelectDropdown } from '@/object-record/select/components/MultipleSelectDropdown';
 import { useRecordsForSelect } from '@/object-record/select/hooks/useRecordsForSelect';
 import { type SelectableItem } from '@/object-record/select/types/SelectableItem';
+import { useCustomerCompanyIds } from '@/pop-creations/hooks/useCustomerCompanyIds';
 import { DropdownMenuSeparator } from '@/ui/layout/dropdown/components/DropdownMenuSeparator';
 import { useAtomComponentSelectorValue } from '@/ui/utilities/state/jotai/hooks/useAtomComponentSelectorValue';
 import { useAtomComponentStateValue } from '@/ui/utilities/state/jotai/hooks/useAtomComponentStateValue';
@@ -97,6 +99,20 @@ export const ObjectFilterDropdownRecordSelect = ({
     throw new Error('objectNameSingular is not defined');
   }
 
+  // Restrict company filter dropdown to customer companies when filtering people
+  const { objectMetadataItem: parentObjectMetadataItem } =
+    useRecordIndexContextOrThrow();
+  const shouldRestrictToCustomerCompanies =
+    parentObjectMetadataItem.nameSingular === 'person' &&
+    objectNameSingular === 'company';
+  const { ids: customerCompanyIds } = useCustomerCompanyIds({
+    skip: !shouldRestrictToCustomerCompanies,
+  });
+  const companyFilterOverride =
+    shouldRestrictToCustomerCompanies && customerCompanyIds.length > 0
+      ? { id: { in: customerCompanyIds } }
+      : undefined;
+
   const firstSimpleRecordFilterForFieldMetadataItemUsedInDropdown =
     currentRecordFilters.find(
       (filter) =>
@@ -121,14 +137,19 @@ export const ObjectFilterDropdownRecordSelect = ({
     })
     .parse(recordFilterUsedInDropdown?.value);
 
-  const { loading, filteredSelectedRecords, recordsToSelect, selectedRecords } =
-    useRecordsForSelect({
-      searchFilterText: objectFilterDropdownSearchInput,
-      selectedIds: selectedRecordIds,
-      objectNameSingular,
-      limit: 10,
-      allowRequestsToTwentyIcons,
-    });
+  const {
+    loading,
+    filteredSelectedRecords,
+    recordsToSelect,
+    selectedRecords,
+  } = useRecordsForSelect({
+    searchFilterText: objectFilterDropdownSearchInput,
+    selectedIds: selectedRecordIds,
+    objectNameSingular,
+    limit: 20,
+    allowRequestsToTwentyIcons,
+    filterOverride: companyFilterOverride,
+  });
 
   const currentWorkspaceMemberSelectableItem: SelectableItem = {
     id: CURRENT_WORKSPACE_MEMBER_SELECTABLE_ITEM_ID,

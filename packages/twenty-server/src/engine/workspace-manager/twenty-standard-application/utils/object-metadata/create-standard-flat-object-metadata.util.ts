@@ -711,6 +711,238 @@ export const STANDARD_FLAT_OBJECT_METADATA_BUILDERS_BY_OBJECT_NAME = {
       twentyStandardApplicationId,
       now,
     }),
+  // ─── POP Creations custom objects ─────────────────────────────────────────
+  aiModelConfig: ({
+    now,
+    workspaceId,
+    standardObjectMetadataRelatedEntityIds,
+    twentyStandardApplicationId,
+    dependencyFlatEntityMaps,
+  }: Omit<
+    CreateStandardObjectArgs<'aiModelConfig'>,
+    'context' | 'objectName'
+  >) =>
+    createStandardObjectFlatMetadata({
+      objectName: 'aiModelConfig',
+      dependencyFlatEntityMaps,
+      context: {
+        universalIdentifier: STANDARD_OBJECTS.aiModelConfig.universalIdentifier,
+        nameSingular: 'aiModelConfig',
+        namePlural: 'aiModelConfigs',
+        labelSingular: i18nLabel(msg`AI Model Config`),
+        labelPlural: i18nLabel(msg`AI Model Configs`),
+        description: i18nLabel(
+          msg`AI model configuration for routing and processing`,
+        ),
+        icon: 'IconRobot',
+        isSearchable: true,
+        labelIdentifierFieldMetadataName: 'name',
+      },
+      workspaceId,
+      standardObjectMetadataRelatedEntityIds,
+      twentyStandardApplicationId,
+      now,
+    }),
+  department: ({
+    now,
+    workspaceId,
+    standardObjectMetadataRelatedEntityIds,
+    twentyStandardApplicationId,
+    dependencyFlatEntityMaps,
+  }: Omit<CreateStandardObjectArgs<'department'>, 'context' | 'objectName'>) =>
+    createStandardObjectFlatMetadata({
+      objectName: 'department',
+      dependencyFlatEntityMaps,
+      context: {
+        universalIdentifier: STANDARD_OBJECTS.department.universalIdentifier,
+        nameSingular: 'department',
+        namePlural: 'departments',
+        labelSingular: i18nLabel(msg`Department`),
+        labelPlural: i18nLabel(msg`Departments`),
+        description: i18nLabel(msg`A buying department within a retail chain`),
+        icon: 'IconBuildingStore',
+        isSearchable: true,
+        shortcut: 'D',
+        labelIdentifierFieldMetadataName: 'name',
+      },
+      workspaceId,
+      standardObjectMetadataRelatedEntityIds,
+      twentyStandardApplicationId,
+      now,
+    }),
+  emailMessage: ({
+    now,
+    workspaceId,
+    standardObjectMetadataRelatedEntityIds,
+    twentyStandardApplicationId,
+    dependencyFlatEntityMaps,
+  }: Omit<
+    CreateStandardObjectArgs<'emailMessage'>,
+    'context' | 'objectName'
+  >) =>
+    createStandardObjectFlatMetadata({
+      objectName: 'emailMessage',
+      dependencyFlatEntityMaps,
+      context: {
+        universalIdentifier: STANDARD_OBJECTS.emailMessage.universalIdentifier,
+        nameSingular: 'emailMessage',
+        namePlural: 'emailMessages',
+        labelSingular: i18nLabel(msg`Email Message`),
+        labelPlural: i18nLabel(msg`Email Messages`),
+        description: i18nLabel(msg`An ingested email from Outlook`),
+        icon: 'IconMail',
+        isSearchable: true,
+        labelIdentifierFieldMetadataName: 'subject',
+      },
+      workspaceId,
+      standardObjectMetadataRelatedEntityIds,
+      twentyStandardApplicationId,
+      now,
+    }),
+  factory: ({
+    now,
+    workspaceId,
+    standardObjectMetadataRelatedEntityIds,
+    twentyStandardApplicationId,
+    dependencyFlatEntityMaps,
+  }: Omit<CreateStandardObjectArgs<'factory'>, 'context' | 'objectName'>) =>
+    createStandardObjectFlatMetadata({
+      objectName: 'factory',
+      dependencyFlatEntityMaps,
+      context: {
+        universalIdentifier: STANDARD_OBJECTS.factory.universalIdentifier,
+        nameSingular: 'factory',
+        namePlural: 'factories',
+        labelSingular: i18nLabel(msg`Factory`),
+        labelPlural: i18nLabel(msg`Factories`),
+        description: i18nLabel(msg`A manufacturing partner`),
+        icon: 'IconBuildingFactory',
+        isSearchable: true,
+        labelIdentifierFieldMetadataName: 'name',
+      },
+      workspaceId,
+      standardObjectMetadataRelatedEntityIds,
+      twentyStandardApplicationId,
+      now,
+    }),
+  ignoreRule: ({
+    now,
+    workspaceId,
+    standardObjectMetadataRelatedEntityIds,
+    twentyStandardApplicationId,
+    dependencyFlatEntityMaps,
+  }: Omit<CreateStandardObjectArgs<'ignoreRule'>, 'context' | 'objectName'>) =>
+    createStandardObjectFlatMetadata({
+      objectName: 'ignoreRule',
+      dependencyFlatEntityMaps,
+      context: {
+        universalIdentifier: STANDARD_OBJECTS.ignoreRule.universalIdentifier,
+        nameSingular: 'ignoreRule',
+        namePlural: 'ignoreRules',
+        labelSingular: i18nLabel(msg`Ignore Rule`),
+        labelPlural: i18nLabel(msg`Ignore Rules`),
+        description: i18nLabel(
+          msg`A subject pattern to auto-skip during email routing`,
+        ),
+        icon: 'IconFilter',
+        isSearchable: true,
+        labelIdentifierFieldMetadataName: 'pattern',
+      },
+      workspaceId,
+      standardObjectMetadataRelatedEntityIds,
+      twentyStandardApplicationId,
+      now,
+    }),
+  licensorApprovalThread: ({
+    now,
+    workspaceId,
+    standardObjectMetadataRelatedEntityIds,
+    twentyStandardApplicationId,
+    dependencyFlatEntityMaps,
+  }: Omit<
+    CreateStandardObjectArgs<'licensorApprovalThread'>,
+    'context' | 'objectName'
+  >) =>
+    createStandardObjectFlatMetadata({
+      objectName: 'licensorApprovalThread',
+      dependencyFlatEntityMaps,
+      context: {
+        universalIdentifier:
+          STANDARD_OBJECTS.licensorApprovalThread.universalIdentifier,
+        nameSingular: 'licensorApprovalThread',
+        namePlural: 'licensorApprovalThreads',
+        labelSingular: i18nLabel(msg`Licensor Approval Thread`),
+        labelPlural: i18nLabel(msg`Licensor Approval Threads`),
+        description: i18nLabel(
+          msg`A licensing submission and approval workflow`,
+        ),
+        icon: 'IconCertificate',
+        isSearchable: true,
+        labelIdentifierFieldMetadataName: 'propertyName',
+      },
+      workspaceId,
+      standardObjectMetadataRelatedEntityIds,
+      twentyStandardApplicationId,
+      now,
+    }),
+  meetingNote: ({
+    now,
+    workspaceId,
+    standardObjectMetadataRelatedEntityIds,
+    twentyStandardApplicationId,
+    dependencyFlatEntityMaps,
+  }: Omit<CreateStandardObjectArgs<'meetingNote'>, 'context' | 'objectName'>) =>
+    createStandardObjectFlatMetadata({
+      objectName: 'meetingNote',
+      dependencyFlatEntityMaps,
+      context: {
+        universalIdentifier: STANDARD_OBJECTS.meetingNote.universalIdentifier,
+        nameSingular: 'meetingNote',
+        namePlural: 'meetingNotes',
+        labelSingular: i18nLabel(msg`Meeting Note`),
+        labelPlural: i18nLabel(msg`Meeting Notes`),
+        description: i18nLabel(
+          msg`A meeting record from Fireflies or manual entry`,
+        ),
+        icon: 'IconNotes',
+        isSearchable: true,
+        labelIdentifierFieldMetadataName: 'name',
+      },
+      workspaceId,
+      standardObjectMetadataRelatedEntityIds,
+      twentyStandardApplicationId,
+      now,
+    }),
+  meetingNoteAttendee: ({
+    now,
+    workspaceId,
+    standardObjectMetadataRelatedEntityIds,
+    twentyStandardApplicationId,
+    dependencyFlatEntityMaps,
+  }: Omit<
+    CreateStandardObjectArgs<'meetingNoteAttendee'>,
+    'context' | 'objectName'
+  >) =>
+    createStandardObjectFlatMetadata({
+      objectName: 'meetingNoteAttendee',
+      dependencyFlatEntityMaps,
+      context: {
+        universalIdentifier:
+          STANDARD_OBJECTS.meetingNoteAttendee.universalIdentifier,
+        nameSingular: 'meetingNoteAttendee',
+        namePlural: 'meetingNoteAttendees',
+        labelSingular: i18nLabel(msg`Meeting Note Attendee`),
+        labelPlural: i18nLabel(msg`Meeting Note Attendees`),
+        description: i18nLabel(msg`A staff member who attended a meeting`),
+        icon: 'IconUserCheck',
+        isSystem: true,
+        labelIdentifierFieldMetadataName: 'name',
+      },
+      workspaceId,
+      standardObjectMetadataRelatedEntityIds,
+      twentyStandardApplicationId,
+      now,
+    }),
 } satisfies {
   [P in AllStandardObjectName]: (
     args: Omit<CreateStandardObjectArgs<P>, 'context' | 'objectName'>,

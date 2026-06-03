@@ -19,6 +19,9 @@ import { type NoteTargetWorkspaceEntity } from 'src/modules/note/standard-object
 import { type OpportunityWorkspaceEntity } from 'src/modules/opportunity/standard-objects/opportunity.workspace-entity';
 import { type TaskTargetWorkspaceEntity } from 'src/modules/task/standard-objects/task-target.workspace-entity';
 import { type TimelineActivityWorkspaceEntity } from 'src/modules/timeline/standard-objects/timeline-activity.workspace-entity';
+import { type DepartmentWorkspaceEntity } from 'src/modules/pop-creations/standard-objects/department.workspace-entity';
+import { type MeetingNoteWorkspaceEntity } from 'src/modules/pop-creations/standard-objects/meeting-note.workspace-entity';
+import { type MeetingNoteAttendeeWorkspaceEntity } from 'src/modules/pop-creations/standard-objects/meeting-note-attendee.workspace-entity';
 
 const NAME_FIELD_NAME = 'name';
 const EMAILS_FIELD_NAME = 'emails';
@@ -29,7 +32,6 @@ export const SEARCH_FIELDS_FOR_PERSON: FieldTypeAndNameMetadata[] = [
   { name: NAME_FIELD_NAME, type: FieldMetadataType.FULL_NAME },
   { name: EMAILS_FIELD_NAME, type: FieldMetadataType.EMAILS },
   { name: PHONES_FIELD_NAME, type: FieldMetadataType.PHONES },
-  { name: JOB_TITLE_FIELD_NAME, type: FieldMetadataType.TEXT },
 ];
 
 export class PersonWorkspaceEntity extends BaseWorkspaceEntity {
@@ -60,4 +62,14 @@ export class PersonWorkspaceEntity extends BaseWorkspaceEntity {
   >;
   timelineActivities: EntityRelation<TimelineActivityWorkspaceEntity[]>;
   searchVector: string;
+
+  // --- POP Creations custom fields ---
+  contactType: string | null;
+  scope: string | null;
+  companyCustomerStatus: string | null;
+  department: EntityRelation<DepartmentWorkspaceEntity> | null;
+  departmentId: string | null;
+  departmentsAsPrimaryBuyer: EntityRelation<DepartmentWorkspaceEntity[]>;
+  meetingAttendances: EntityRelation<MeetingNoteAttendeeWorkspaceEntity[]>;
+  meetingNotes: EntityRelation<MeetingNoteWorkspaceEntity[]>;
 }

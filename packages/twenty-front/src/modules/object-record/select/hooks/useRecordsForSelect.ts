@@ -19,6 +19,7 @@ export const useRecordsForSelect = ({
   excludedRecordIds = [],
   objectNameSingular,
   allowRequestsToTwentyIcons,
+  filterOverride,
 }: {
   searchFilterText: string;
   sortOrder?: OrderBy;
@@ -27,6 +28,9 @@ export const useRecordsForSelect = ({
   excludedRecordIds?: string[];
   objectNameSingular: string;
   allowRequestsToTwentyIcons: boolean;
+  // POP: optional extra filter to scope the dropdown (e.g. restrict company
+  // picker to customer companies when filtering people)
+  filterOverride?: Record<string, unknown>;
 }) => {
   const { mapToObjectRecordIdentifier } = useMapToObjectRecordIdentifier({
     objectNameSingular,
@@ -88,7 +92,11 @@ export const useRecordsForSelect = ({
     loading: filteredSelectedRecordsLoading,
     records: filteredSelectedRecordsData,
   } = useFindManyRecords({
-    filter: makeAndFilterVariables([...searchFilters, selectedIdsFilter]),
+    filter: makeAndFilterVariables([
+      ...searchFilters,
+      selectedIdsFilter,
+      ...(filterOverride ? [filterOverride] : []),
+    ]),
     orderBy: orderByField,
     objectNameSingular,
     skip: !selectedIds.length,
@@ -100,7 +108,11 @@ export const useRecordsForSelect = ({
     : undefined;
   const { loading: recordsToSelectLoading, records: recordsToSelectData } =
     useFindManyRecords({
-      filter: makeAndFilterVariables([...searchFilters, notFilter]),
+      filter: makeAndFilterVariables([
+        ...searchFilters,
+        notFilter,
+        ...(filterOverride ? [filterOverride] : []),
+      ]),
       limit: limit ?? DEFAULT_SEARCH_REQUEST_LIMIT,
       orderBy: orderByField,
       objectNameSingular,

@@ -29,6 +29,15 @@ import { buildWorkflowRunStandardFlatFieldMetadatas } from 'src/engine/workspace
 import { buildWorkflowStandardFlatFieldMetadatas } from 'src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-workflow-standard-flat-field-metadata.util';
 import { buildWorkflowVersionStandardFlatFieldMetadatas } from 'src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-workflow-version-standard-flat-field-metadata.util';
 import { buildWorkspaceMemberStandardFlatFieldMetadatas } from 'src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-workspace-member-standard-flat-field-metadata.util';
+// POP Creations custom objects
+import { buildAiModelConfigStandardFlatFieldMetadatas } from 'src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/pop-creations/compute-ai-model-config-standard-flat-field-metadata.util';
+import { buildDepartmentStandardFlatFieldMetadatas } from 'src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/pop-creations/compute-department-standard-flat-field-metadata.util';
+import { buildEmailMessageStandardFlatFieldMetadatas } from 'src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/pop-creations/compute-email-message-standard-flat-field-metadata.util';
+import { buildFactoryStandardFlatFieldMetadatas } from 'src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/pop-creations/compute-factory-standard-flat-field-metadata.util';
+import { buildIgnoreRuleStandardFlatFieldMetadatas } from 'src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/pop-creations/compute-ignore-rule-standard-flat-field-metadata.util';
+import { buildLicensorApprovalThreadStandardFlatFieldMetadatas } from 'src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/pop-creations/compute-licensor-approval-thread-standard-flat-field-metadata.util';
+import { buildMeetingNoteStandardFlatFieldMetadatas } from 'src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/pop-creations/compute-meeting-note-standard-flat-field-metadata.util';
+import { buildMeetingNoteAttendeeStandardFlatFieldMetadatas } from 'src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/pop-creations/compute-meeting-note-attendee-standard-flat-field-metadata.util';
 import { type CreateStandardFieldArgs } from 'src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/create-standard-field-flat-metadata.util';
 
 type StandardFieldBuilder<P extends AllStandardObjectName> = (
@@ -65,6 +74,15 @@ const STANDARD_FLAT_FIELD_METADATA_BUILDERS_BY_OBJECT_NAME = {
   workflowRun: buildWorkflowRunStandardFlatFieldMetadatas,
   workflowVersion: buildWorkflowVersionStandardFlatFieldMetadatas,
   workspaceMember: buildWorkspaceMemberStandardFlatFieldMetadatas,
+  // POP Creations custom objects
+  aiModelConfig: buildAiModelConfigStandardFlatFieldMetadatas,
+  department: buildDepartmentStandardFlatFieldMetadatas,
+  emailMessage: buildEmailMessageStandardFlatFieldMetadatas,
+  factory: buildFactoryStandardFlatFieldMetadatas,
+  ignoreRule: buildIgnoreRuleStandardFlatFieldMetadatas,
+  licensorApprovalThread: buildLicensorApprovalThreadStandardFlatFieldMetadatas,
+  meetingNote: buildMeetingNoteStandardFlatFieldMetadatas,
+  meetingNoteAttendee: buildMeetingNoteAttendeeStandardFlatFieldMetadatas,
 } satisfies {
   [P in AllStandardObjectName]: StandardFieldBuilder<P>;
 };
