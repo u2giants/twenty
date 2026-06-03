@@ -28,6 +28,12 @@ import { WorkflowCleanWorkflowRunsCronCommand } from 'src/modules/workflow/workf
 import { WorkflowHandleStaledRunsCronCommand } from 'src/modules/workflow/workflow-runner/workflow-run-queue/cron/command/workflow-handle-staled-runs.cron.command';
 import { WorkflowRunEnqueueCronCommand } from 'src/modules/workflow/workflow-runner/workflow-run-queue/cron/command/workflow-run-enqueue.cron.command';
 import { WorkflowCronTriggerCronCommand } from 'src/modules/workflow/workflow-trigger/automated-trigger/crons/commands/workflow-cron-trigger.cron.command';
+import { OutlookIngestCronCommand } from 'src/modules/pop-creations/crons/commands/outlook-ingest.cron.command';
+import {
+  EmailRerouterCronCommand,
+  ClickUpSyncCronCommand,
+  EmailContactSyncCronCommand,
+} from 'src/modules/pop-creations/crons/commands/pop-creations-cron.commands';
 
 @Command({
   name: 'cron:register:all',
@@ -65,6 +71,11 @@ export class CronRegisterAllCommand extends CommandRunner {
     private readonly applicationVersionCheckCronCommand: ApplicationVersionCheckCronCommand,
     private readonly staleRegistrationCleanupCronCommand: StaleRegistrationCleanupCronCommand,
     private readonly twentyConfigService: TwentyConfigService,
+
+    private readonly outlookIngestCronCommand: OutlookIngestCronCommand,
+    private readonly emailRerouterCronCommand: EmailRerouterCronCommand,
+    private readonly clickUpSyncCronCommand: ClickUpSyncCronCommand,
+    private readonly emailContactSyncCronCommand: EmailContactSyncCronCommand,
   ) {
     super();
   }
@@ -173,6 +184,22 @@ export class CronRegisterAllCommand extends CommandRunner {
       {
         name: 'StaleRegistrationCleanup',
         command: this.staleRegistrationCleanupCronCommand,
+      },
+      {
+        name: 'OutlookIngest',
+        command: this.outlookIngestCronCommand,
+      },
+      {
+        name: 'EmailRerouter',
+        command: this.emailRerouterCronCommand,
+      },
+      {
+        name: 'ClickUpSync',
+        command: this.clickUpSyncCronCommand,
+      },
+      {
+        name: 'EmailContactSync',
+        command: this.emailContactSyncCronCommand,
       },
     ];
 

@@ -48,6 +48,13 @@ import { CalendarEventImportManagerModule } from 'src/modules/calendar/calendar-
 import { MessagingImportManagerModule } from 'src/modules/messaging/message-import-manager/messaging-import-manager.module';
 import { WorkflowRunQueueModule } from 'src/modules/workflow/workflow-runner/workflow-run-queue/workflow-run-queue.module';
 import { AutomatedTriggerModule } from 'src/modules/workflow/workflow-trigger/automated-trigger/automated-trigger.module';
+import { PopCreationsModule } from 'src/modules/pop-creations/pop-creations.module';
+import { OutlookIngestCronCommand } from 'src/modules/pop-creations/crons/commands/outlook-ingest.cron.command';
+import {
+  EmailRerouterCronCommand,
+  ClickUpSyncCronCommand,
+  EmailContactSyncCronCommand,
+} from 'src/modules/pop-creations/crons/commands/pop-creations-cron.commands';
 
 @Module({
   imports: [
@@ -87,6 +94,7 @@ import { AutomatedTriggerModule } from 'src/modules/workflow/workflow-trigger/au
     WorkspaceVersionModule,
     UpgradeModule,
     SecretEncryptionRotationModule,
+    PopCreationsModule,
   ],
   providers: [
     DataSeedWorkspaceCommand,
@@ -102,6 +110,10 @@ import { AutomatedTriggerModule } from 'src/modules/workflow/workflow-trigger/au
     UpgradeStatusCommand,
     RebuildApplicationDefaultDepsCommand,
     InstallPreInstalledAppsCommand,
+    OutlookIngestCronCommand,
+    EmailRerouterCronCommand,
+    ClickUpSyncCronCommand,
+    EmailContactSyncCronCommand,
   ],
 })
 export class DatabaseCommandModule {}
