@@ -162,7 +162,9 @@ const StyledBtn = styled.button<{ $danger?: boolean }>`
   border: 1px solid ${themeCssVariables.border.color.medium};
   border-radius: ${themeCssVariables.border.radius.sm};
   color: ${({ $danger }) =>
-    $danger ? themeCssVariables.font.color.inverted : themeCssVariables.font.color.primary};
+    $danger
+      ? themeCssVariables.font.color.inverted
+      : themeCssVariables.font.color.primary};
   cursor: pointer;
   font-size: ${themeCssVariables.font.size.xs};
   font-weight: ${themeCssVariables.font.weight.medium};
@@ -477,14 +479,18 @@ export const LookupValuesPage = () => {
                           >
                             Save
                           </StyledBtn>
-                          <StyledBtn onClick={() => setEdit(null)}>Cancel</StyledBtn>
+                          <StyledBtn onClick={() => setEdit(null)}>
+                            Cancel
+                          </StyledBtn>
                         </StyledActionsCell>
                       </StyledTd>
                     </StyledTr>
                   ) : (
                     <StyledTr key={opt.id}>
                       <StyledTd>{opt.label}</StyledTd>
-                      <StyledTd style={{ fontFamily: 'monospace', fontSize: 12 }}>
+                      <StyledTd
+                        style={{ fontFamily: 'monospace', fontSize: 12 }}
+                      >
                         {opt.value}
                       </StyledTd>
                       <StyledTd>{opt.color}</StyledTd>
@@ -571,7 +577,9 @@ export const LookupValuesPage = () => {
                         >
                           Save
                         </StyledBtn>
-                        <StyledBtn onClick={() => setEdit(null)}>Cancel</StyledBtn>
+                        <StyledBtn onClick={() => setEdit(null)}>
+                          Cancel
+                        </StyledBtn>
                       </StyledActionsCell>
                     </StyledTd>
                   </StyledTr>
