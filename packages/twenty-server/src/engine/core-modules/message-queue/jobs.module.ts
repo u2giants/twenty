@@ -19,6 +19,7 @@ import { GenerateSdkClientJob } from 'src/engine/core-modules/sdk-client/jobs/ge
 import { SdkClientModule } from 'src/engine/core-modules/sdk-client/sdk-client.module';
 import { UserWorkspaceModule } from 'src/engine/core-modules/user-workspace/user-workspace.module';
 import { UpdateWorkspaceMemberEmailJob } from 'src/engine/core-modules/user/jobs/update-workspace-member-email.job';
+import { PopCreationsModule } from 'src/modules/pop-creations/pop-creations.module';
 import { UserVarsModule } from 'src/engine/core-modules/user/user-vars/user-vars.module';
 import { UserModule } from 'src/engine/core-modules/user/user.module';
 import { HandleWorkspaceMemberDeletedJob } from 'src/engine/core-modules/workspace/handle-workspace-member-deleted.job';
@@ -45,6 +46,7 @@ import { WorkflowModule } from 'src/modules/workflow/workflow.module';
 
 @Module({
   imports: [
+    PopCreationsModule,
     TypeOrmModule.forFeature([
       WorkspaceEntity,
       BillingSubscriptionEntity,
