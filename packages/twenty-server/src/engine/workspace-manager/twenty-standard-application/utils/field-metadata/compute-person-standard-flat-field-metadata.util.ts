@@ -813,7 +813,9 @@ export const buildPersonStandardFlatFieldMetadatas = ({
       morphId: null,
       fieldName: 'departmentsAsPrimaryBuyer',
       label: i18nLabel(msg`Departments as Primary Buyer`),
-      description: i18nLabel(msg`Departments where this person is the primary buyer`),
+      description: i18nLabel(
+        msg`Departments where this person is the primary buyer`,
+      ),
       icon: 'IconBuildingStore',
       isNullable: true,
       targetObjectName: 'department',

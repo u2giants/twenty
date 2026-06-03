@@ -137,19 +137,15 @@ export const ObjectFilterDropdownRecordSelect = ({
     })
     .parse(recordFilterUsedInDropdown?.value);
 
-  const {
-    loading,
-    filteredSelectedRecords,
-    recordsToSelect,
-    selectedRecords,
-  } = useRecordsForSelect({
-    searchFilterText: objectFilterDropdownSearchInput,
-    selectedIds: selectedRecordIds,
-    objectNameSingular,
-    limit: 20,
-    allowRequestsToTwentyIcons,
-    filterOverride: companyFilterOverride,
-  });
+  const { loading, filteredSelectedRecords, recordsToSelect, selectedRecords } =
+    useRecordsForSelect({
+      searchFilterText: objectFilterDropdownSearchInput,
+      selectedIds: selectedRecordIds,
+      objectNameSingular,
+      limit: 20,
+      allowRequestsToTwentyIcons,
+      filterOverride: companyFilterOverride,
+    });
 
   const currentWorkspaceMemberSelectableItem: SelectableItem = {
     id: CURRENT_WORKSPACE_MEMBER_SELECTABLE_ITEM_ID,
