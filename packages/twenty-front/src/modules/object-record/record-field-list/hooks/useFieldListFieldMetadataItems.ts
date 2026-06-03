@@ -7,7 +7,55 @@ import { isFieldCellSupported } from '@/object-record/utils/isFieldCellSupported
 import { useIsFeatureEnabled } from '@/workspace/hooks/useIsFeatureEnabled';
 import groupBy from 'lodash.groupby';
 import { CoreObjectNameSingular, FieldMetadataType } from 'twenty-shared/types';
-import { FeatureFlagKey } from '~/generated-metadata/graphql';
+import { FeatureFlagKey, RelationType } from '~/generated-metadata/graphql';
+
+/**
+ * Priority field ordering for the emailMessage record panel.
+ * Fields listed here appear first (in this order); remaining fields sort
+ * alphabetically after them.
+ */
+const EMAIL_MESSAGE_FIELD_ORDER: string[] = [
+  'program', // Opportunity
+  'department', // Department
+  'company', // Company
+  'detectedPoNumbers', // Detected Prod PO
+  'detectedSoNumbers', // Detected SO
+  'routingStatus', // Routing Status
+];
+
+const sortEmailMessageFields = <T extends { name: string }>(items: T[]): T[] =>
+  [...items].sort((a, b) => {
+    const ai = EMAIL_MESSAGE_FIELD_ORDER.indexOf(a.name);
+    const bi = EMAIL_MESSAGE_FIELD_ORDER.indexOf(b.name);
+    if (ai !== -1 && bi !== -1) return ai - bi;
+    if (ai !== -1) return -1;
+    if (bi !== -1) return 1;
+    return a.name.localeCompare(b.name);
+  });
+
+/**
+ * Priority field ordering for the department record panel.
+ * company and primaryBuyer are pulled inline (not boxed) so they appear
+ * prominently when creating or editing a department.
+ */
+const DEPARTMENT_FIELD_ORDER: string[] = [
+  'name', // Department name (shown inline, not just as title)
+  'company', // Retailer this department belongs to
+  'category', // Department category
+  'division', // Business division
+  'primaryBuyer', // Primary buyer contact
+  'active', // Active status
+];
+
+const sortDepartmentFields = <T extends { name: string }>(items: T[]): T[] =>
+  [...items].sort((a, b) => {
+    const ai = DEPARTMENT_FIELD_ORDER.indexOf(a.name);
+    const bi = DEPARTMENT_FIELD_ORDER.indexOf(b.name);
+    if (ai !== -1 && bi !== -1) return ai - bi;
+    if (ai !== -1) return -1;
+    if (bi !== -1) return 1;
+    return a.name.localeCompare(b.name);
+  });
 
 type UseFieldListFieldMetadataItemsProps = {
   objectNameSingular: string;
@@ -43,7 +91,10 @@ export const useFieldListFieldMetadataItems = ({
     .filter(
       (fieldMetadataItem) =>
         isFieldCellSupported(fieldMetadataItem, objectMetadataItems) &&
-        fieldMetadataItem.id !== labelIdentifierFieldMetadataItem?.id &&
+        // For department, show the name field inline so it's visible as a labeled input.
+        // For all other objects, exclude the label identifier (it's shown as the record title).
+        (objectNameSingular === 'department' ||
+          fieldMetadataItem.id !== labelIdentifierFieldMetadataItem?.id) &&
         !excludeFieldMetadataIds.includes(fieldMetadataItem.id) &&
         (!excludeCreatedAtAndUpdatedAt ||
           (fieldMetadataItem.name !== 'createdAt' &&
@@ -79,22 +130,43 @@ export const useFieldListFieldMetadataItems = ({
         : 'inlineFieldMetadataItems',
   );
 
+  // For emailMessage and department: pull MANY_TO_ONE relations out of the
+  // boxed section and render them inline so they can be sorted together with
+  // other fields in the priority order defined above.
+  const isEmailMessage = objectNameSingular === 'emailMessage';
+  const isDepartment = objectNameSingular === 'department';
+  const pullManyToOneInline = isEmailMessage || isDepartment;
+  const allRelations = relationFieldMetadataItems ?? [];
+  const relationsForCategorization = pullManyToOneInline
+    ? allRelations.filter((f) => f.relation?.type !== RelationType.MANY_TO_ONE)
+    : allRelations;
+  const manyToOneRelationsForInline = pullManyToOneInline
+    ? allRelations.filter((f) => f.relation?.type === RelationType.MANY_TO_ONE)
+    : [];
+
   const {
     activityTargetFields,
     inlineRelationFields,
     junctionRelationFields,
     boxedRelationFields,
   } = categorizeRelationFields({
-    relationFields: relationFieldMetadataItems ?? [],
+    relationFields: relationsForCategorization,
     objectNameSingular,
     objectPermissionsByObjectMetadataId,
     isJunctionRelationsEnabled,
   });
 
-  const allInlineFieldMetadataItems = [
+  const mergedInlineItems = [
     ...(inlineFieldMetadataItems ?? []),
     ...inlineRelationFields,
-  ].sort((a, b) => a.name.localeCompare(b.name));
+    ...manyToOneRelationsForInline,
+  ];
+
+  const allInlineFieldMetadataItems = isEmailMessage
+    ? sortEmailMessageFields(mergedInlineItems)
+    : isDepartment
+      ? sortDepartmentFields(mergedInlineItems)
+      : mergedInlineItems.sort((a, b) => a.name.localeCompare(b.name));
 
   return {
     inlineFieldMetadataItems: allInlineFieldMetadataItems,
