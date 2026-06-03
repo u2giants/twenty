@@ -15,7 +15,7 @@ correct customer company/department/program automatically, and surfaces them in 
 | **[AGENTS.md](./AGENTS.md)** | Primary developer and AI guide — read this first |
 | **[docs/architecture.md](./docs/architecture.md)** | System design, components, data flow |
 | **[docs/development.md](./docs/development.md)** | Local setup, run/test/lint |
-| **[docs/configuration.md](./docs/configuration.md)** | Env vars, auth (Authentik SSO, Microsoft OAuth) |
+| **[docs/configuration.md](./docs/configuration.md)** | Env vars, auth (Microsoft Entra SSO, Microsoft OAuth) |
 | **[docs/deployment.md](./docs/deployment.md)** | Build, push, Coolify deploy, rollback |
 | **[HANDOFF.md](./HANDOFF.md)** | Open work: force-push to main + CI pipeline |
 | **[CLAUDE.md](./CLAUDE.md)** | Claude Code-specific notes |
@@ -57,14 +57,6 @@ docs/                                          ← extended documentation
 AGENTS.md                                      ← primary guide
 HANDOFF.md                                     ← pending work
 ```
-
----
-
-## Branch status
-
-Active development is on `v28-refork`. This branch has not yet been force-pushed to `origin/main`.
-Coolify reads `docker-compose.yaml` from `origin/main` but deploys `ghcr.io/u2giants/twenty:latest`,
-which is always built from this branch. See [HANDOFF.md](./HANDOFF.md) for the force-push plan.
 
 ---
 

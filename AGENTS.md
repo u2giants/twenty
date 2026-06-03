@@ -47,10 +47,9 @@ This is the upstream Twenty monorepo (Nx + Yarn workspaces) with a project-owned
 | Generated code | `packages/twenty-front/src/generated*/`, `**/locales/generated/`, `*/metadata/generated/` | generated — do not hand-edit |
 | Build artifacts | `dist/`, `.nx/cache/`, `node_modules/`, `.twenty/` | not in scope (see §9) |
 
-**Branch status:** this codebase lives on the `v28-refork` git branch, which has not yet been
-force-pushed to `origin/main`. The Coolify deploy reads `docker-compose.yaml` from `origin/main`
-(v1.20 era) but the compose file only references the GHCR image — production is running this v2.8
-code via `ghcr.io/u2giants/twenty:latest`. See §14 (pending: force-push to main).
+**Branch model:** active development is on the local `v28-refork` branch, which pushes to
+`origin/main`. CI triggers on every push to `main` and deploys automatically. The local branch
+name is a historical artifact of the re-fork — treat `origin/main` as the single source of truth.
 
 ---
 
@@ -258,14 +257,6 @@ Looks like: a bug that excludes valid companies.
 Actually: deliberate — routing against all companies produces mis-routing.
 Do not change because: `UNASSIGNED` and other statuses must be excluded from routing candidates.
 
-### `docker-compose.yaml` lives on `origin/main`, not `v28-refork`
-
-Looks like: the deployment file is missing from the active branch.
-Actually: Coolify reads `docker-compose.yaml` from `origin/main` (git branch). The compose file
-points to `ghcr.io/u2giants/twenty:latest` with `pull_policy: always`, so it always runs whatever
-image was last pushed — the branch the image was built from is irrelevant to Coolify's compose read.
-Do not change because: when v28-refork is force-pushed to main (§14), the compose file will be there.
-
 ### `ENCRYPTION_KEY` is satisfied by `APP_SECRET`
 
 Looks like: v2.8 requires a new `ENCRYPTION_KEY` env var.
@@ -307,7 +298,7 @@ Full list: [docs/configuration.md](./docs/configuration.md). Values live in Cool
 | `POP_CREATIONS_WORKSPACE_ID` | target workspace for crons | yes | yes |
 | `FIREFLIES_API_KEY` | Fireflies webhook receiver | optional | yes |
 | `LOGIC_FUNCTION_TYPE` | must be `LOCAL` in production | — | yes |
-| `ENTERPRISE_KEY` | enables OIDC/SSO guard (any non-empty value) | — | yes |
+| `ENTERPRISE_KEY` | enables OIDC/SSO guard required for Microsoft Entra login (any non-empty value) | — | yes |
 
 ---
 
@@ -403,11 +394,12 @@ Recovery: migration `001_enforce_uuid_variant.sql`. Rule: all hand-written UUIDs
 
 | Status | Item | Next action |
 |---|---|---|
-| **open** | **Force-push `v28-refork` to `origin/main`** | Requires explicit user authorization; see `HANDOFF.md` |
-| **open** | **Wire CI/CD pipeline for v28-refork** | After force-push: adapt `build-and-push.yml` from `/worksp/twenty/fork/.github/workflows/build-and-push.yml` so pushes to `main` auto-build + push + deploy |
-| open | Connected account re-auth | 2 Microsoft accounts may need re-linking in the UI (v2.7 moved `connectedAccount` to core schema) |
-| open | Phase E deferred frontend components | 5 UX components reset to v2.8.3 base: `FrontComponentRenderer.tsx`, `useFrontComponentExecutionContext.ts`, `useFieldListFieldMetadataItems.ts`, `useNavigationMenuItemFolderOpenState.ts`, `NavigationMenuItemFolderDnd.tsx` — non-blocking |
+| open | Connected account re-auth | Individual users (Albert, Adam) must go to Settings → Connected accounts → connect their personal Microsoft/Outlook accounts for personal email and calendar sync. Unrelated to workspace login SSO. |
 | done | v1.20 → v2.8.3 upgrade | Completed 2026-06-03; crm.designflow.app live on v2.8.3 |
+| done | Force-push `v28-refork` to `origin/main` | Done; CI auto-triggers on push to main |
+| done | Wire CI/CD pipeline | `build-and-push.yml` live; push to main → lint → test → build → GHCR → Coolify |
+| done | Phase E deferred frontend components | `useFieldListFieldMetadataItems.ts` ported; remaining 4 files were already at correct state in v2.8.3 base |
+| done | Microsoft Entra SSO | Replaced Authentik OIDC with Microsoft Entra (`login.microsoftonline.com/1caeb1c0-…/v2.0`); redirect URI registered in Azure; employees sign in with `@popcre.com` Microsoft accounts |
 | done | POP cron registration | All 4 crons registered; confirmed in server logs (27 successful) |
 | done | Backup service fix | Nightly backup confirmed working; 14-day rolling retention |
 | done | Staging container cleanup | All staging/cutover containers removed |

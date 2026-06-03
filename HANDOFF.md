@@ -5,10 +5,18 @@ Delete this file when all items are resolved.
 
 ---
 
-## 4. Connected account re-auth
+## Connected account re-auth
 
-**Status:** open — accounts must be created fresh (table is empty after v2.7 migration moved connectedAccount to core schema)
+**Status:** open — personal email/calendar sync accounts must be created fresh.
 
-**Action required (Albert):** Go to Settings → Connected accounts → connect Microsoft account(s).
-This applies to any personal Outlook account used for email ingestion or calendar sync.
-The service-account ingestion (`AZURE_CLIENT_SECRET`-based) is unaffected — it uses env vars, not connected accounts.
+**Context:** This is separate from workspace login SSO (which is now Microsoft Entra — fully working).
+This is about Twenty's "Connected accounts" feature for syncing an individual user's personal Outlook
+inbox and calendar into the CRM. The `connectedAccount` table is empty after the v2.7 migration
+moved it to the core schema.
+
+**Action required (Albert, Adam):** Go to **Settings → Connected accounts → connect Microsoft
+account**. Do this for any personal `@popcre.com` Outlook account you want to use for email
+ingestion or calendar sync through the Twenty UI.
+
+The service-account ingestion (`AZURE_CLIENT_SECRET`-based `OutlookIngest` cron) is unaffected —
+it uses env vars, not connected accounts, and is already running.

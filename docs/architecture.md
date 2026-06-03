@@ -39,7 +39,7 @@ The server registers crons (schedules BullMQ jobs) at startup. The worker execut
 | Queue | BullMQ (Redis-backed) |
 | Database | PostgreSQL — `core` schema (global) + `workspace_<id>` schema (per-workspace) |
 | Cache / session | Redis |
-| Auth | Authentik (OIDC/SSO), Microsoft OAuth for connected accounts |
+| Auth | Microsoft Entra OIDC (workspace login SSO), Microsoft OAuth for connected accounts |
 | Build | Nx monorepo, Yarn 4, SWC compiler |
 | Deploy | Docker, GHCR, Coolify API |
 
@@ -138,13 +138,16 @@ Adding a new cron requires edits to **4 files** — see AGENTS.md §5.
 
 ## Authentication
 
-**User login:** Authentik OIDC SSO. The `ENTERPRISE_KEY` env var (any non-empty value) enables the
-OIDC/SSO guard. Users authenticate via Authentik; Twenty issues its own session token.
+**User login (workspace SSO):** Microsoft Entra OIDC. The `ENTERPRISE_KEY` env var (any non-empty
+value) enables the OIDC/SSO guard. Employees authenticate with their `@popcre.com` Microsoft
+accounts; Twenty issues its own session token. The OIDC provider record lives in
+`core.workspaceSSOIdentityProvider` — see `docs/configuration.md` for the tenant/client/redirect
+details.
 
-**Microsoft OAuth (connected accounts):** `AZURE_TENANT_ID` / `AZURE_CLIENT_ID` /
-`AZURE_CLIENT_SECRET` grant access to Outlook and Calendar. The Outlook ingestion cron uses a
-service-account credential stored in `connectedAccount`; individual user accounts can also connect
-for personal calendar/email sync.
+**Microsoft OAuth (connected accounts):** separate from SSO. `AZURE_TENANT_ID` / `AZURE_CLIENT_ID` /
+`AZURE_CLIENT_SECRET` grant service-account access to Outlook and Calendar for the ingestion cron.
+Individual users can also connect personal accounts via Settings → Connected accounts for personal
+email/calendar sync.
 
 **API keys:** generated via `generate-api-key` CLI command; stored in `core.apiKey`.
 
@@ -156,23 +159,25 @@ POP frontend code lives in `packages/twenty-front/src/modules/pop-creations/`. I
 - Right-click context menu on `ParticipantChip` (navigate to People record)
 - Company filter scoped to customer companies when filtering People records
 
-The upstream Twenty frontend (React/Jotai/Apollo) is otherwise stock v2.8.3. Five components were
-reset to v2.8.3 base during the re-fork (Phase E deferred — see HANDOFF.md).
+The upstream Twenty frontend (React/Jotai/Apollo) is otherwise stock v2.8.3.
 
 ---
 
 ## Deployment topology
 
 ```
-GitHub (origin/main) ──────────────────────► Coolify reads docker-compose.yaml
-                                                   │
-GHCR (ghcr.io/u2giants/twenty:latest) ◄── push    │ pull_policy: always
-           │                                       │
-           └───────────────────────────────────────┘
-                                              ▼
-                              Coolify recreates server + worker containers
+push to origin/main
+    │
+    ▼
+GitHub Actions (.github/workflows/build-and-push.yml)
+    lint → test → build Docker image → push ghcr.io/u2giants/twenty:latest → trigger Coolify API
+    │
+    ▼
+Coolify reads docker-compose.yaml from origin/main (pull_policy: always)
+    │
+    ▼
+Coolify recreates server + worker containers on VPS
 ```
 
-`docker-compose.yaml` lives on `origin/main`. The active development branch is `v28-refork`
-(not yet force-pushed to main — see HANDOFF.md). Images are always built from the local repo
-on the VPS and pushed to GHCR manually. CI automation is pending.
+`docker-compose.yaml` on `origin/main` references `ghcr.io/u2giants/twenty:latest`. Every push
+to `main` builds a new image tagged both `latest` and `sha-<commit>` for auditability.

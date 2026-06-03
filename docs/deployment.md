@@ -163,10 +163,15 @@ SSH is **not** the deploy path (use Coolify API). SSH-editing source files on th
 
 ---
 
-## CI pipeline (pending)
+## CI pipeline
 
-No CI pipeline is currently wired to `v28-refork`. The old `build-and-push.yml` on `origin/main`
-dispatches to Twenty's own infrastructure and does not apply here. After the force-push to main
-(see HANDOFF.md), the workflow will be adapted to: push to `main` → GitHub Actions builds the
-image → pushes to GHCR → triggers Coolify deploy. The workflow template is at
-`/worksp/twenty/fork/.github/workflows/build-and-push.yml`.
+`.github/workflows/build-and-push.yml` — active, triggers on every push to `main`.
+
+Stages: `lint` → `test` → `build + push to GHCR` → `trigger Coolify deploy`.
+
+The pipeline uses a **frontend fast path**: if all changed files are under `packages/twenty-front/`
+or `packages/twenty-front-component-renderer/`, only frontend lint/test/build runs. Any other
+changed file triggers the full suite.
+
+Packages excluded from the test step: `twenty-front`, `twenty-zapier`, `twenty-e2e-testing`
+(Playwright E2E requires a live server and cannot run headlessly in CI).

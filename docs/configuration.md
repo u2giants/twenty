@@ -24,17 +24,30 @@ Values live in **Coolify** (production) or `.env` files (local dev). They are ne
 | `FRONT_BASE_URL` | `https://crm.designflow.app` | Frontend URL (same as SERVER_URL in production) |
 | `PORT` | `3000` | API server port |
 
-### Authentication (Authentik SSO)
+### Authentication (Microsoft Entra OIDC / SSO)
 
 | Variable | Example | Purpose |
 |---|---|---|
-| `ENTERPRISE_KEY` | any non-empty string | Enables OIDC/SSO guard |
-| `AUTH_GOOGLE_ENABLED` | `false` | Disable upstream Google OAuth |
-| `AUTH_MICROSOFT_ENABLED` | `false` | Disable upstream Microsoft user-auth OAuth |
+| `ENTERPRISE_KEY` | any non-empty string | Enables the OIDC/SSO guard; required for Microsoft Entra login to work |
+| `AUTH_GOOGLE_ENABLED` | `false` | Disable upstream Google OAuth (not used) |
+| `AUTH_MICROSOFT_ENABLED` | `false` | Disable upstream Microsoft user-auth OAuth (separate from SSO) |
 | `SIGN_IN_PREFILLED` | `false` | Disable prefilled dev credentials |
 
-Authentik is configured as an OIDC provider. `ENTERPRISE_KEY` being set activates the SSO
-middleware that redirects unauthenticated requests through Authentik.
+**Microsoft Entra is the workspace login provider.** `ENTERPRISE_KEY` being set activates the
+OIDC/SSO middleware. Employees sign in with their `@popcre.com` Microsoft accounts.
+
+The SSO provider is stored in `core.workspaceSSOIdentityProvider`:
+
+| Field | Value |
+|---|---|
+| Provider ID | `74f28c0c-4e3a-4f8f-9b97-1e2e2f887a03` |
+| Issuer | `https://login.microsoftonline.com/1caeb1c0-a087-4cb9-b046-a5e22404f971/v2.0` |
+| Client ID | `ceb8e13c-abc3-4535-a4fd-21bb334dec51` |
+| Redirect URI | `https://crm.designflow.app/auth/oidc/callback/74f28c0c-4e3a-4f8f-9b97-1e2e2f887a03` |
+| Azure tenant | `1caeb1c0-a087-4cb9-b046-a5e22404f971` |
+
+The redirect URI is registered in the Azure app registration (`ceb8e13c-…` under tenant `1caeb1c0-…`).
+The client secret is stored in Coolify env vars — do not rotate it without updating the SSO record in the DB.
 
 ### Microsoft Graph (Outlook ingestion)
 
