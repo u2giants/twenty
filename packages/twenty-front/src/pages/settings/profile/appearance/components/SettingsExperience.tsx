@@ -8,7 +8,6 @@ import { getSettingsPath } from 'twenty-shared/utils';
 import { H2Title } from 'twenty-ui/display';
 import { ColorSchemePicker } from 'twenty-ui/input';
 import { Section } from 'twenty-ui/layout';
-import { LocalePicker } from '~/pages/settings/profile/appearance/components/LocalePicker';
 
 export const SettingsExperience = () => {
   const { colorScheme, setColorScheme } = useColorScheme();
@@ -35,14 +34,6 @@ export const SettingsExperience = () => {
             darkLabel={t`Dark`}
             systemLabel={t`System settings`}
           />
-        </Section>
-
-        <Section>
-          <H2Title
-            title={t`Language`}
-            description={t`Select your preferred language`}
-          />
-          <LocalePicker />
         </Section>
 
         <Section>

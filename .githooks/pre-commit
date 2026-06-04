@@ -1,0 +1,82 @@
+#!/usr/bin/env bash
+# Pre-commit hook: two checks before every commit.
+#
+# 1. Reject hand-crafted UUIDs with invalid variant bits.
+#    RFC 4122 requires the 4th UUID group to start with 8, 9, a, or b.
+#    A single bad UUID causes a blank-page crash in production.
+#
+# 2. Reject .ts/.tsx files that fail Prettier formatting.
+#    Prettier failures are the #1 cause of CI breakage on this repo.
+
+STAGED=$(git diff --cached --name-only --diff-filter=ACMR)
+
+if [ -z "$STAGED" ]; then
+  exit 0
+fi
+
+FOUND=0
+
+# ── Check 1: bad UUID variant bits ──────────────────────────────────────────
+
+BAD_PATTERN='[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[cCdDeEfF][0-9a-fA-F]{3}-[0-9a-fA-F]{12}'
+
+while IFS= read -r file; do
+  if ! git show ":$file" 2>/dev/null | grep -qP "$BAD_PATTERN"; then
+    continue
+  fi
+
+  MATCHES=$(git show ":$file" | grep -oP "$BAD_PATTERN")
+  if [ -n "$MATCHES" ]; then
+    echo ""
+    echo "ERROR: Invalid UUID variant in staged file: $file"
+    echo "  The 4th UUID group must start with 8, 9, a, or b (RFC 4122 variant bits)."
+    echo "  Twenty will show a blank page if these reach the database."
+    echo ""
+    echo "  Offending UUIDs:"
+    echo "$MATCHES" | sed 's/^/    /'
+    echo ""
+    echo "  Fix: change the 4th group — e.g. 'xxxx-c001-' → 'xxxx-a001-'"
+    echo "  Or use gen_random_uuid() instead of a hand-crafted ID."
+    echo ""
+    FOUND=1
+  fi
+done <<< "$STAGED"
+
+# ── Check 2: Prettier formatting on staged .ts / .tsx files ─────────────────
+
+STAGED_TS=$(echo "$STAGED" | grep -E '\.(ts|tsx)$' || true)
+
+if [ -n "$STAGED_TS" ]; then
+  # Write each staged file content to a temp location for checking
+  BAD_FORMAT=0
+  BAD_FILES=""
+
+  while IFS= read -r file; do
+    # Use --stdin-filepath so Prettier resolves .prettierrc from the project
+    # root (where the file logically lives), not from a /tmp temp path.
+    if ! git show ":$file" 2>/dev/null | npx prettier --check --stdin-filepath "$file" > /dev/null 2>&1; then
+      BAD_FORMAT=1
+      BAD_FILES="$BAD_FILES\n    $file"
+    fi
+  done <<< "$STAGED_TS"
+
+  if [ "$BAD_FORMAT" -eq 1 ]; then
+    echo ""
+    echo "ERROR: Prettier formatting check failed on staged files."
+    echo "  Prettier failures are the #1 CI-breaking issue on this repo."
+    echo ""
+    echo "  Files with issues:$BAD_FILES"
+    echo ""
+    echo "  Fix: npx prettier --write <file>"
+    echo "  Or:  npx nx lint twenty-front --configuration=fix"
+    echo "       npx nx lint twenty-server --configuration=fix"
+    echo ""
+    FOUND=1
+  fi
+fi
+
+if [ "$FOUND" -eq 1 ]; then
+  exit 1
+fi
+
+exit 0
