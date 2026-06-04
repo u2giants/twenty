@@ -12,7 +12,6 @@ import { join } from 'path';
 
 import { YogaDriver, type YogaDriverConfig } from '@graphql-yoga/nestjs';
 import { SentryModule } from '@sentry/nestjs/setup';
-import type { NextFunction, Request, Response } from 'express';
 
 import { AdminPanelGraphQLApiModule } from 'src/engine/api/graphql/admin-panel-graphql-api.module';
 import { CoreGraphQLApiModule } from 'src/engine/api/graphql/core-graphql-api.module';
@@ -113,20 +112,6 @@ export class AppModule {
   }
 
   configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply((req: Request, res: Response, next: NextFunction) => {
-        const acceptsHtml = req.headers.accept?.includes('text/html') ?? false;
-        const hasBuildQuery = typeof req.query.build === 'string';
-
-        if (req.method === 'GET' && acceptsHtml && !hasBuildQuery) {
-          res.setHeader('Clear-Site-Data', '"cache"');
-          res.setHeader('Cache-Control', 'no-store');
-        }
-
-        next();
-      })
-      .forRoutes({ path: '*', method: RequestMethod.GET });
-
     consumer
       .apply(
         GraphQLHydrateRequestFromTokenMiddleware,

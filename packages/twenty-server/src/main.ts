@@ -5,6 +5,7 @@ import fs from 'fs';
 
 import bytes from 'bytes';
 import { useContainer } from 'class-validator';
+import type { NextFunction, Request, Response } from 'express';
 import session from 'express-session';
 import graphqlUploadExpress from 'graphql-upload/graphqlUploadExpress.mjs';
 
@@ -86,6 +87,18 @@ const bootstrap = async () => {
       maxFiles: 10,
     }),
   );
+
+  app.use((req: Request, res: Response, next: NextFunction) => {
+    const acceptsHtml = req.headers.accept?.includes('text/html') ?? false;
+    const hasBuildQuery = typeof req.query.build === 'string';
+
+    if (req.method === 'GET' && acceptsHtml && !hasBuildQuery) {
+      res.setHeader('Clear-Site-Data', '"cache"');
+      res.setHeader('Cache-Control', 'no-store');
+    }
+
+    next();
+  });
 
   // Inject the server url in the frontend page
   generateFrontConfig();
