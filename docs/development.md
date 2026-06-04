@@ -73,6 +73,9 @@ The Docker image builds the server only — see `packages/twenty-docker/twenty/D
 # Preferred: single test file (fastest)
 cd packages/twenty-server && npx jest path/to/test.spec.ts
 
+# Frontend focused tests without rebuilding the whole Nx dependency graph
+npx jest -c packages/twenty-front/jest.config.mjs path/to/test.ts --runInBand
+
 # All tests for a package
 npx nx test twenty-server
 npx nx test twenty-front
@@ -88,6 +91,11 @@ npx nx storybook:test twenty-front
 `@/` in `twenty-front` test files maps to `src/modules/` — not `src/`. A wrong path produces
 a misleading "Vitest cannot be imported in a CommonJS module" error; fix the path, not the phantom
 ESM problem.
+
+If `npx nx test twenty-front --runTestsByPath ...` fails before tests run because an upstream
+dependency build is missing a package (for example `rollup-plugin-dts` in `twenty-sdk:build`), use
+the direct `npx jest -c packages/twenty-front/jest.config.mjs ...` form above for focused frontend
+validation. The GitHub Actions pipeline remains the authoritative full check before deployment.
 
 ---
 
@@ -175,7 +183,7 @@ See `.cursor/rules/` for detailed guidelines on naming, file structure, testing 
 
 ## Adding a cron job
 
-Requires edits to **4 files** (v2.8 does not auto-discover):
+Requires implementation files plus **4 registration edits** (v2.8 does not auto-discover):
 
 1. `pop-creations/crons/jobs/<name>.cron.job.ts` — job implementation
 2. `pop-creations/crons/commands/<name>.cron.command.ts` — command wrapper

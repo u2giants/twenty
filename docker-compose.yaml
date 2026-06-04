@@ -1,5 +1,5 @@
 # Authoritative production compose for crm.designflow.app.
-# Coolify reads this file on every deployment (synced from GitHub by cd-deploy-main.yaml).
+# Coolify reads this file from origin/main on every deployment.
 # Database and Redis are managed as separate Coolify services; they are NOT declared here.
 # All environment variables are managed in Coolify and injected at deploy time.
 

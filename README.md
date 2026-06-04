@@ -16,7 +16,7 @@ correct customer company/department/program automatically, and surfaces them in 
 | **[docs/architecture.md](./docs/architecture.md)** | System design, components, data flow |
 | **[docs/development.md](./docs/development.md)** | Local setup, run/test/lint |
 | **[docs/configuration.md](./docs/configuration.md)** | Env vars, auth (Microsoft Entra SSO, Microsoft OAuth) |
-| **[docs/deployment.md](./docs/deployment.md)** | Build, push, Coolify deploy, rollback |
+| **[docs/deployment.md](./docs/deployment.md)** | Build, push, Coolify deploy, live hash verification, rollback |
 | **[HANDOFF.md](./HANDOFF.md)** | Open work: connected account re-auth for Albert + Adam |
 | **[CLAUDE.md](./CLAUDE.md)** | Claude Code-specific notes |
 

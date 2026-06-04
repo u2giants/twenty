@@ -95,8 +95,13 @@ Files **outside** project-owned areas that were modified, and why.
 | `packages/twenty-front/src/modules/object-record/record-picker/single-record-picker/hooks/useSingleRecordPickerRecords.ts` | Passes `filterOverride` down to `useSingleRecordPickerPerformSearch` | Same as above | Merge conflict |
 | `packages/twenty-front/src/modules/object-record/record-picker/single-record-picker/components/SingleRecordPickerMenuItemsWithSearch.tsx` | Accepts and passes `filterOverride` | Same | Merge conflict |
 | `packages/twenty-front/src/modules/object-record/record-picker/single-record-picker/components/SingleRecordPicker.tsx` | Accepts and passes `filterOverride` | Same | Merge conflict |
-| `packages/twenty-front/src/modules/object-record/record-field/ui/meta-types/input/components/RelationManyToOneFieldInput.tsx` | Reads `companyId` from record store; computes and passes `filterOverride` for department picker | Same | Merge conflict |
+| `packages/twenty-front/src/modules/object-record/record-field/ui/meta-types/input/components/RelationManyToOneFieldInput.tsx` | Reads `companyId` from record store; resolves company Department IDs; passes ID-only `filterOverride` for department picker | Same | Merge conflict |
 | `packages/twenty-front/src/modules/object-record/record-field-list/components/RecordFieldList.tsx` | ORs `isDepartmentReadOnly()` into `isRecordFieldReadOnly` for inline fields | Needed to grey-out department field when no company selected | Merge conflict |
+| `packages/twenty-front/src/modules/object-record/record-index/components/RecordIndexPageHeader.tsx` | Renders live build hash/date badge in the topmost record-index header | Operators need to see what commit production is serving without opening dev tools | Merge conflict |
+| `packages/twenty-front/src/modules/views/components/ViewBar.tsx` | Does not render the build badge in the secondary view toolbar | Badge belongs in the page header, not beside Filter/Sort/Options | Low risk |
+| `packages/twenty-front/src/modules/views/components/ViewBarBuildInfo.tsx` | Displays `REACT_APP_BUILD_HASH` + `REACT_APP_BUILD_DATE`, with GitHub commit fallback | Production build provenance indicator | Low risk |
+| `packages/twenty-server/src/utils/generate-front-config.ts` | Injects `REACT_APP_BUILD_HASH` and `REACT_APP_BUILD_DATE` into `index.html` via `window._env_` | Runtime config must reflect the running image/deploy, not only compile-time Vite env | Low risk |
+| `packages/twenty-server/src/app.module.ts` | Adds `Clear-Site-Data: "cache"` and `Cache-Control: no-store` for `index.html` only | Prevents stale app-shell cache after v2.8 deployments | Low risk |
 | `packages/twenty-server/src/engine/core-modules/i18n/i18n.service.ts` | Rewritten to load only `en` locale (was 31 locales) | English-only fork | Low risk |
 | `packages/twenty-front/src/utils/i18n/dynamicActivate.ts` | Always activates English; ignores locale argument | English-only fork | Low risk |
 | `packages/twenty-front/src/utils/i18n/initialI18nActivate.ts` | Hardwired to call `dynamicActivate('en')` — no URL/storage/browser detection | English-only fork | Low risk |
@@ -113,10 +118,12 @@ Files **outside** project-owned areas that were modified, and why.
 | Add a custom object | New `pop-creations/standard-objects/<obj>.workspace-entity.ts` + new `field-metadata/pop-creations/compute-<obj>-standard-flat-field-metadata.util.ts` + register in `STANDARD_OBJECTS` in `standard-object.constant.ts` | other standard objects' metadata |
 | Add a field to company/person/opportunity | The upstream `*.workspace-entity.ts` + matching `compute-*-standard-flat-field-metadata.util.ts` (see §4) | unrelated standard objects |
 | Schema / data change | A **new numbered SQL file** in `pop-creations/migrations/` (applied manually; see protocol below) | already-applied migration files |
-| Add a cron job | New `crons/jobs/<name>.cron.job.ts` + `crons/commands/<name>.cron.command.ts` → register in ALL THREE: `pop-creations.module.ts`, `jobs.module.ts`, AND `cron-register-all.command.ts` + `database-command.module.ts` | other cron jobs' logic |
+| Add a cron job | New `crons/jobs/<name>.cron.job.ts` + `crons/commands/<name>.cron.command.ts` → register in all four places: `pop-creations.module.ts`, `jobs.module.ts`, `cron-register-all.command.ts`, and `database-command.module.ts` | other cron jobs' logic |
 | Add/modify an automation listener | `pop-creations/listeners/` or `pop-creations/logic-functions/*/listeners/` — use `@OnDatabaseBatchEvent` (v2.8); register in `pop-creations.module.ts` | upstream listeners |
 | Add a frontend hook | `pop-creations/hooks/` (e.g. `usePopCreationsDepartmentReadOnly`) | core hooks |
 | Change deploy/build | `docker-compose.yaml` (on `origin/main` — see §12), `packages/twenty-docker/twenty/Dockerfile` | production `.env` (lives in Coolify) |
+| Verify a production deploy | GitHub run for `.github/workflows/build-and-push.yml`, then `https://crm.designflow.app/?probe=<timestamp>` build constants | `CD deploy main` workflow, browser cache alone |
+| Change Department ↔ Company picker behavior | `packages/twenty-front/src/modules/pop-creations/hooks/useCompanyDepartmentIds.ts`, `useCompanyScopedDepartmentFilterOverride.ts`, and the relation picker threading listed in §4 | `useObjectRecordSearchRecords` with custom fields such as `companyId` |
 | Add an env var | `docs/configuration.md` + the consuming code | production env directly (set it in Coolify) |
 
 **Migration protocol (strict):** schema/data changes go into a **new numbered SQL file** in
@@ -127,7 +134,7 @@ docker exec -i twenty-postgres psql -U twenty -d twenty \
 ```
 Migrations are **hand-applied SQL, not TypeORM**. Write idempotently (every migration here is re-runnable).
 
-**Cron registration is THREE places in v2.8** (unlike v1.20 which only needed `jobs.module.ts`):
+**Cron registration is four places in v2.8** (unlike v1.20 which only needed `jobs.module.ts`):
 1. `pop-creations.module.ts` — declares the provider
 2. `engine/core-modules/message-queue/jobs.module.ts` — imports `PopCreationsModule` so the DI container can resolve the command
 3. `database/commands/cron-register-all.command.ts` — adds the command to the hardcoded execution list
@@ -233,7 +240,7 @@ runs `node dist/queue-worker/queue-worker`. Worker has `DISABLE_DB_MIGRATIONS=tr
 Why: simpler single-image build; upstream supports it.
 Do not change because: it would double the build and break the current single-image deploy.
 
-### Cron registration requires THREE separate file edits in v2.8
+### Cron registration requires four separate registration edits in v2.8
 
 Looks like: registering in `pop-creations.module.ts` or `jobs.module.ts` should be enough.
 Actually: `CronRegisterAllCommand` is a hardcoded list, not auto-discovery. Adding a cron command
@@ -306,14 +313,38 @@ removing the listener, the routing pipeline must be updated in lockstep.
 
 The `SingleRecordPicker` for the `department` relation on `emailMessage`, `meetingNote`, and
 `opportunity` has two related behaviors:
-1. **Filtered**: `getPopCreationsRelationPickerFilterOverride` returns `{ companyId: { eq: companyId } }`
-   so only departments belonging to the selected company appear.
+1. **Filtered**: `RelationManyToOneFieldInput` reads the current record's `companyId`, calls
+   `useCompanyDepartmentIds`, then passes `{ id: { in: departmentIds } }` to the picker.
+   The search endpoint accepts only `id`, timestamps, and boolean groups in `ObjectRecordFilterInput`;
+   do **not** pass `{ companyId: ... }` to `useObjectRecordSearchRecords`.
 2. **Greyed out**: `usePopCreationsDepartmentReadOnly` marks the field `isRecordFieldReadOnly = true`
    in `RecordFieldList` when the record has no `companyId`. The user must select a company first.
 
 `filterOverride` is threaded through: `RelationManyToOneFieldInput` → `SingleRecordPicker` →
 `SingleRecordPickerMenuItemsWithSearch` → `useSingleRecordPickerRecords` →
 `useSingleRecordPickerPerformSearch` → `useObjectRecordSearchRecords`.
+
+Why: relation pickers use the core search GraphQL endpoint, whose generated
+`ObjectRecordFilterInput` is intentionally narrow. A custom field filter like `companyId` causes
+three picker search queries to fail and produces three toast errors.
+Do not change because: the ID prefetch is the only supported way to combine company scoping with
+the generic search picker.
+
+### Live build badge and app-shell cache headers
+
+Looks like: the build badge could live beside Filter/Sort/Options in `ViewBar`.
+Actually: the operator-visible badge belongs in `RecordIndexPageHeader`, the topmost bar beside
+New record and command-menu actions. `ViewBar` is the secondary view toolbar.
+Why: the badge answers "what is production serving right now?" and must remain visible even when
+view controls move or change.
+Do not change because: putting it in `ViewBar` made it look like a view option instead of live
+runtime provenance.
+
+The build hash/date are injected into `index.html` by
+`packages/twenty-server/src/utils/generate-front-config.ts`. GitHub Actions sets
+`REACT_APP_BUILD_HASH=${{ github.sha }}` and `REACT_APP_BUILD_DATE=${{ github.event.head_commit.timestamp }}`
+when building the image. The server sends `Cache-Control: no-store` and `Clear-Site-Data: "cache"`
+for `index.html` only, so a deployed app shell cannot remain stuck on an old commit.
 
 ### i18n/Lingui macros stay; non-English locales are gone
 
@@ -384,6 +415,15 @@ docker logs $(docker ps -qf name=server-rd261bt0wy7ifjrkoe1tkl92) 2>&1 | \
   grep "Cron job registration completed"
 # Expect: 27 successful, 0 failed, 1 skipped
 ```
+
+**Verify the live frontend, not just CI/Coolify:**
+```bash
+curl -fsSL "https://crm.designflow.app/?probe=$(date +%s)" | \
+  grep -E 'REACT_APP_BUILD_(HASH|DATE)'
+```
+The hash must match the commit you just pushed. During Coolify container replacement, brief 503s are
+expected; keep probing until the site returns 200 and the hash changes. If GitHub Actions says deploy
+completed but this hash is still old, production did not actually move.
 
 **Rollback:** redeploy a previous immutable image tag through Coolify — do not `docker tag` on the VPS.
 The pre-cutover backup image is tagged `rollback-v120-20260603` in GHCR.
@@ -484,6 +524,37 @@ Recovery: threaded `filterOverride` through 5 upstream files (commits `2b8fa9b7f
 `companyId` is absent (commit `16860030eb`).
 Rule added: see department-picker quirk in §10.
 
+### 2026-06-04 — Department picker toast storm from invalid search filter
+
+What happened: Clicking the pencil icon in the Department field triggered three toast errors
+("An error occurred", then sometimes "Response not successful: Received status code 503").
+Impact: users could not reliably open the Department relation picker.
+Root cause: the picker sent `{ companyId: { eq: ... } }` into the core `search` GraphQL endpoint.
+That endpoint's `ObjectRecordFilterInput` only supports `id`, `createdAt`, `updatedAt`, `deletedAt`,
+`and`, `or`, and `not`. The picker issues up to three search queries (selected records, filtered
+selected records, records to select), so one invalid filter produced three toasts.
+Recovery: changed the Department picker to first fetch department IDs with `useCompanyDepartmentIds`
+via `useFindManyRecords`, then pass a search-safe `{ id: { in: departmentIds } }` filter
+(commit `af2630f2cd`). Removed the old invalid helper branch.
+Rule added: never pass custom object fields such as `companyId` to `useObjectRecordSearchRecords`.
+For relation pickers, prefetch IDs through the workspace GraphQL API and filter search by `id`.
+
+### 2026-06-04 — Deploy said success while browser still served old frontend
+
+What happened: after several fixes, GitHub/Coolify reported deploys as successful but
+`https://crm.designflow.app` still served older frontend JavaScript and the build badge was missing
+or showing an older commit.
+Impact: fixes appeared not to work, causing repeated hard-refresh/logout/redeploy cycles.
+Root cause: verification stopped at "pushed" or "workflow/deploy completed" instead of checking
+the app shell that the public URL served. The build hash/date badge had also been placed in the
+secondary view toolbar first, not the topmost header where operators expected it.
+Recovery: added build hash/date injection to the served frontend config, added no-store/cache-clear
+headers for `index.html`, moved the badge to `RecordIndexPageHeader`, and verified production by
+curling `REACT_APP_BUILD_HASH` from `https://crm.designflow.app/?probe=<timestamp>`.
+Rule added: a deploy is not done until the public URL returns HTTP 200 and the embedded
+`REACT_APP_BUILD_HASH` equals the pushed commit SHA. Expect a short 503 window during Coolify
+replacement; keep polling through it.
+
 ### 2026-06-04 — Upstream Crowdin/i18n workflows violating branch-creation rule
 
 What happened: Three upstream workflow files (`i18n-push.yaml`, `docs-i18n-push.yaml`,
@@ -516,7 +587,8 @@ Recovery: migration `001_enforce_uuid_variant.sql`. Rule: all hand-written UUIDs
 | done | Staging container cleanup | All staging/cutover containers removed |
 | done | Restore `docker-compose.yaml` | Lost in re-fork; restored from git history (commit `68341cc9b4`); Coolify deploys now work |
 | done | Fix department routing (person.scope) | `ContactAutoScopeListener` bug fixed (commit `f4f732c663`); 8,603 people backfilled; emails now routed to departments |
-| done | Company-scoped department picker | `filterOverride` threaded through `SingleRecordPicker` stack; department field greys out when no company selected |
+| done | Company-scoped department picker | Uses company Department ID prefetch + search-safe `id: { in: ... }` filter; department field greys out when no company selected |
+| done | Live build badge and app-shell cache busting | Badge moved to topmost `RecordIndexPageHeader`; production verified by embedded `REACT_APP_BUILD_HASH` |
 | done | Remove upstream Crowdin/i18n workflows | 6 workflow files deleted; no branch-creation violations |
 | done | English-only: remove non-English locales | 95 `.po` files + 60 compiled locale bundles deleted; `LocalePicker` removed; `I18nService` hardwired to English |
 | done | Gitignore `backups/` and `*.dump` | Production database dumps no longer tracked in git |

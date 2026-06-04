@@ -43,12 +43,45 @@ Required GitHub Secrets (already configured):
 The workflow also publishes an immutable `sha-<commit-sha>` tag alongside `latest` and `main`
 for auditability and rollback.
 
+The Docker build injects frontend provenance through build args:
+
+| Build arg | Source | Where it surfaces |
+|---|---|---|
+| `REACT_APP_BUILD_HASH` | `${{ github.sha }}` | `window._env_.REACT_APP_BUILD_HASH`, displayed by `ViewBarBuildInfo` in the topmost record page header |
+| `REACT_APP_BUILD_DATE` | `${{ github.event.head_commit.timestamp }}` | `window._env_.REACT_APP_BUILD_DATE`, displayed with the hash |
+
+`packages/twenty-server/src/app.module.ts` sends `Cache-Control: no-store` and
+`Clear-Site-Data: "cache"` for `index.html` only. Static assets remain normal hashed assets.
+
 **Do not build Docker images manually on the VPS** — see `AI_OPERATING_RULES.md`.
 
 ---
 
 ## Verify deploy
 
+```bash
+# 1. GitHub Actions must be green for the commit you pushed
+gh run list -R u2giants/twenty --workflow 256491078 --branch main --limit 3 \
+  --json databaseId,status,conclusion,headSha,displayTitle,url
+
+# 2. Public app shell must expose the same commit hash
+curl -fsSL "https://crm.designflow.app/?probe=$(date +%s)" | \
+  grep -E 'REACT_APP_BUILD_(HASH|DATE)'
+
+# 3. App shell cache headers must prevent stale frontend HTML
+curl -fsSI -H 'Accept: text/html' "https://crm.designflow.app/?probe=$(date +%s)" | \
+  grep -Ei '^(HTTP/|cache-control|clear-site-data|last-modified)'
+
+# 4. API health must be OK
+curl -fsS https://crm.designflow.app/healthz
+```
+
+**Do not stop at "pushed", "workflow completed", or "Coolify deploy completed".** A deploy is done
+only when `https://crm.designflow.app` returns HTTP 200 and the embedded `REACT_APP_BUILD_HASH`
+equals the commit SHA you pushed. Brief 503s are expected while Coolify replaces containers; keep
+polling until the site returns and the hash changes.
+
+Server/container checks:
 ```bash
 # Cron registration log — expect "27 successful, 0 failed, 1 skipped"
 docker logs $(docker ps -qf name=server-rd261bt0wy7ifjrkoe1tkl92) 2>&1 | \
@@ -103,6 +136,17 @@ Watch for new containers:
 ```bash
 docker ps --filter "name=rd261bt0wy7ifjrkoe1tkl92" --format "{{.Names}} {{.CreatedAt}}"
 ```
+
+If the GitHub Actions deploy job is green but the public app hash remains old, trigger a fresh
+Coolify deploy through the API (use a token from the secrets store, never paste it into docs or git):
+```bash
+curl -s -X POST \
+  "${COOLIFY_BASE_URL}/api/v1/deploy?uuid=rd261bt0wy7ifjrkoe1tkl92&force=true" \
+  -H "Authorization: Bearer ${COOLIFY_API_TOKEN}" \
+  -H "Content-Type: application/json"
+```
+
+Then re-run the public app-shell hash probe above.
 
 ---
 

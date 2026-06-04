@@ -140,7 +140,7 @@ All crons are registered by `CronRegisterAllCommand` (hardcoded list — not aut
 | `CalendarEventListFetchCronJob` | upstream | Google Calendar sync |
 | … (20+ upstream crons) | various | Upstream Twenty background tasks |
 
-Adding a new cron requires edits to **4 files** — see AGENTS.md §5.
+Adding a new cron requires implementation files plus **4 registration edits** — see AGENTS.md §5.
 
 ---
 
@@ -168,10 +168,14 @@ POP frontend code lives in `packages/twenty-front/src/modules/pop-creations/`. I
 - **`ParticipantChip` right-click menu** — navigate to the People record from any email participant chip
 - **Company filter for People** — `ObjectFilterDropdownRecordSelect` scoped to customer companies when filtering People records (`useRecordsForSelect` `filterOverride`)
 - **Company-scoped department picker** — on `emailMessage`, `meetingNote`, and `opportunity` records, the Department relation field only shows departments belonging to the selected company. If no company is selected, the field is greyed out and non-clickable.
-  - `getPopCreationsRelationPickerFilterOverride` — computes the `{ companyId: { eq: companyId } }` filter
+  - `useCompanyDepartmentIds` — fetches valid Department IDs for the selected company through the workspace GraphQL API
+  - `useCompanyScopedDepartmentFilterOverride` — returns a search-safe `{ id: { in: departmentIds } }` filter
   - `usePopCreationsDepartmentReadOnly` — returns `isReadOnly = true` when `companyId` is absent
   - `filterOverride` is threaded through `RelationManyToOneFieldInput` → `SingleRecordPicker` → `SingleRecordPickerMenuItemsWithSearch` → `useSingleRecordPickerRecords` → `useSingleRecordPickerPerformSearch`
   - `RecordFieldList` applies `usePopCreationsDepartmentReadOnly` to each inline field's `FieldContext`
+
+Do not pass custom fields such as `companyId` to `useObjectRecordSearchRecords`. The search
+endpoint's `ObjectRecordFilterInput` only accepts `id`, timestamp filters, and boolean groups.
 
 **i18n:** The fork is English-only. Lingui macros (`t\`...\``) remain in the codebase but compile
 to English strings with no runtime cost. Non-English locale bundles and the `LocalePicker` component
