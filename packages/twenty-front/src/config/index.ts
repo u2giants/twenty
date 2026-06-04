@@ -19,3 +19,9 @@ const getDefaultUrl = () => {
 
 export const REACT_APP_SERVER_BASE_URL =
   window._env_?.REACT_APP_SERVER_BASE_URL || getDefaultUrl();
+
+export const REACT_APP_BUILD_HASH =
+  window._env_?.REACT_APP_BUILD_HASH || import.meta.env.REACT_APP_BUILD_HASH;
+
+export const REACT_APP_BUILD_DATE =
+  window._env_?.REACT_APP_BUILD_DATE || import.meta.env.REACT_APP_BUILD_DATE;

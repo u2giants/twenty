@@ -12,6 +12,8 @@ export function generateFrontConfig(): void {
     window: {
       _env_: {
         REACT_APP_SERVER_BASE_URL: process.env.SERVER_URL,
+        REACT_APP_BUILD_HASH: process.env.REACT_APP_BUILD_HASH,
+        REACT_APP_BUILD_DATE: process.env.REACT_APP_BUILD_DATE,
       },
     },
   };

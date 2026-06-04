@@ -19,6 +19,7 @@ export const useSingleRecordPickerPerformSearch = ({
   objectNameSingulars,
   searchFilter,
   filterOverride,
+  dedupeRecordsByLabel = false,
 }: {
   selectedIds: string[];
   limit?: number;
@@ -26,6 +27,7 @@ export const useSingleRecordPickerPerformSearch = ({
   objectNameSingulars: string[];
   searchFilter?: string;
   filterOverride?: ObjectRecordFilterInput;
+  dedupeRecordsByLabel?: boolean;
 }): {
   pickableMorphItems: RecordPickerPickableMorphItem[];
   loading: boolean;
@@ -41,11 +43,15 @@ export const useSingleRecordPickerPerformSearch = ({
   const selectedIdsFilter = hasSelectedIds
     ? { id: { in: selectedIds } }
     : undefined;
+  const selectedRecordsFilter =
+    selectedIdsFilter && filterOverride
+      ? { and: [selectedIdsFilter, filterOverride] }
+      : (selectedIdsFilter ?? filterOverride);
 
   const { loading: selectedRecordsLoading, searchRecords: selectedRecords } =
     useObjectRecordSearchRecords({
       objectNameSingulars,
-      filter: selectedIdsFilter,
+      filter: selectedRecordsFilter,
       skip: !hasSelectedIds,
       searchInput: '',
     });
@@ -55,7 +61,7 @@ export const useSingleRecordPickerPerformSearch = ({
     searchRecords: filteredSelectedRecords,
   } = useObjectRecordSearchRecords({
     objectNameSingulars,
-    filter: selectedIdsFilter,
+    filter: selectedRecordsFilter,
     skip: !hasSelectedIds,
     searchInput: searchFilter,
   });
@@ -110,7 +116,26 @@ export const useSingleRecordPickerPerformSearch = ({
     singleRecordPickerInstanceId,
   ]);
 
-  const pickableMorphItems = [...selectedRecords, ...recordsToSelect]
+  const pickableSearchRecords = [...selectedRecords, ...recordsToSelect].filter(
+    (record, index, self) =>
+      isDefined(record) &&
+      self.findIndex((candidate) => {
+        if (!isDefined(candidate)) {
+          return false;
+        }
+
+        const sameRecord = candidate.recordId === record.recordId;
+        const sameLabel =
+          dedupeRecordsByLabel &&
+          candidate.objectNameSingular === record.objectNameSingular &&
+          candidate.label.trim().toLowerCase() ===
+            record.label.trim().toLowerCase();
+
+        return sameRecord || sameLabel;
+      }) === index,
+  );
+
+  const pickableMorphItems = pickableSearchRecords
     .filter(isDefined)
     .map((record) => {
       const objectMetadataItem = objectMetadataItems.find(

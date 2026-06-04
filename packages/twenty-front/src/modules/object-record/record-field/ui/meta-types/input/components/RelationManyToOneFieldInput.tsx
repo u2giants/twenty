@@ -80,12 +80,20 @@ export const RelationManyToOneFieldInput = () => {
   });
 
   const [recordInStore] = useAtom(recordStoreFamilyState.atomFamily(recordId));
-  const companyId = (
-    (recordInStore as Record<string, unknown> | null)?.company as
-      | Record<string, unknown>
-      | null
-      | undefined
+  const typedRecordInStore = recordInStore as Record<string, unknown> | null;
+  const companyIdFromRelation = (
+    typedRecordInStore?.company as Record<string, unknown> | null | undefined
   )?.id as string | null | undefined;
+  const companyId =
+    companyIdFromRelation ??
+    (typedRecordInStore?.companyId as string | null | undefined);
+
+  const isCompanyScopedDepartmentPicker =
+    (objectMetadataItem.nameSingular === 'emailMessage' ||
+      objectMetadataItem.nameSingular === 'meetingNote' ||
+      objectMetadataItem.nameSingular === 'opportunity') &&
+    fieldDefinition.metadata.relationObjectMetadataNameSingular ===
+      'department';
 
   const departmentFilterOverride = useCompanyScopedDepartmentFilterOverride({
     sourceObjectNameSingular: objectMetadataItem.nameSingular,
@@ -136,6 +144,7 @@ export const RelationManyToOneFieldInput = () => {
         fieldDefinition.metadata.relationObjectMetadataNameSingular,
       ]}
       filterOverride={departmentFilterOverride}
+      dedupeRecordsByLabel={isCompanyScopedDepartmentPicker}
       recordPickerInstanceId={instanceId}
       layoutDirection={
         recordFieldInputLayoutDirection === 'downward'

@@ -20,6 +20,7 @@ import { ViewBarRecordFilterGroupEffect } from '@/views/components/ViewBarRecord
 import { ViewBarRecordSortEffect } from '@/views/components/ViewBarRecordSortEffect';
 import { ViewBarFilterDropdownIds } from '@/views/constants/ViewBarFilterDropdownIds';
 import { UpdateViewButtonGroup } from './UpdateViewButtonGroup';
+import { ViewBarBuildInfo } from './ViewBarBuildInfo';
 import { ViewBarDetails } from './ViewBarDetails';
 
 type ViewBarProps = {
@@ -65,6 +66,7 @@ export const ViewBar = ({
         leftComponent={<ViewPickerDropdown />}
         rightComponent={
           <>
+            <ViewBarBuildInfo />
             <ObjectFilterDropdownComponentInstanceContext.Provider
               value={{ instanceId: ViewBarFilterDropdownIds.MAIN }}
             >

@@ -8,10 +8,12 @@ export const useSingleRecordPickerRecords = ({
   objectNameSingulars,
   excludedRecordIds = [],
   filterOverride,
+  dedupeRecordsByLabel,
 }: {
   objectNameSingulars: string[];
   excludedRecordIds?: string[];
   filterOverride?: ObjectRecordFilterInput;
+  dedupeRecordsByLabel?: boolean;
 }) => {
   const singleRecordPickerSearchFilter = useAtomComponentStateValue(
     singleRecordPickerSearchFilterComponentState,
@@ -28,6 +30,7 @@ export const useSingleRecordPickerRecords = ({
     excludedRecordIds: excludedRecordIds,
     objectNameSingulars,
     filterOverride,
+    dedupeRecordsByLabel,
   });
 
   return { pickableMorphItems, loading };

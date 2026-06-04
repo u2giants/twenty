@@ -1,4 +1,3 @@
-import { useFindManyRecords } from '@/object-record/hooks/useFindManyRecords';
 import { type ObjectRecordFilterInput } from '~/generated/graphql';
 
 const COMPANY_SCOPED_DEPARTMENT_SOURCES = [
@@ -20,13 +19,6 @@ export const useCompanyScopedDepartmentFilterOverride = ({
     COMPANY_SCOPED_DEPARTMENT_SOURCES.includes(sourceObjectNameSingular) &&
     targetObjectNameSingular === 'department';
 
-  const { records: departments } = useFindManyRecords({
-    objectNameSingular: 'department',
-    filter: isScoped && companyId ? { companyId: { eq: companyId } } : {},
-    skip: !isScoped || !companyId,
-    recordGqlFields: { id: true },
-  });
-
   if (!isScoped) return undefined;
 
   // No company selected — block all departments (return impossible filter)
@@ -34,11 +26,7 @@ export const useCompanyScopedDepartmentFilterOverride = ({
     return { id: { in: [] } } as unknown as ObjectRecordFilterInput;
   }
 
-  if (departments.length === 0) {
-    return { id: { in: [] } } as unknown as ObjectRecordFilterInput;
-  }
-
   return {
-    id: { in: departments.map((d) => d.id) },
+    companyId: { eq: companyId },
   } as unknown as ObjectRecordFilterInput;
 };

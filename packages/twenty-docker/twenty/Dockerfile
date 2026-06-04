@@ -61,6 +61,11 @@ RUN yarn workspaces focus --production twenty-emails twenty-shared twenty-client
 
 FROM front-deps AS twenty-front-build
 
+ARG REACT_APP_BUILD_HASH
+ARG REACT_APP_BUILD_DATE
+ENV REACT_APP_BUILD_HASH=$REACT_APP_BUILD_HASH
+ENV REACT_APP_BUILD_DATE=$REACT_APP_BUILD_DATE
+
 COPY ./packages/twenty-front /app/packages/twenty-front
 COPY ./packages/twenty-front-component-renderer /app/packages/twenty-front-component-renderer
 COPY ./packages/twenty-ui /app/packages/twenty-ui
@@ -97,7 +102,11 @@ RUN chmod +x /app/entrypoint.sh
 WORKDIR /app/packages/twenty-server
 
 ARG APP_VERSION
+ARG REACT_APP_BUILD_HASH
+ARG REACT_APP_BUILD_DATE
 ENV APP_VERSION=$APP_VERSION
+ENV REACT_APP_BUILD_HASH=$REACT_APP_BUILD_HASH
+ENV REACT_APP_BUILD_DATE=$REACT_APP_BUILD_DATE
 
 # Workspace root config
 COPY --chown=1000 --from=twenty-server-build /app/package.json /app/yarn.lock /app/.yarnrc.yml /app/

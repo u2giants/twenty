@@ -24,6 +24,7 @@ import { type ObjectRecordFilterInput } from '~/generated/graphql';
 export type SingleRecordPickerMenuItemsWithSearchProps = {
   excludedRecordIds?: string[];
   filterOverride?: ObjectRecordFilterInput;
+  dedupeRecordsByLabel?: boolean;
   onCreate?: ((searchInput?: string) => void) | (() => void);
   objectNameSingulars: string[];
   recordPickerInstanceId?: string;
@@ -39,6 +40,7 @@ export const SingleRecordPickerMenuItemsWithSearch = ({
   emptyLabel,
   excludedRecordIds,
   filterOverride,
+  dedupeRecordsByLabel,
   onCancel,
   onCreate,
   onMorphItemSelected,
@@ -61,6 +63,7 @@ export const SingleRecordPickerMenuItemsWithSearch = ({
     objectNameSingulars,
     excludedRecordIds,
     filterOverride,
+    dedupeRecordsByLabel,
   });
 
   const { objectMetadataItems: allObjectMetadataItems } =
