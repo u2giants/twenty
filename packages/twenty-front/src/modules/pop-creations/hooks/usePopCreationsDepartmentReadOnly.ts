@@ -20,8 +20,12 @@ export const usePopCreationsDepartmentReadOnly = ({
     recordStoreFamilyState.atomFamily(objectRecordId),
   );
 
-  const companyId = (recordInStore as Record<string, unknown> | null)
-    ?.companyId as string | null | undefined;
+  const companyId = (
+    (recordInStore as Record<string, unknown> | null)?.company as
+      | Record<string, unknown>
+      | null
+      | undefined
+  )?.id as string | null | undefined;
 
   return (fieldMetadataItem: FieldMetadataItem): boolean => {
     if (!COMPANY_SCOPED_DEPARTMENT_SOURCES.includes(objectNameSingular)) {

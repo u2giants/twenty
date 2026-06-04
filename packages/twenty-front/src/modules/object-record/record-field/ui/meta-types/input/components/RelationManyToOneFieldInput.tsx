@@ -80,8 +80,12 @@ export const RelationManyToOneFieldInput = () => {
   });
 
   const [recordInStore] = useAtom(recordStoreFamilyState.atomFamily(recordId));
-  const companyId = (recordInStore as Record<string, unknown> | null)
-    ?.companyId as string | null | undefined;
+  const companyId = (
+    (recordInStore as Record<string, unknown> | null)?.company as
+      | Record<string, unknown>
+      | null
+      | undefined
+  )?.id as string | null | undefined;
 
   const departmentFilterOverride = getPopCreationsRelationPickerFilterOverride({
     sourceObjectNameSingular: objectMetadataItem.nameSingular,
