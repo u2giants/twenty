@@ -67,6 +67,45 @@ docker logs -f $(docker ps -qf name=server-rd261bt0wy7ifjrkoe1tkl92) 2>&1 | tail
 
 ---
 
+## Coolify deploy stuck / failed jobs
+
+If `docker ps` shows containers that are many hours old and a recent build-and-push succeeded,
+Coolify's `ApplicationDeploymentJob` may have failed and landed in the failed-jobs queue.
+
+**Check and retry:**
+```bash
+# See failed jobs
+docker exec coolify php artisan queue:failed
+
+# Retry by UUID
+docker exec coolify php artisan queue:retry <uuid>
+
+# If nothing in failed queue, queue a fresh deploy directly
+docker exec coolify php artisan tinker --execute='
+use App\Jobs\ApplicationDeploymentJob;
+$app = \App\Models\Application::where("uuid", "rd261bt0wy7ifjrkoe1tkl92")->first();
+$q = \App\Models\ApplicationDeploymentQueue::create([
+    "application_id" => $app->id,
+    "application_name" => $app->name,
+    "deployment_uuid" => \Illuminate\Support\Str::uuid(),
+    "pull_request_id" => 0,
+    "force_rebuild" => false,
+    "is_webhook" => false,
+    "status" => "queued",
+    "server_id" => $app->destination->server_id,
+]);
+ApplicationDeploymentJob::dispatch($q->id)->onQueue("high");
+echo "Queued: " . $q->deployment_uuid . "\n";
+'
+```
+
+Watch for new containers:
+```bash
+docker ps --filter "name=rd261bt0wy7ifjrkoe1tkl92" --format "{{.Names}} {{.CreatedAt}}"
+```
+
+---
+
 ## Rollback
 
 A pre-cutover backup image is tagged `rollback-v120-20260603` in GHCR.
@@ -160,6 +199,14 @@ SSH to the VPS is allowed for:
 
 SSH is **not** the deploy path (use Coolify API). SSH-editing source files on the server is
 **forbidden** — changes don't survive the next image deploy.
+
+---
+
+## `CD deploy main` workflow — always fails (expected)
+
+The repo contains `cd-deploy-main.yaml` inherited from upstream Twenty. It tries to dispatch to
+`twentyhq/twenty-infra` using a `GH_TOKEN` that only twentyhq has. This workflow will always
+fail on the fork with exit code 4. **Ignore it.** Our real CI is `build-and-push.yml`.
 
 ---
 

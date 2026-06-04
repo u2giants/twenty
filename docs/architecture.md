@@ -98,18 +98,26 @@ emailMessage record created in workspace DB
     ▼
 EmailRouterService.route(emailMessage)
     │
-    ├─ Step 1: domain lookup          (sender domain → company.routingDomain)
-    ├─ Step 2: thread scan            (prior messages in same thread already routed?)
-    ├─ Step 3: subject history        (prior messages with same subject line?)
-    ├─ Step 4: company name fuzzy     (subject/body contains known company name?)
-    ├─ Step 5: department narrowing   (multiple companies → pick by department keyword)
-    ├─ Step 6: SO/PO regex            (subject contains PO# or SO# → map to opportunity)
-    └─ Step 7: AI fallback            (OpenRouter call with company list context)
+    ├─ Step 1: domain lookup          (sender domain → company.routingDomain / domainNamePrimaryLinkUrl)
+    │                                  skip if ACTIVE/POTENTIAL not found; skip if internal domain
+    ├─ Step 2: department narrowing   (people on email scoped to exactly one department?
+    │                                  requires person.scope === 'DEPARTMENT' && person.departmentId)
+    ├─ Step 3: PO/SO regex            (subject/body contains PO# or SO# → map to opportunity)
+    ├─ Step 4: fuzzy name match       (subject/body ~= opportunity.name, threshold ≥ 0.5)
+    └─ Step 5: AI fallback            (OpenRouter call with active programs list; UUID response)
     │
     ▼
-emailMessage.company, .department, .opportunity set
-activityLog entry written
+emailMessage.companyId, .departmentId, .programId, .routingStatus set
 ```
+
+`routingStatus` values: `ROUTED` (program found), `COMPANY_DEPT` (company + department, no program),
+`COMPANY_ONLY` (company matched, no department), `UNROUTED` (no match), `SKIPPED` (internal sender
+or `OTHER`-status company).
+
+**Department attribution depends on `person.scope`.** The Step 2 filter is
+`p.scope === 'DEPARTMENT' && p.departmentId`. `ContactAutoScopeListener` sets this automatically on
+`person.created` and `person.updated`. If `scope` is NULL (e.g. from a direct-SQL insert), the email
+will never be attributed to a department even if `departmentId` is set on the person.
 
 Only companies with `customerStatus` of `ACTIVE_CUSTOMER` or `POTENTIAL_CUSTOMER` are routing
 candidates. `UNASSIGNED` and other statuses are excluded by design.
@@ -125,9 +133,9 @@ All crons are registered by `CronRegisterAllCommand` (hardcoded list — not aut
 | Job | Schedule | Purpose |
 |---|---|---|
 | `OutlookIngestCronJob` | every 15 min | Poll Outlook mailbox via Microsoft Graph |
-| `EmailRerouterCronJob` | every 30 min | Re-attempt routing for unrouted messages |
-| `ClickUpSyncCronJob` | every 10 min | Mirror opportunity stage to ClickUp task status |
-| `EmailContactSyncCronJob` | every 60 min | Sync email sender contact info to Person records |
+| `EmailRerouterCronJob` | every 6 hours | Re-attempt routing for unrouted/company-only messages |
+| `ClickUpSyncCronJob` | 7am daily | Mirror opportunity stage to ClickUp task status |
+| `EmailContactSyncCronJob` | 2am daily | Sync email sender contact info to Person records |
 | `MessagingMessagesImportCronJob` | upstream | Gmail/OAuth message import |
 | `CalendarEventListFetchCronJob` | upstream | Google Calendar sync |
 | … (20+ upstream crons) | various | Upstream Twenty background tasks |

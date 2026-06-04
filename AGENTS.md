@@ -47,9 +47,8 @@ This is the upstream Twenty monorepo (Nx + Yarn workspaces) with a project-owned
 | Generated code | `packages/twenty-front/src/generated*/`, `**/locales/generated/`, `*/metadata/generated/` | generated — do not hand-edit |
 | Build artifacts | `dist/`, `.nx/cache/`, `node_modules/`, `.twenty/` | not in scope (see §9) |
 
-**Branch model:** active development is on the local `v28-refork` branch, which pushes to
-`origin/main`. CI triggers on every push to `main` and deploys automatically. The local branch
-name is a historical artifact of the re-fork — treat `origin/main` as the single source of truth.
+**Branch model:** active development pushes directly to `origin/main`. CI triggers on every push
+and deploys automatically. Treat `origin/main` as the single source of truth.
 
 ---
 
@@ -272,6 +271,27 @@ Actually: an intentional escape hatch. The TypeORM/workspace-ORM path silently r
 cross-workspace queries initiated from the worker context. Raw SQL is the only reliable path there.
 Do not change because: switching back to ORM silently no-ops.
 
+### `CD deploy main` workflow always fails on the fork
+
+Looks like: CI is broken and deploys aren't landing.
+Actually: `cd-deploy-main.yaml` is the upstream Twenty workflow that dispatches to
+`twentyhq/twenty-infra` — a repo we don't own. It requires a `GH_TOKEN` secret that only
+twentyhq has. Our deploy pipeline is `build-and-push.yml` (lint → test → build → GHCR → Coolify).
+Why: inherited from upstream; no practical way to disable it without maintaining a diff on the file.
+Do not change because: it's harmless. Check `build-and-push.yml` for actual deploy status.
+
+### `person.scope` drives email department attribution
+
+Looks like: unused or redundant given `person.departmentId` already exists.
+Actually: the email router's Step 2 (department narrowing) filters people by
+`p.scope === 'DEPARTMENT' && p.departmentId`. Without `scope = 'DEPARTMENT'` the filter returns
+zero matches and all department attribution is skipped even when `departmentId` is set.
+Why: scope is set automatically by `ContactAutoScopeListener` (`person.created` and `person.updated`
+events). If someone assigns a `departmentId` through a path that bypasses the ORM event (e.g.
+direct SQL), they must also set `scope = 'DEPARTMENT'` or the router won't see the department.
+Do not change because: the router depends on this contract. If changing the scope field name or
+removing the listener, the routing pipeline must be updated in lockstep.
+
 ### `@/` in twenty-front tests maps to `src/modules/`, not `src/`
 
 Jest `moduleNameMapper` maps `@/` → `packages/twenty-front/src/modules/`. Import a file at
@@ -382,6 +402,36 @@ egg: `upgrade` queries `core.upgradeMigration` before it exists; `--force` skips
 Pre-upgrade backup: `twenty_preupgrade_20260602_204355.dump`; pre-cutover backup:
 `twenty_cutover_20260603_075513.dump`. Both at `/worksp/twenty/fork/backups/`.
 
+### 2026-06-04 — `docker-compose.yaml` lost in re-fork; all Coolify deploys failing
+
+What happened: `docker-compose.yaml` (the file Coolify reads to know what to deploy) was not
+carried forward when `main` was re-forked from v1.20 to v2.8.3. Every Coolify deployment since
+the cutover was silently failing with "Docker Compose file not found at `/docker-compose.yaml`".
+The file existed in the v1.20 git history (`a6d401906b`) but not in the new base.
+Impact: containers running the v1.20 image (from pre-cutover) — no code changes deployed for ~1 day.
+Root cause: re-fork creates a new git history; files not explicitly committed on `main` are absent.
+Recovery: restored `docker-compose.yaml` from git history (commit `68341cc9b4`); manually triggered
+Coolify deployment via tinker (failed jobs retried after two failures, then queued fresh).
+Rule added: after any re-fork or forced push, verify `docker-compose.yaml` exists on `main` before
+assuming deploys are working. Check `docker ps` container ages vs most recent deploy time.
+
+### 2026-06-04 — Emails never routed to departments (`person.scope` never set)
+
+What happened: `ContactAutoScopeListener` was setting `companyCustomerStatus` instead of `scope`
+on newly created/updated people. All people had `scope = NULL` instead of `DEPARTMENT` /
+`COMPANY_WIDE` / `IGNORED`. The email router's Step 2 (department narrowing) filters by
+`p.scope === 'DEPARTMENT'` — so it always returned empty, making `departmentId` null on every email.
+Impact: 0 emails routed to departments despite 53 people having `departmentId` set.
+Root cause: copy-paste bug in `updatePersonScope()` — wrong field name. Additionally, the listener
+only handled `person.created`, not `person.updated`, so manual department assignments never triggered.
+The event `properties` access was also wrong (used `payload.properties` directly instead of
+`payload.properties.after`).
+Recovery: fixed the listener (commit `f4f732c663`); direct SQL backfill set `scope` correctly for
+all 8,603 people (`DEPARTMENT`: 53, `COMPANY_WIDE`: 8,301, `IGNORED`: 249).
+Rule added: when writing ORM event listeners, always access `payload.properties.after` (not
+`payload.properties` bare). When a routing behavior is consistently zero across thousands of emails,
+check that the filter predicate conditions are actually reachable in the data.
+
 ### Invalid-variant UUIDs caused blank-page crash (pre-2026)
 
 What happened: hand-crafted UUIDs whose 4th group did not start with `8/9/a/b` were inserted,
@@ -403,6 +453,8 @@ Recovery: migration `001_enforce_uuid_variant.sql`. Rule: all hand-written UUIDs
 | done | POP cron registration | All 4 crons registered; confirmed in server logs (27 successful) |
 | done | Backup service fix | Nightly backup confirmed working; 14-day rolling retention |
 | done | Staging container cleanup | All staging/cutover containers removed |
+| done | Restore `docker-compose.yaml` | Lost in re-fork; restored from git history (commit `68341cc9b4`); Coolify deploys now work |
+| done | Fix department routing (person.scope) | `ContactAutoScopeListener` bug fixed (commit `f4f732c663`); 8,603 people backfilled; emails now routed to departments |
 
 ---
 
