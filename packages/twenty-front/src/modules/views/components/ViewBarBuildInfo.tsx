@@ -1,8 +1,17 @@
 import { styled } from '@linaria/react';
 import { isNonEmptyString } from '@sniptt/guards';
+import { useEffect, useState } from 'react';
 
 import { REACT_APP_BUILD_DATE, REACT_APP_BUILD_HASH } from '~/config';
 import { themeCssVariables } from 'twenty-ui/theme-constants';
+
+const BUILD_INFO_FALLBACK_URL =
+  'https://api.github.com/repos/u2giants/twenty/commits/main';
+
+type BuildInfo = {
+  hash: string;
+  date: string;
+};
 
 const StyledBuildInfo = styled.div`
   align-items: center;
@@ -34,7 +43,7 @@ const formatBuildDate = (buildDate: string) => {
   });
 };
 
-export const ViewBarBuildInfo = () => {
+const getBuildInfoFromEnv = (): BuildInfo | null => {
   if (
     !isNonEmptyString(REACT_APP_BUILD_HASH) ||
     !isNonEmptyString(REACT_APP_BUILD_DATE)
@@ -42,13 +51,52 @@ export const ViewBarBuildInfo = () => {
     return null;
   }
 
-  const shortHash = REACT_APP_BUILD_HASH.slice(0, 8);
+  return {
+    hash: REACT_APP_BUILD_HASH,
+    date: REACT_APP_BUILD_DATE,
+  };
+};
+
+export const ViewBarBuildInfo = () => {
+  const [buildInfo, setBuildInfo] = useState<BuildInfo | null>(
+    getBuildInfoFromEnv,
+  );
+
+  useEffect(() => {
+    if (buildInfo !== null) {
+      return;
+    }
+
+    let isMounted = true;
+
+    const fetchBuildInfo = async () => {
+      const response = await fetch(BUILD_INFO_FALLBACK_URL);
+      const commit = await response.json();
+      const hash = commit?.sha;
+      const date =
+        commit?.commit?.committer?.date ?? commit?.commit?.author?.date;
+
+      if (isMounted && isNonEmptyString(hash) && isNonEmptyString(date)) {
+        setBuildInfo({ hash, date });
+      }
+    };
+
+    void fetchBuildInfo().catch(() => undefined);
+
+    return () => {
+      isMounted = false;
+    };
+  }, [buildInfo]);
+
+  if (buildInfo === null) {
+    return null;
+  }
+
+  const shortHash = buildInfo.hash.slice(0, 8);
 
   return (
-    <StyledBuildInfo
-      title={`${REACT_APP_BUILD_HASH} - ${REACT_APP_BUILD_DATE}`}
-    >
-      {shortHash} - {formatBuildDate(REACT_APP_BUILD_DATE)}
+    <StyledBuildInfo title={`${buildInfo.hash} - ${buildInfo.date}`}>
+      {shortHash} - {formatBuildDate(buildInfo.date)}
     </StyledBuildInfo>
   );
 };
