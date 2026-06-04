@@ -1,0 +1,119 @@
+# Authoritative production compose for crm.designflow.app.
+# Coolify reads this file on every deployment (synced from GitHub by cd-deploy-main.yaml).
+# Database and Redis are managed as separate Coolify services; they are NOT declared here.
+# All environment variables are managed in Coolify and injected at deploy time.
+
+name: twenty
+
+services:
+  server:
+    image: ghcr.io/u2giants/twenty:latest
+    networks:
+      - coolify
+    labels:
+      traefik.enable: "true"
+      traefik.http.middlewares.gzip.compress: "true"
+      traefik.http.middlewares.redirect-to-https.redirectscheme.scheme: https
+      traefik.http.routers.http-0-rd261bt0wy7ifjrkoe1tkl92.entryPoints: http
+      traefik.http.routers.http-0-rd261bt0wy7ifjrkoe1tkl92.middlewares: redirect-to-https
+      traefik.http.routers.http-0-rd261bt0wy7ifjrkoe1tkl92.rule: "Host(`crm.designflow.app`) && PathPrefix(`/`)"
+      traefik.http.routers.http-0-rd261bt0wy7ifjrkoe1tkl92.service: http-0-rd261bt0wy7ifjrkoe1tkl92
+      traefik.http.routers.https-0-rd261bt0wy7ifjrkoe1tkl92.entryPoints: https
+      traefik.http.routers.https-0-rd261bt0wy7ifjrkoe1tkl92.middlewares: gzip
+      traefik.http.routers.https-0-rd261bt0wy7ifjrkoe1tkl92.rule: "Host(`crm.designflow.app`) && PathPrefix(`/`)"
+      traefik.http.routers.https-0-rd261bt0wy7ifjrkoe1tkl92.service: https-0-rd261bt0wy7ifjrkoe1tkl92
+      traefik.http.routers.https-0-rd261bt0wy7ifjrkoe1tkl92.tls: "true"
+      traefik.http.routers.https-0-rd261bt0wy7ifjrkoe1tkl92.tls.certresolver: letsencrypt
+      traefik.http.services.http-0-rd261bt0wy7ifjrkoe1tkl92.loadbalancer.server.port: "3000"
+      traefik.http.services.https-0-rd261bt0wy7ifjrkoe1tkl92.loadbalancer.server.port: "3000"
+    volumes:
+      - server-local-data:/app/packages/twenty-server/.local-storage
+    environment:
+      NODE_PORT: 3000
+      PG_DATABASE_URL: ${PG_DATABASE_URL}
+      SERVER_URL: ${SERVER_URL}
+      REDIS_URL: ${REDIS_URL}
+      APP_SECRET: ${APP_SECRET}
+      STORAGE_TYPE: ${STORAGE_TYPE}
+      STORAGE_S3_REGION: ${STORAGE_S3_REGION}
+      STORAGE_S3_NAME: ${STORAGE_S3_NAME}
+      STORAGE_S3_ENDPOINT: ${STORAGE_S3_ENDPOINT}
+      APP_VERSION: ${APP_VERSION}
+      IS_BILLING_ENABLED: ${IS_BILLING_ENABLED}
+      API_RATE_LIMITING_LONG_LIMIT: ${API_RATE_LIMITING_LONG_LIMIT}
+      API_RATE_LIMITING_SHORT_LIMIT: ${API_RATE_LIMITING_SHORT_LIMIT}
+      AUTH_MICROSOFT_ENABLED: ${AUTH_MICROSOFT_ENABLED}
+      AUTH_MICROSOFT_CLIENT_ID: ${AUTH_MICROSOFT_CLIENT_ID}
+      AUTH_MICROSOFT_CLIENT_SECRET: ${AUTH_MICROSOFT_CLIENT_SECRET}
+      AUTH_MICROSOFT_TENANT_ID: ${AUTH_MICROSOFT_TENANT_ID}
+      AUTH_MICROSOFT_CALLBACK_URL: ${AUTH_MICROSOFT_CALLBACK_URL}
+      AUTH_MICROSOFT_APIS_CALLBACK_URL: ${AUTH_MICROSOFT_APIS_CALLBACK_URL}
+      MESSAGING_PROVIDER_MICROSOFT_ENABLED: ${MESSAGING_PROVIDER_MICROSOFT_ENABLED}
+      CALENDAR_PROVIDER_MICROSOFT_ENABLED: ${CALENDAR_PROVIDER_MICROSOFT_ENABLED}
+      IS_IMAP_SMTP_CALDAV_ENABLED: ${IS_IMAP_SMTP_CALDAV_ENABLED}
+      OPENROUTER_API_KEY: ${OPENROUTER_API_KEY}
+      AZURE_TENANT_ID: ${AZURE_TENANT_ID}
+      AZURE_CLIENT_ID: ${AZURE_CLIENT_ID}
+      AZURE_CLIENT_SECRET: ${AZURE_CLIENT_SECRET}
+      OUTLOOK_MAILBOX: ${OUTLOOK_MAILBOX}
+      CLICKUP_API_TOKEN: ${CLICKUP_API_TOKEN}
+      POP_CREATIONS_WORKSPACE_ID: ${POP_CREATIONS_WORKSPACE_ID}
+      FIREFLIES_API_KEY: ${FIREFLIES_API_KEY}
+    healthcheck:
+      test: curl --fail http://localhost:3000/healthz
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    restart: always
+
+  worker:
+    image: ghcr.io/u2giants/twenty:latest
+    command: ["node", "dist/queue-worker/queue-worker"]
+    networks:
+      - coolify
+    volumes:
+      - server-local-data:/app/packages/twenty-server/.local-storage
+    environment:
+      PG_DATABASE_URL: ${PG_DATABASE_URL}
+      SERVER_URL: ${SERVER_URL}
+      REDIS_URL: ${REDIS_URL}
+      APP_SECRET: ${APP_SECRET}
+      STORAGE_TYPE: ${STORAGE_TYPE}
+      STORAGE_S3_REGION: ${STORAGE_S3_REGION}
+      STORAGE_S3_NAME: ${STORAGE_S3_NAME}
+      STORAGE_S3_ENDPOINT: ${STORAGE_S3_ENDPOINT}
+      APP_VERSION: ${APP_VERSION}
+      IS_BILLING_ENABLED: ${IS_BILLING_ENABLED}
+      API_RATE_LIMITING_LONG_LIMIT: ${API_RATE_LIMITING_LONG_LIMIT}
+      API_RATE_LIMITING_SHORT_LIMIT: ${API_RATE_LIMITING_SHORT_LIMIT}
+      AUTH_MICROSOFT_ENABLED: ${AUTH_MICROSOFT_ENABLED}
+      AUTH_MICROSOFT_CLIENT_ID: ${AUTH_MICROSOFT_CLIENT_ID}
+      AUTH_MICROSOFT_CLIENT_SECRET: ${AUTH_MICROSOFT_CLIENT_SECRET}
+      AUTH_MICROSOFT_TENANT_ID: ${AUTH_MICROSOFT_TENANT_ID}
+      AUTH_MICROSOFT_CALLBACK_URL: ${AUTH_MICROSOFT_CALLBACK_URL}
+      AUTH_MICROSOFT_APIS_CALLBACK_URL: ${AUTH_MICROSOFT_APIS_CALLBACK_URL}
+      MESSAGING_PROVIDER_MICROSOFT_ENABLED: ${MESSAGING_PROVIDER_MICROSOFT_ENABLED}
+      CALENDAR_PROVIDER_MICROSOFT_ENABLED: ${CALENDAR_PROVIDER_MICROSOFT_ENABLED}
+      IS_IMAP_SMTP_CALDAV_ENABLED: ${IS_IMAP_SMTP_CALDAV_ENABLED}
+      OPENROUTER_API_KEY: ${OPENROUTER_API_KEY}
+      AZURE_TENANT_ID: ${AZURE_TENANT_ID}
+      AZURE_CLIENT_ID: ${AZURE_CLIENT_ID}
+      AZURE_CLIENT_SECRET: ${AZURE_CLIENT_SECRET}
+      OUTLOOK_MAILBOX: ${OUTLOOK_MAILBOX}
+      CLICKUP_API_TOKEN: ${CLICKUP_API_TOKEN}
+      POP_CREATIONS_WORKSPACE_ID: ${POP_CREATIONS_WORKSPACE_ID}
+      FIREFLIES_API_KEY: ${FIREFLIES_API_KEY}
+      # Worker-only overrides: migrations and cron registration run on the server, not here
+      DISABLE_DB_MIGRATIONS: "true"
+      DISABLE_CRON_JOBS_REGISTRATION: "true"
+    depends_on:
+      server:
+        condition: service_healthy
+    restart: always
+
+networks:
+  coolify:
+    external: true
+
+volumes:
+  server-local-data:
