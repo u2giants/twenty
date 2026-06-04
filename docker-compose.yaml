@@ -8,6 +8,7 @@ name: twenty
 services:
   server:
     image: ghcr.io/u2giants/twenty:latest
+    pull_policy: always
     networks:
       - coolify
     labels:
@@ -68,6 +69,7 @@ services:
 
   worker:
     image: ghcr.io/u2giants/twenty:latest
+    pull_policy: always
     command: ["node", "dist/queue-worker/queue-worker"]
     networks:
       - coolify
