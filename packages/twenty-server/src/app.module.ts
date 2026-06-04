@@ -8,7 +8,7 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ServeStaticModule } from '@nestjs/serve-static';
 
 import { existsSync } from 'fs';
-import { join } from 'path';
+import { basename, join } from 'path';
 
 import { YogaDriver, type YogaDriverConfig } from '@graphql-yoga/nestjs';
 import { SentryModule } from '@sentry/nestjs/setup';
@@ -95,6 +95,16 @@ export class AppModule {
       modules.push(
         ServeStaticModule.forRoot({
           rootPath: frontPath,
+          serveStaticOptions: {
+            setHeaders: (res, path) => {
+              if (basename(path) !== 'index.html') {
+                return;
+              }
+
+              res.setHeader('Clear-Site-Data', '"cache"');
+              res.setHeader('Cache-Control', 'no-store');
+            },
+          },
         }),
       );
     }
