@@ -8,15 +8,17 @@ import { type ThemeColor, MAIN_COLOR_NAMES } from 'twenty-ui/theme';
 const SYSTEM_OBJECT_COLOR: ThemeColor = 'gray';
 
 const STANDARD_OBJECT_FALLBACK_COLOR: Partial<
-  Record<CoreObjectNameSingular, ThemeColor>
+  Record<CoreObjectNameSingular | string, ThemeColor>
 > = {
-  [CoreObjectNameSingular.Company]: 'blue',
+  [CoreObjectNameSingular.Company]: 'jade',
   [CoreObjectNameSingular.Person]: 'blue',
   [CoreObjectNameSingular.Task]: 'turquoise',
   [CoreObjectNameSingular.TaskTarget]: 'turquoise',
   [CoreObjectNameSingular.Note]: 'turquoise',
   [CoreObjectNameSingular.NoteTarget]: 'turquoise',
   [CoreObjectNameSingular.Opportunity]: 'red',
+  emailMessage: 'blue',
+  meetingNote: 'purple',
   [CoreObjectNameSingular.Dashboard]: SYSTEM_OBJECT_COLOR,
   [CoreObjectNameSingular.Workflow]: SYSTEM_OBJECT_COLOR,
   [CoreObjectNameSingular.WorkflowRun]: SYSTEM_OBJECT_COLOR,
@@ -56,8 +58,7 @@ export const getObjectColorWithFallback = (
   }
 
   return (
-    STANDARD_OBJECT_FALLBACK_COLOR[
-      objectMetadataItem.nameSingular as CoreObjectNameSingular
-    ] ?? getColorForCustomObject(objectMetadataItem.nameSingular)
+    STANDARD_OBJECT_FALLBACK_COLOR[objectMetadataItem.nameSingular] ??
+    getColorForCustomObject(objectMetadataItem.nameSingular)
   );
 };

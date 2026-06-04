@@ -89,14 +89,10 @@ export const RelationManyToOneFieldInput = () => {
     (typedRecordInStore?.companyId as string | null | undefined);
 
   const isCompanyScopedDepartmentPicker =
-    (objectMetadataItem.nameSingular === 'emailMessage' ||
-      objectMetadataItem.nameSingular === 'meetingNote' ||
-      objectMetadataItem.nameSingular === 'opportunity') &&
     fieldDefinition.metadata.relationObjectMetadataNameSingular ===
-      'department';
+    'department';
 
   const departmentFilterOverride = useCompanyScopedDepartmentFilterOverride({
-    sourceObjectNameSingular: objectMetadataItem.nameSingular,
     targetObjectNameSingular:
       fieldDefinition.metadata.relationObjectMetadataNameSingular,
     companyId,
