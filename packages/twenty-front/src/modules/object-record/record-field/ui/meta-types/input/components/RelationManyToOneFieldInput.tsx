@@ -9,9 +9,9 @@ import { RecordFieldComponentInstanceContext } from '@/object-record/record-fiel
 import { recordFieldInputLayoutDirectionComponentState } from '@/object-record/record-field/ui/states/recordFieldInputLayoutDirectionComponentState';
 import { recordFieldInputLayoutDirectionLoadingComponentState } from '@/object-record/record-field/ui/states/recordFieldInputLayoutDirectionLoadingComponentState';
 import { SingleRecordPicker } from '@/object-record/record-picker/single-record-picker/components/SingleRecordPicker';
-import { getPopCreationsRelationPickerFilterOverride } from '@/object-record/record-picker/single-record-picker/utils/getPopCreationsRelationPickerFilterOverride';
 import { singleRecordPickerSelectedIdComponentState } from '@/object-record/record-picker/single-record-picker/states/singleRecordPickerSelectedIdComponentState';
 import { recordStoreFamilyState } from '@/object-record/record-store/states/recordStoreFamilyState';
+import { useCompanyScopedDepartmentFilterOverride } from '@/pop-creations/hooks/useCompanyScopedDepartmentFilterOverride';
 import { type RecordPickerPickableMorphItem } from '@/object-record/record-picker/types/RecordPickerPickableMorphItem';
 import { type ObjectRecord } from '@/object-record/types/ObjectRecord';
 import { useAvailableComponentInstanceIdOrThrow } from '@/ui/utilities/state/component-state/hooks/useAvailableComponentInstanceIdOrThrow';
@@ -87,7 +87,7 @@ export const RelationManyToOneFieldInput = () => {
       | undefined
   )?.id as string | null | undefined;
 
-  const departmentFilterOverride = getPopCreationsRelationPickerFilterOverride({
+  const departmentFilterOverride = useCompanyScopedDepartmentFilterOverride({
     sourceObjectNameSingular: objectMetadataItem.nameSingular,
     targetObjectNameSingular:
       fieldDefinition.metadata.relationObjectMetadataNameSingular,
