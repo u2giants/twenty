@@ -45,6 +45,54 @@
       };
     </script>
     <!-- END: Twenty Config -->
+    <script>
+      (() => {
+        const buildHash = window._env_?.REACT_APP_BUILD_HASH;
+
+        if (typeof buildHash !== 'string' || buildHash.length === 0) {
+          return;
+        }
+
+        const buildHashStorageKey = 'twenty:last-loaded-build-hash';
+        const reloadStorageKey = `twenty:reloaded-for-build:${buildHash}`;
+        const previousBuildHash = localStorage.getItem(buildHashStorageKey);
+
+        if (previousBuildHash === buildHash) {
+          return;
+        }
+
+        localStorage.setItem(buildHashStorageKey, buildHash);
+
+        if (sessionStorage.getItem(reloadStorageKey) === 'true') {
+          return;
+        }
+
+        sessionStorage.setItem(reloadStorageKey, 'true');
+
+        const clearBrowserCaches = async () => {
+          if ('caches' in window) {
+            const cacheNames = await caches.keys();
+            await Promise.all(
+              cacheNames.map((cacheName) => caches.delete(cacheName)),
+            );
+          }
+
+          if ('serviceWorker' in navigator) {
+            const registrations =
+              await navigator.serviceWorker.getRegistrations();
+            await Promise.all(
+              registrations.map((registration) => registration.unregister()),
+            );
+          }
+        };
+
+        clearBrowserCaches().finally(() => {
+          const url = new URL(window.location.href);
+          url.searchParams.set('build', buildHash.slice(0, 12));
+          window.location.replace(url.toString());
+        });
+      })();
+    </script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script type="module">

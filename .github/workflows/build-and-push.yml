@@ -174,7 +174,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: packages/twenty-front/build
-          key: frontend-build-${{ hashFiles('packages/twenty-front/src/**', 'packages/twenty-front-component-renderer/src/**', 'packages/twenty-ui/src/**', 'packages/twenty-shared/src/**', 'yarn.lock') }}
+          key: frontend-build-${{ hashFiles('packages/twenty-front/index.html', 'packages/twenty-front/vite.config.ts', 'packages/twenty-front/src/**', 'packages/twenty-front-component-renderer/src/**', 'packages/twenty-ui/src/**', 'packages/twenty-shared/src/**', 'yarn.lock') }}
           restore-keys: |
             frontend-build-
 
@@ -337,7 +337,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: packages/twenty-front/build
-          key: frontend-build-${{ hashFiles('packages/twenty-front/src/**', 'packages/twenty-front-component-renderer/src/**', 'packages/twenty-ui/src/**', 'packages/twenty-shared/src/**', 'yarn.lock') }}
+          key: frontend-build-${{ hashFiles('packages/twenty-front/index.html', 'packages/twenty-front/vite.config.ts', 'packages/twenty-front/src/**', 'packages/twenty-front-component-renderer/src/**', 'packages/twenty-ui/src/**', 'packages/twenty-shared/src/**', 'yarn.lock') }}
           restore-keys: |
             frontend-build-
 
