@@ -91,6 +91,16 @@ Files **outside** project-owned areas that were modified, and why.
 | `packages/twenty-front/src/modules/object-record/object-filter-dropdown/components/ObjectFilterDropdownRecordSelect.tsx` | Restrict company filter to customer companies when filtering People records | No extension point | Merge conflict |
 | `packages/twenty-front/src/modules/object-record/select/hooks/useRecordsForSelect.ts` | Added `filterOverride` param for scoped dropdown | Required by the company-filter restriction above | Merge conflict |
 | `packages/twenty-front/src/modules/activities/components/ParticipantChip.tsx` | Right-click context menu to open People record | No extension point | Low risk |
+| `packages/twenty-front/src/modules/object-record/record-picker/single-record-picker/hooks/useSingleRecordPickerPerformSearch.ts` | Added `filterOverride` param threaded through to `useObjectRecordSearchRecords` | Needed for company-scoped department picker | Merge conflict |
+| `packages/twenty-front/src/modules/object-record/record-picker/single-record-picker/hooks/useSingleRecordPickerRecords.ts` | Passes `filterOverride` down to `useSingleRecordPickerPerformSearch` | Same as above | Merge conflict |
+| `packages/twenty-front/src/modules/object-record/record-picker/single-record-picker/components/SingleRecordPickerMenuItemsWithSearch.tsx` | Accepts and passes `filterOverride` | Same | Merge conflict |
+| `packages/twenty-front/src/modules/object-record/record-picker/single-record-picker/components/SingleRecordPicker.tsx` | Accepts and passes `filterOverride` | Same | Merge conflict |
+| `packages/twenty-front/src/modules/object-record/record-field/ui/meta-types/input/components/RelationManyToOneFieldInput.tsx` | Reads `companyId` from record store; computes and passes `filterOverride` for department picker | Same | Merge conflict |
+| `packages/twenty-front/src/modules/object-record/record-field-list/components/RecordFieldList.tsx` | ORs `isDepartmentReadOnly()` into `isRecordFieldReadOnly` for inline fields | Needed to grey-out department field when no company selected | Merge conflict |
+| `packages/twenty-server/src/engine/core-modules/i18n/i18n.service.ts` | Rewritten to load only `en` locale (was 31 locales) | English-only fork | Low risk |
+| `packages/twenty-front/src/utils/i18n/dynamicActivate.ts` | Always activates English; ignores locale argument | English-only fork | Low risk |
+| `packages/twenty-front/src/utils/i18n/initialI18nActivate.ts` | Hardwired to call `dynamicActivate('en')` — no URL/storage/browser detection | English-only fork | Low risk |
+| `packages/twenty-front/src/pages/settings/profile/appearance/components/SettingsExperience.tsx` | Removed Language section and `LocalePicker` import | English-only fork | Low risk |
 
 ---
 
@@ -105,7 +115,7 @@ Files **outside** project-owned areas that were modified, and why.
 | Schema / data change | A **new numbered SQL file** in `pop-creations/migrations/` (applied manually; see protocol below) | already-applied migration files |
 | Add a cron job | New `crons/jobs/<name>.cron.job.ts` + `crons/commands/<name>.cron.command.ts` → register in ALL THREE: `pop-creations.module.ts`, `jobs.module.ts`, AND `cron-register-all.command.ts` + `database-command.module.ts` | other cron jobs' logic |
 | Add/modify an automation listener | `pop-creations/listeners/` or `pop-creations/logic-functions/*/listeners/` — use `@OnDatabaseBatchEvent` (v2.8); register in `pop-creations.module.ts` | upstream listeners |
-| Add a frontend hook | `pop-creations/hooks/` | core hooks |
+| Add a frontend hook | `pop-creations/hooks/` (e.g. `usePopCreationsDepartmentReadOnly`) | core hooks |
 | Change deploy/build | `docker-compose.yaml` (on `origin/main` — see §12), `packages/twenty-docker/twenty/Dockerfile` | production `.env` (lives in Coolify) |
 | Add an env var | `docs/configuration.md` + the consuming code | production env directly (set it in Coolify) |
 
@@ -292,6 +302,35 @@ direct SQL), they must also set `scope = 'DEPARTMENT'` or the router won't see t
 Do not change because: the router depends on this contract. If changing the scope field name or
 removing the listener, the routing pipeline must be updated in lockstep.
 
+### Department picker is company-scoped; greyed out until company is set
+
+The `SingleRecordPicker` for the `department` relation on `emailMessage`, `meetingNote`, and
+`opportunity` has two related behaviors:
+1. **Filtered**: `getPopCreationsRelationPickerFilterOverride` returns `{ companyId: { eq: companyId } }`
+   so only departments belonging to the selected company appear.
+2. **Greyed out**: `usePopCreationsDepartmentReadOnly` marks the field `isRecordFieldReadOnly = true`
+   in `RecordFieldList` when the record has no `companyId`. The user must select a company first.
+
+`filterOverride` is threaded through: `RelationManyToOneFieldInput` → `SingleRecordPicker` →
+`SingleRecordPickerMenuItemsWithSearch` → `useSingleRecordPickerRecords` →
+`useSingleRecordPickerPerformSearch` → `useObjectRecordSearchRecords`.
+
+### i18n/Lingui macros stay; non-English locales are gone
+
+This fork is English-only. The `t\`...\`` Lingui macros remain throughout the codebase — they
+compile to English strings at build time with no runtime cost. What was removed: all non-English
+`.po` source files, all non-English compiled locale bundles (`locales/generated/`), and the
+`LocalePicker` UI component. `initialI18nActivate` and `I18nService` now hardwire English with no
+locale detection or switching.
+
+If upstream Twenty adds new locale files in a future upgrade, do not commit them.
+
+### `backups/` and `*.dump` are gitignored
+
+Database backups are written to `/worksp/twenty/fork/backups/` by the nightly systemd timer.
+They are in `.gitignore` — never commit `.dump` files to the repo (they exceed GitHub's 50 MB
+file-size limit and contain production data).
+
 ### `@/` in twenty-front tests maps to `src/modules/`, not `src/`
 
 Jest `moduleNameMapper` maps `@/` → `packages/twenty-front/src/modules/`. Import a file at
@@ -432,6 +471,28 @@ Rule added: when writing ORM event listeners, always access `payload.properties.
 `payload.properties` bare). When a routing behavior is consistently zero across thousands of emails,
 check that the filter predicate conditions are actually reachable in the data.
 
+### 2026-06-04 — Department picker showing all companies' departments
+
+What happened: The `department` relation field on `emailMessage`, `meetingNote`, and `opportunity`
+records was showing departments from all companies. Each department belongs to one company via
+`companyId`, but the picker had no filter.
+Root cause: the `filterOverride` mechanism existed for the table filter sidebar path but was not
+threaded through `RelationManyToOneFieldInput` → `SingleRecordPicker`. Additionally, when no company
+was selected, the department field was still clickable and showed an unfiltered list.
+Recovery: threaded `filterOverride` through 5 upstream files (commits `2b8fa9b7f8`); added
+`usePopCreationsDepartmentReadOnly` hook wired into `RecordFieldList` to grey out the field when
+`companyId` is absent (commit `16860030eb`).
+Rule added: see department-picker quirk in §10.
+
+### 2026-06-04 — Upstream Crowdin/i18n workflows violating branch-creation rule
+
+What happened: Three upstream workflow files (`i18n-push.yaml`, `docs-i18n-push.yaml`,
+`website-i18n-push.yaml`) were pushing to an `i18n` branch, failing due to the repo ruleset
+"no branches" (`~ALL` with `creation` blocked).
+Root cause: inherited from upstream Twenty; this fork has no Crowdin integration.
+Recovery: deleted all 6 Crowdin/i18n workflow files (commit `d8fe421351`).
+Rule added: do not re-add any i18n workflow files from upstream.
+
 ### Invalid-variant UUIDs caused blank-page crash (pre-2026)
 
 What happened: hand-crafted UUIDs whose 4th group did not start with `8/9/a/b` were inserted,
@@ -455,6 +516,10 @@ Recovery: migration `001_enforce_uuid_variant.sql`. Rule: all hand-written UUIDs
 | done | Staging container cleanup | All staging/cutover containers removed |
 | done | Restore `docker-compose.yaml` | Lost in re-fork; restored from git history (commit `68341cc9b4`); Coolify deploys now work |
 | done | Fix department routing (person.scope) | `ContactAutoScopeListener` bug fixed (commit `f4f732c663`); 8,603 people backfilled; emails now routed to departments |
+| done | Company-scoped department picker | `filterOverride` threaded through `SingleRecordPicker` stack; department field greys out when no company selected |
+| done | Remove upstream Crowdin/i18n workflows | 6 workflow files deleted; no branch-creation violations |
+| done | English-only: remove non-English locales | 95 `.po` files + 60 compiled locale bundles deleted; `LocalePicker` removed; `I18nService` hardwired to English |
+| done | Gitignore `backups/` and `*.dump` | Production database dumps no longer tracked in git |
 
 ---
 

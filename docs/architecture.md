@@ -164,8 +164,18 @@ email/calendar sync.
 ## Frontend overlay
 
 POP frontend code lives in `packages/twenty-front/src/modules/pop-creations/`. It adds:
-- Right-click context menu on `ParticipantChip` (navigate to People record)
-- Company filter scoped to customer companies when filtering People records
+
+- **`ParticipantChip` right-click menu** — navigate to the People record from any email participant chip
+- **Company filter for People** — `ObjectFilterDropdownRecordSelect` scoped to customer companies when filtering People records (`useRecordsForSelect` `filterOverride`)
+- **Company-scoped department picker** — on `emailMessage`, `meetingNote`, and `opportunity` records, the Department relation field only shows departments belonging to the selected company. If no company is selected, the field is greyed out and non-clickable.
+  - `getPopCreationsRelationPickerFilterOverride` — computes the `{ companyId: { eq: companyId } }` filter
+  - `usePopCreationsDepartmentReadOnly` — returns `isReadOnly = true` when `companyId` is absent
+  - `filterOverride` is threaded through `RelationManyToOneFieldInput` → `SingleRecordPicker` → `SingleRecordPickerMenuItemsWithSearch` → `useSingleRecordPickerRecords` → `useSingleRecordPickerPerformSearch`
+  - `RecordFieldList` applies `usePopCreationsDepartmentReadOnly` to each inline field's `FieldContext`
+
+**i18n:** The fork is English-only. Lingui macros (`t\`...\``) remain in the codebase but compile
+to English strings with no runtime cost. Non-English locale bundles and the `LocalePicker` component
+have been removed. `initialI18nActivate` hardwires English with no locale detection.
 
 The upstream Twenty frontend (React/Jotai/Apollo) is otherwise stock v2.8.3.
 

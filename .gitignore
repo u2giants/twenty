@@ -55,3 +55,8 @@ TRANSLATION_QA_REPORT.md
 .playwright-mcp/
 .playwright-cli/
 output/playwright/
+
+# Local ops artifacts — never commit to git
+backups/
+*.dump
+insert_*.py
