@@ -2,13 +2,16 @@ import { useSingleRecordPickerPerformSearch } from '@/object-record/record-picke
 import { singleRecordPickerSearchFilterComponentState } from '@/object-record/record-picker/single-record-picker/states/singleRecordPickerSearchFilterComponentState';
 import { singleRecordPickerSelectedIdComponentState } from '@/object-record/record-picker/single-record-picker/states/singleRecordPickerSelectedIdComponentState';
 import { useAtomComponentStateValue } from '@/ui/utilities/state/jotai/hooks/useAtomComponentStateValue';
+import { type ObjectRecordFilterInput } from '~/generated/graphql';
 
 export const useSingleRecordPickerRecords = ({
   objectNameSingulars,
   excludedRecordIds = [],
+  filterOverride,
 }: {
   objectNameSingulars: string[];
   excludedRecordIds?: string[];
+  filterOverride?: ObjectRecordFilterInput;
 }) => {
   const singleRecordPickerSearchFilter = useAtomComponentStateValue(
     singleRecordPickerSearchFilterComponentState,
@@ -24,6 +27,7 @@ export const useSingleRecordPickerRecords = ({
       : [],
     excludedRecordIds: excludedRecordIds,
     objectNameSingulars,
+    filterOverride,
   });
 
   return { pickableMorphItems, loading };

@@ -9,6 +9,7 @@ import { SingleRecordPickerComponentInstanceContext } from '@/object-record/reco
 import { singleRecordPickerSearchableObjectMetadataItemsComponentState } from '@/object-record/record-picker/single-record-picker/states/singleRecordPickerSearchableObjectMetadataItemsComponentState';
 import { type RecordPickerPickableMorphItem } from '@/object-record/record-picker/types/RecordPickerPickableMorphItem';
 import { useAvailableComponentInstanceIdOrThrow } from '@/ui/utilities/state/component-state/hooks/useAvailableComponentInstanceIdOrThrow';
+import { type ObjectRecordFilterInput } from '~/generated/graphql';
 import { CustomError, isDefined } from 'twenty-shared/utils';
 
 export const useSingleRecordPickerPerformSearch = ({
@@ -17,12 +18,14 @@ export const useSingleRecordPickerPerformSearch = ({
   excludedRecordIds = [],
   objectNameSingulars,
   searchFilter,
+  filterOverride,
 }: {
   selectedIds: string[];
   limit?: number;
   excludedRecordIds?: string[];
   objectNameSingulars: string[];
   searchFilter?: string;
+  filterOverride?: ObjectRecordFilterInput;
 }): {
   pickableMorphItems: RecordPickerPickableMorphItem[];
   loading: boolean;
@@ -61,10 +64,14 @@ export const useSingleRecordPickerPerformSearch = ({
   const notFilter = notFilterIds.length
     ? { not: { id: { in: notFilterIds } } }
     : undefined;
+  const combinedFilter =
+    notFilter && filterOverride
+      ? { and: [notFilter, filterOverride] }
+      : (notFilter ?? filterOverride);
   const { loading: recordsToSelectLoading, searchRecords: recordsToSelect } =
     useObjectRecordSearchRecords({
       objectNameSingulars,
-      filter: notFilter,
+      filter: combinedFilter,
       limit: limit ?? DEFAULT_SEARCH_REQUEST_LIMIT,
       searchInput: searchFilter,
       fetchPolicy: 'cache-and-network',

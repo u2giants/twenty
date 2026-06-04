@@ -9,13 +9,16 @@ import { RecordFieldComponentInstanceContext } from '@/object-record/record-fiel
 import { recordFieldInputLayoutDirectionComponentState } from '@/object-record/record-field/ui/states/recordFieldInputLayoutDirectionComponentState';
 import { recordFieldInputLayoutDirectionLoadingComponentState } from '@/object-record/record-field/ui/states/recordFieldInputLayoutDirectionLoadingComponentState';
 import { SingleRecordPicker } from '@/object-record/record-picker/single-record-picker/components/SingleRecordPicker';
+import { getPopCreationsRelationPickerFilterOverride } from '@/object-record/record-picker/single-record-picker/utils/getPopCreationsRelationPickerFilterOverride';
 import { singleRecordPickerSelectedIdComponentState } from '@/object-record/record-picker/single-record-picker/states/singleRecordPickerSelectedIdComponentState';
+import { recordStoreFamilyState } from '@/object-record/record-store/states/recordStoreFamilyState';
 import { type RecordPickerPickableMorphItem } from '@/object-record/record-picker/types/RecordPickerPickableMorphItem';
 import { type ObjectRecord } from '@/object-record/types/ObjectRecord';
 import { useAvailableComponentInstanceIdOrThrow } from '@/ui/utilities/state/component-state/hooks/useAvailableComponentInstanceIdOrThrow';
 import { useAtomComponentStateValue } from '@/ui/utilities/state/jotai/hooks/useAtomComponentStateValue';
 import { useSetAtomComponentState } from '@/ui/utilities/state/jotai/hooks/useSetAtomComponentState';
 import { useLingui } from '@lingui/react/macro';
+import { useAtom } from 'jotai';
 import { useContext } from 'react';
 import { CustomError, isDefined } from 'twenty-shared/utils';
 import { IconForbid } from 'twenty-ui/display';
@@ -76,6 +79,17 @@ export const RelationManyToOneFieldInput = () => {
     recordId,
   });
 
+  const [recordInStore] = useAtom(recordStoreFamilyState.atomFamily(recordId));
+  const companyId = (recordInStore as Record<string, unknown> | null)
+    ?.companyId as string | null | undefined;
+
+  const departmentFilterOverride = getPopCreationsRelationPickerFilterOverride({
+    sourceObjectNameSingular: objectMetadataItem.nameSingular,
+    targetObjectNameSingular:
+      fieldDefinition.metadata.relationObjectMetadataNameSingular,
+    companyId,
+  });
+
   const recordFieldInputLayoutDirection = useAtomComponentStateValue(
     recordFieldInputLayoutDirectionComponentState,
   );
@@ -117,6 +131,7 @@ export const RelationManyToOneFieldInput = () => {
       objectNameSingulars={[
         fieldDefinition.metadata.relationObjectMetadataNameSingular,
       ]}
+      filterOverride={departmentFilterOverride}
       recordPickerInstanceId={instanceId}
       layoutDirection={
         recordFieldInputLayoutDirection === 'downward'
