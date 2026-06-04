@@ -22,6 +22,7 @@ import { useRecordShowContainerActions } from '@/object-record/record-show/hooks
 import { useRecordShowContainerData } from '@/object-record/record-show/hooks/useRecordShowContainerData';
 import { getRecordFieldInputInstanceId } from '@/object-record/utils/getRecordFieldInputId';
 import { getObjectPermissionsFromMapByObjectMetadataId } from '@/settings/roles/role-permissions/objects-permissions/utils/getObjectPermissionsFromMapByObjectMetadataId';
+import { usePopCreationsDepartmentReadOnly } from '@/pop-creations/hooks/usePopCreationsDepartmentReadOnly';
 import { useSetAtomComponentState } from '@/ui/utilities/state/jotai/hooks/useSetAtomComponentState';
 import {
   FieldMetadataType,
@@ -65,6 +66,11 @@ export const RecordFieldList = ({
   const isRecordReadOnly = useIsRecordReadOnly({
     recordId: objectRecordId,
     objectMetadataId: objectMetadataItem.id,
+  });
+
+  const isDepartmentReadOnly = usePopCreationsDepartmentReadOnly({
+    objectNameSingular,
+    objectRecordId,
   });
 
   const setRecordFieldListHoverPosition = useSetAtomComponentState(
@@ -176,22 +182,23 @@ export const RecordFieldList = ({
                 fieldDefinition,
                 useUpdateRecord: useUpdateOneObjectRecordMutation,
                 isDisplayModeFixHeight: true,
-                isRecordFieldReadOnly: isRecordFieldReadOnly({
-                  isRecordReadOnly,
-                  isSystemObject: objectMetadataItem.isSystem,
-                  objectPermissions:
-                    getObjectPermissionsFromMapByObjectMetadataId({
-                      objectPermissionsByObjectMetadataId,
-                      objectMetadataId: objectMetadataItem.id,
-                    }),
-                  fieldMetadataItem: {
-                    id: fieldMetadataItem.id,
-                    isUIReadOnly: fieldMetadataItem.isUIReadOnly ?? false,
-                    isCustom: fieldMetadataItem.isCustom ?? false,
-                  },
-                  fieldDefinition,
-                  objectPermissionsByObjectMetadataId,
-                }),
+                isRecordFieldReadOnly:
+                  isRecordFieldReadOnly({
+                    isRecordReadOnly,
+                    isSystemObject: objectMetadataItem.isSystem,
+                    objectPermissions:
+                      getObjectPermissionsFromMapByObjectMetadataId({
+                        objectPermissionsByObjectMetadataId,
+                        objectMetadataId: objectMetadataItem.id,
+                      }),
+                    fieldMetadataItem: {
+                      id: fieldMetadataItem.id,
+                      isUIReadOnly: fieldMetadataItem.isUIReadOnly ?? false,
+                      isCustom: fieldMetadataItem.isCustom ?? false,
+                    },
+                    fieldDefinition,
+                    objectPermissionsByObjectMetadataId,
+                  }) || isDepartmentReadOnly(fieldMetadataItem),
                 onMouseEnter: () =>
                   handleMouseEnter(
                     index +
