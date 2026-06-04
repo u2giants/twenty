@@ -10,6 +10,7 @@ import { useRecordIndexContextOrThrow } from '@/object-record/record-index/conte
 import { PageHeader } from '@/ui/layout/page/components/PageHeader';
 import { useAtomComponentStateValue } from '@/ui/utilities/state/jotai/hooks/useAtomComponentStateValue';
 import { useAtomStateValue } from '@/ui/utilities/state/jotai/hooks/useAtomStateValue';
+import { ViewBarBuildInfo } from '@/views/components/ViewBarBuildInfo';
 import { styled } from '@linaria/react';
 import { t } from '@lingui/core/macro';
 import { isDefined } from 'twenty-shared/utils';
@@ -76,6 +77,7 @@ export const RecordIndexPageHeader = () => {
     >
       {isDefined(contextStoreCurrentViewId) && (
         <>
+          <ViewBarBuildInfo />
           <RecordIndexCommandMenu />
           {!isLayoutCustomizationModeEnabled && <SidePanelToggleButton />}
         </>

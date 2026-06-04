@@ -2,19 +2,20 @@ import { type ObjectRecordFilterInput } from '~/generated/graphql';
 
 export const useCompanyScopedDepartmentFilterOverride = ({
   targetObjectNameSingular,
-  companyId,
+  departmentIds,
+  loading,
 }: {
   targetObjectNameSingular: string;
-  companyId: string | null | undefined;
+  departmentIds: string[];
+  loading: boolean;
 }): ObjectRecordFilterInput | undefined => {
   if (targetObjectNameSingular !== 'department') return undefined;
 
-  // No company selected — block all departments (return impossible filter)
-  if (!companyId) {
+  if (loading) {
     return { id: { in: [] } } as unknown as ObjectRecordFilterInput;
   }
 
   return {
-    companyId: { eq: companyId },
+    id: { in: departmentIds },
   } as unknown as ObjectRecordFilterInput;
 };

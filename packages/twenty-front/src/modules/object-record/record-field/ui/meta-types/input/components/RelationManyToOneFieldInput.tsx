@@ -11,9 +11,10 @@ import { recordFieldInputLayoutDirectionLoadingComponentState } from '@/object-r
 import { SingleRecordPicker } from '@/object-record/record-picker/single-record-picker/components/SingleRecordPicker';
 import { singleRecordPickerSelectedIdComponentState } from '@/object-record/record-picker/single-record-picker/states/singleRecordPickerSelectedIdComponentState';
 import { recordStoreFamilyState } from '@/object-record/record-store/states/recordStoreFamilyState';
-import { useCompanyScopedDepartmentFilterOverride } from '@/pop-creations/hooks/useCompanyScopedDepartmentFilterOverride';
 import { type RecordPickerPickableMorphItem } from '@/object-record/record-picker/types/RecordPickerPickableMorphItem';
 import { type ObjectRecord } from '@/object-record/types/ObjectRecord';
+import { useCompanyDepartmentIds } from '@/pop-creations/hooks/useCompanyDepartmentIds';
+import { useCompanyScopedDepartmentFilterOverride } from '@/pop-creations/hooks/useCompanyScopedDepartmentFilterOverride';
 import { useAvailableComponentInstanceIdOrThrow } from '@/ui/utilities/state/component-state/hooks/useAvailableComponentInstanceIdOrThrow';
 import { useAtomComponentStateValue } from '@/ui/utilities/state/jotai/hooks/useAtomComponentStateValue';
 import { useSetAtomComponentState } from '@/ui/utilities/state/jotai/hooks/useSetAtomComponentState';
@@ -92,10 +93,17 @@ export const RelationManyToOneFieldInput = () => {
     fieldDefinition.metadata.relationObjectMetadataNameSingular ===
     'department';
 
+  const { ids: departmentIds, loading: departmentIdsLoading } =
+    useCompanyDepartmentIds({
+      companyId,
+      skip: !isCompanyScopedDepartmentPicker,
+    });
+
   const departmentFilterOverride = useCompanyScopedDepartmentFilterOverride({
     targetObjectNameSingular:
       fieldDefinition.metadata.relationObjectMetadataNameSingular,
-    companyId,
+    departmentIds,
+    loading: departmentIdsLoading,
   });
 
   const recordFieldInputLayoutDirection = useAtomComponentStateValue(
