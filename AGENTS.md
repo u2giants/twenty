@@ -346,6 +346,23 @@ The build hash/date are injected into `index.html` by
 when building the image. The server sends `Cache-Control: no-store` and `Clear-Site-Data: "cache"`
 for `index.html` only, so a deployed app shell cannot remain stuck on an old commit.
 
+### Do not blame browser cache until the server is proven current
+
+Looks like: the user should hard-refresh, log out/in, or clear browser data when the UI still looks old.
+Actually: first prove what the public server is serving:
+```bash
+curl -fsSL "https://crm.designflow.app/?probe=$(date +%s)" | \
+  grep -E 'REACT_APP_BUILD_(HASH|DATE)'
+```
+If that hash is old, the problem is **not** the user's browser. It is one of: GitHub Actions did
+not build/push the expected image, Coolify did not pull/recreate the running containers, or the
+server is still serving an old `index.html`.
+Why: repeated hard refreshes wasted time during the v2.8 rollout because production itself was still
+serving an old app shell.
+Do not change because: the live app-shell hash is the authoritative deploy signal. Browser cache is
+only a plausible explanation after the curl probe shows the correct hash while the user's browser
+still shows old UI.
+
 ### i18n/Lingui macros stay; non-English locales are gone
 
 This fork is English-only. The `t\`...\`` Lingui macros remain throughout the codebase — they
@@ -539,21 +556,23 @@ via `useFindManyRecords`, then pass a search-safe `{ id: { in: departmentIds } }
 Rule added: never pass custom object fields such as `companyId` to `useObjectRecordSearchRecords`.
 For relation pickers, prefetch IDs through the workspace GraphQL API and filter search by `id`.
 
-### 2026-06-04 — Deploy said success while browser still served old frontend
+### 2026-06-04 — Cache/deploy confusion: deploy said success while server still served old frontend
 
 What happened: after several fixes, GitHub/Coolify reported deploys as successful but
 `https://crm.designflow.app` still served older frontend JavaScript and the build badge was missing
 or showing an older commit.
 Impact: fixes appeared not to work, causing repeated hard-refresh/logout/redeploy cycles.
-Root cause: verification stopped at "pushed" or "workflow/deploy completed" instead of checking
-the app shell that the public URL served. The build hash/date badge had also been placed in the
-secondary view toolbar first, not the topmost header where operators expected it.
+Root cause: verification stopped at "pushed", "workflow/deploy completed", or "user should hard
+refresh" instead of checking the app shell that the public URL served. The build hash/date badge had
+also been placed in the secondary view toolbar first, not the topmost header where operators
+expected it.
 Recovery: added build hash/date injection to the served frontend config, added no-store/cache-clear
 headers for `index.html`, moved the badge to `RecordIndexPageHeader`, and verified production by
 curling `REACT_APP_BUILD_HASH` from `https://crm.designflow.app/?probe=<timestamp>`.
 Rule added: a deploy is not done until the public URL returns HTTP 200 and the embedded
 `REACT_APP_BUILD_HASH` equals the pushed commit SHA. Expect a short 503 window during Coolify
-replacement; keep polling through it.
+replacement; keep polling through it. Never ask the user to hard-refresh as the primary fix while
+the server-side curl probe still reports an old hash.
 
 ### 2026-06-04 — Upstream Crowdin/i18n workflows violating branch-creation rule
 

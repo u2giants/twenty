@@ -81,6 +81,11 @@ only when `https://crm.designflow.app` returns HTTP 200 and the embedded `REACT_
 equals the commit SHA you pushed. Brief 503s are expected while Coolify replaces containers; keep
 polling until the site returns and the hash changes.
 
+Do **not** diagnose stale UI as browser cache first. Hard refresh, logout/login, and clearing site
+data cannot make production current if the curl probe above still returns an old hash. Browser cache
+is only a plausible culprit after the public app-shell hash is correct and a specific browser still
+shows old UI.
+
 Server/container checks:
 ```bash
 # Cron registration log — expect "27 successful, 0 failed, 1 skipped"
