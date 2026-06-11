@@ -6,12 +6,17 @@ This is a fork of [Twenty CRM](https://twenty.com) v2.8.3 with an inbound-email-
 system layered on top. Emails arrive in a shared Outlook mailbox, the system classifies them to the
 correct customer company/department/program automatically, and surfaces them in the CRM timeline.
 
+> **⚠️ Migration in planning:** this CRM is slated to move off Twenty onto POP's shared self-hosted
+> **Directus** backend, with a new `popcmr-web` React frontend. The full, self-contained plan is in
+> **[MIGRATE-TO-DIRECTUS.md](./MIGRATE-TO-DIRECTUS.md)** — read that first if your task is the migration.
+
 ---
 
 ## Quick orientation
 
 | Document | Purpose |
 |---|---|
+| **[MIGRATE-TO-DIRECTUS.md](./MIGRATE-TO-DIRECTUS.md)** | **Migration guide** — move this CRM onto the shared Directus backend + new `popcmr-web` frontend |
 | **[AGENTS.md](./AGENTS.md)** | Primary developer and AI guide — read this first |
 | **[docs/architecture.md](./docs/architecture.md)** | System design, components, data flow |
 | **[docs/development.md](./docs/development.md)** | Local setup, run/test/lint |
