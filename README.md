@@ -6,6 +6,8 @@ This is a fork of [Twenty CRM](https://twenty.com) v2.8.3 with an inbound-email-
 system layered on top. Emails arrive in a shared Outlook mailbox, the system classifies them to the
 correct customer company/department/program automatically, and surfaces them in the CRM timeline.
 
+> 📄 **Migrating off this fork?** See **[`MIGRATE-TO-DIRECTUS.md`](./MIGRATE-TO-DIRECTUS.md)** — the full, self-contained plan to move this CRM onto the shared Directus backend (one super-app DB) and replace this app with `popcmr-web`. Owner decisions are baked in at the top.
+
 ---
 
 ## Quick orientation
